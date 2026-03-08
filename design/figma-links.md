@@ -1,1 +1,1 @@
-https://www.figma.com/make/0sgWxKIyCeQKHOuXqWKGXq/Prototipo?t=ZqbcJtdXr2jTMUjR-1
+https://www.figma.com/make/0sgWxKIyCeQKHOuXqWKGXq/Prototipo?fullscreen=1&t=IeARCZpfVFdgKCLM-1
