@@ -41,7 +41,7 @@ Actualmente, el proyecto se encuentra en la fase inicial de diseño y planeació
 
 ## 🎨 Diseño y Prototipado
 Puedes ver el diseño interactivo de nuestra aplicación en el siguiente enlace:
-🔗 [https://www.figma.com/make/0sgWxKIyCeQKHOuXqWKGXq/Prototipo?t=ZqbcJtdXr2jTMUjR-1]
+🔗 [https://www.figma.com/make/0sgWxKIyCeQKHOuXqWKGXq/Prototipo?fullscreen=1&t=IeARCZpfVFdgKCLM-1]
 
 ---
 
