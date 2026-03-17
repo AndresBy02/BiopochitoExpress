@@ -1,6 +1,6 @@
 # ✈️ Sistema de Gestión de Reservas y Venta de Tiquetes - BiopochitoExpress
 
-Proyecto integrador para la asignatura de **Desarrollo en Ambientes Web I** y **Bases de Datos**. El sistema permite la gestión integral de una aerolínea nacional, incluyendo reservas, venta de tiquetes y paquetes turísticos.
+Proyecto integrador para la asignatura de **Programación en Ambiente Web I** y **Base de Datos**. El sistema permite la gestión integral de una aerolínea nacional, incluyendo reservas, venta de tiquetes y paquetes turísticos.
 
 ---
 
