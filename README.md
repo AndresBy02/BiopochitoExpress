@@ -7,8 +7,8 @@ Proyecto integrador para la asignatura de **Programación en Ambiente Web I** y 
 ## 👥 Equipo de Trabajo
 * **Andres Felipe Vargas Ceballos** - [GitHub Profile](https://github.com/AndresBy02)
 * **Diego Laverde** - [GitHub Profile](https://github.com/imitador01)
-* **Juan Pablo Montoya** - [GitHub Profile](https://github.com/usuario3)
-* **Valentina Salazar** - [GitHub Profile](https://github.com/usuario4)
+* **Juan Pablo Montoya** - [GitHub Profile](https://github.com/Juan-Pablo-M)
+* **Valentina Salazar** - [GitHub Profile](https://github.com/valentinasalazar04-cpu)
 ---
 
 ## 🚀 Tecnologías Utilizadas
