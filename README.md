@@ -48,4 +48,4 @@ Puedes ver el diseño interactivo de nuestra aplicación en el siguiente enlace:
 ## 🛠️ Instalación y Configuración
 1. Clonar el repositorio:
    ```bash
-   git clone [https://github.com/AndresBy02/BiopochitoExpress.git](https://github.com/AndresBy02/BiopochitoExpress.git)
+   git clone https://github.com/AndresBy02/BiopochitoExpress.git
