@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito - BiopochitoExpress</title>
+    <link rel="stylesheet" href="../../public/css/styles.css">
+    <style>
+        .cart-container {
+            padding: 2rem 0;
+            min-height: calc(100vh - 400px);
+        }
+
+        .cart-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 2rem;
+        }
+
+        .cart-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .progress-steps {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .steps-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .step-number.active {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .step-number.inactive {
+            background-color: #e5e7eb;
+            color: #6b7280;
+        }
+
+        .step-label {
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .step-label.active {
+            color: #111827;
+        }
+
+        .step-label.inactive {
+            color: #6b7280;
+        }
+
+        .step-line {
+            flex: 1;
+            height: 4px;
+            background-color: #e5e7eb;
+            margin: 0 1rem;
+        }
+
+        .cart-item {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .cart-item-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-item-image {
+            width: 100%;
+            height: 192px;
+            object-fit: cover;
+        }
+
+        .cart-item-info {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .btn-remove {
+            color: #dc2626;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            transition: color 0.2s;
+        }
+
+        .btn-remove:hover {
+            color: #b91c1c;
+        }
+
+        .cart-item-dates {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .cart-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .quantity-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .quantity-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid #d1d5db;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .quantity-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        .quantity-value {
+            width: 32px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .cart-item-price-section {
+            text-align: right;
+        }
+
+        .cart-item-passengers {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .cart-item-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .info-box {
+            background-color: #eff6ff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+
+        .info-box h3 {
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-box li {
+            font-size: 0.875rem;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-summary {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            position: sticky;
+            top: 5rem;
+        }
+
+        .summary-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+        }
+
+        .summary-label {
+            color: #6b7280;
+        }
+
+        .summary-value {
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .total-label {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .total-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 1rem;
+        }
+
+        .btn-checkout:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-continue {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background-color: white;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .btn-continue:hover {
+            background-color: #f9fafb;
+        }
+
+        .coupon-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .coupon-section h3 {
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .coupon-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .coupon-input {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .coupon-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-apply {
+            padding: 0.5rem 1rem;
+            background-color: #e5e7eb;
+            color: #374151;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-apply:hover {
+            background-color: #d1d5db;
+        }
+
+        .link-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+        }
+
+        .link-section a {
+            font-size: 0.875rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .link-section a:hover {
+            color: #1d4ed8;
+        }
+
+        .empty-cart {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 64px;
+            height: 64px;
+            color: #d1d5db;
+            margin: 0 auto 1rem;
+        }
+
+        .empty-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-text {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .cart-item-content {
+                flex-direction: row;
+            }
+
+            .cart-item-image {
+                width: 192px;
+                height: auto;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .cart-grid {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="../../../index.html" class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">BiopochitoExpress</span>
+            </a>
+
+            <nav class="nav-desktop">
+                <a href="../../../index.html" class="nav-link">Reservar</a>
+                <a href="results.html" class="nav-link">Ofertas y destinos</a>
+                <a href="my-reservation.html" class="nav-link">Tu reserva</a>
+                <a href="help.html" class="nav-link">Información y ayuda</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="cart.html" class="cart-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span class="cart-badge">1</span>
+                </a>
+                <button class="btn-account">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span>Cuenta</span>
+                </button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <nav class="nav-mobile" id="mobileMenu">
+            <a href="../../../index.html" class="nav-mobile-link">Reservar</a>
+            <a href="results.html" class="nav-mobile-link">Ofertas y destinos</a>
+            <a href="my-reservation.html" class="nav-mobile-link">Tu reserva</a>
+            <a href="help.html" class="nav-mobile-link">Información y ayuda</a>
+            <button class="btn-account mobile">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Mi Cuenta</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Cart Content -->
+    <div class="container cart-container">
+        <h1 class="cart-title">Tu carrito</h1>
+
+        <div class="cart-grid">
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <!-- Progress Steps -->
+                <div class="progress-steps">
+                    <div class="steps-container">
+                        <div class="step">
+                            <div class="step-number active">1</div>
+                            <span class="step-label active">Carrito</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step">
+                            <div class="step-number inactive">2</div>
+                            <span class="step-label inactive">Pago</span>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step">
+                            <div class="step-number inactive">3</div>
+                            <span class="step-label inactive">Confirmación</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Item -->
+                <div class="cart-item">
+                    <div class="cart-item-content">
+                        <img src="https://images.unsplash.com/photo-1690571100303-cb86f92b9b01?w=400" alt="Cartagena" class="cart-item-image">
+                        <div class="cart-item-info">
+                            <div class="cart-item-header">
+                                <h3 class="cart-item-title">Cartagena Mágica - Hotel Caribe</h3>
+                                <button class="btn-remove">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                        <line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="cart-item-dates">Mar 15-18, 2026</p>
+                            <div class="cart-item-footer">
+                                <div class="quantity-control">
+                                    <span class="quantity-label">Cantidad:</span>
+                                    <div class="quantity-buttons">
+                                        <button class="quantity-btn" onclick="updateQuantity(-1)">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <line x1="5" y1="12" x2="19" y2="12"/>
+                                            </svg>
+                                        </button>
+                                        <span class="quantity-value" id="quantity">1</span>
+                                        <button class="quantity-btn" onclick="updateQuantity(1)">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="cart-item-price-section">
+                                    <p class="cart-item-passengers">2 pasajeros</p>
+                                    <p class="cart-item-price" id="itemPrice">$2.500.000</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="info-box">
+                    <h3>Información importante</h3>
+                    <ul>
+                        <li>• Las tarifas incluyen impuestos y tasas aeroportuarias</li>
+                        <li>• Puedes cancelar sin cargo hasta 7 días antes de tu viaje</li>
+                        <li>• Los cambios están sujetos a disponibilidad y cargos adicionales</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="cart-summary">
+                <h2 class="summary-title">Resumen de compra</h2>
+                
+                <div class="summary-breakdown">
+                    <div class="summary-item">
+                        <span class="summary-label">Subtotal</span>
+                        <span class="summary-value" id="subtotal">$2.500.000</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Impuestos y tasas</span>
+                        <span class="summary-value" id="taxes">$250.000</span>
+                    </div>
+                </div>
+
+                <div class="summary-total">
+                    <span class="total-label">Total</span>
+                    <span class="total-value" id="total">$2.750.000</span>
+                </div>
+
+                <button class="btn-checkout">
+                    Continuar al pago
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </button>
+
+                <a href="../../../index.html" class="btn-continue">Seguir comprando</a>
+
+                <div class="coupon-section">
+                    <h3>¿Tienes un cupón?</h3>
+                    <div class="coupon-form">
+                        <input type="text" class="coupon-input" placeholder="Código de cupón">
+                        <button class="btn-apply">Aplicar</button>
+                    </div>
+                </div>
+
+                <div class="link-section">
+                    <a href="my-reservation.html">Ver cambios y reembolsos →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>BiopochitoExpress</h3>
+                    <p>Tu aliado para descubrir los mejores destinos de Colombia y el mundo.</p>
+                </div>
+                <div>
+                    <h3>Contáctanos</h3>
+                    <p>📞 +57 1 234 5678<br>📧 info@viajecolombia.com</p>
+                </div>
+                <div>
+                    <h3>Síguenos</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">🎵</a>
+                        <a href="#" class="social-icon">▶️</a>
+                        <a href="#" class="social-icon">📘</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ViajesColombia. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Términos y condiciones</a>
+                    <a href="#">Política de privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../public/js/script.js"></script>
+    <script>
+        let quantity = 1;
+        const basePrice = 2500000;
+
+        function updateQuantity(change) {
+            quantity = Math.max(1, quantity + change);
+            document.getElementById('quantity').textContent = quantity;
+            updatePrices();
+        }
+
+        function updatePrices() {
+            const subtotal = basePrice * quantity;
+            const taxes = subtotal * 0.1;
+            const total = subtotal + taxes;
+
+            document.getElementById('itemPrice').textContent = '$' + subtotal.toLocaleString('es-CO');
+            document.getElementById('subtotal').textContent = '$' + subtotal.toLocaleString('es-CO');
+            document.getElementById('taxes').textContent = '$' + taxes.toLocaleString('es-CO');
+            document.getElementById('total').textContent = '$' + total.toLocaleString('es-CO');
+        }
+    </script>
+</body>
+</html>

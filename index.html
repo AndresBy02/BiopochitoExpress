@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiopochitoExpress - Descubre tu próximo destino</title>
+    <link rel="stylesheet" href="src/public/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">BiopochitoExpress</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="nav-desktop">
+                <a href="index.html" class="nav-link active">Reservar</a>
+                <a href="src/views/client/results.html" class="nav-link">Ofertas y destinos</a>
+                <a href="src/views/client/my-reservation.html" class="nav-link">Tu reserva</a>
+                <a href="src/views/client/help.html" class="nav-link">Información y ayuda</a>
+            </nav>
+
+            <!-- Right Icons -->
+            <div class="header-actions">
+                <a href="src/views/client/cart.html" class="cart-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span class="cart-badge">0</span>
+                </a>
+                <button class="btn-account">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span>Cuenta</span>
+                </button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <nav class="nav-mobile" id="mobileMenu">
+            <a href="index.html" class="nav-mobile-link active">Reservar</a>
+            <a href="src/views/client/results.html" class="nav-mobile-link">Ofertas y destinos</a>
+            <a href="src/views/client/my-reservation.html" class="nav-mobile-link">Tu reserva</a>
+            <a href="src/views/client/help.html" class="nav-mobile-link">Información y ayuda</a>
+            <button class="btn-account mobile">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Mi Cuenta</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>Descubre tu próximo destino</h1>
+                <p>Vuelos, hoteles y paquetes increíbles al mejor precio</p>
+            </div>
+
+            <!-- Search Form -->
+            <div class="search-form-card">
+                <form class="search-form">
+                    <!-- Trip Type Toggle -->
+                    <div class="form-header">
+                        <div class="trip-toggle">
+                            <button type="button" class="toggle-btn active">Ida y vuelta</button>
+                            <button type="button" class="toggle-btn">Solo ida</button>
+                        </div>
+                        <label class="checkbox-label">
+                            <input type="checkbox">
+                            <span>Incluir hotel</span>
+                        </label>
+                    </div>
+
+                    <!-- Search Fields -->
+                    <div class="search-fields">
+                        <div class="form-field">
+                            <label>Origen</label>
+                            <div class="input-with-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                <input type="text" placeholder="¿Desde dónde viajas?">
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label>Destino</label>
+                            <div class="input-with-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                <input type="text" placeholder="¿A dónde quieres ir?">
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label>Ida y vuelta</label>
+                            <div class="input-with-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                <input type="text" placeholder="Selecciona fechas">
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label>Pasajeros</label>
+                            <div class="input-with-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                                <select>
+                                    <option>1 pasajero</option>
+                                    <option>2 pasajeros</option>
+                                    <option>3 pasajeros</option>
+                                    <option>4 pasajeros</option>
+                                    <option>5+ pasajeros</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search Button -->
+                    <button type="submit" class="btn-search">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        Buscar vuelos y ofertas
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Offers -->
+    <section class="offers">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2>Ofertas destacadas</h2>
+                    <p class="subtitle">Los mejores destinos al mejor precio</p>
+                </div>
+                <a href="src/views/client/results.html" class="btn-link">
+                    Ver todas
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Offers Grid -->
+            <div class="offers-grid">
+                <!-- Offer Card 1 -->
+                <div class="offer-card">
+                    <div class="offer-image">
+                        <img src="https://images.unsplash.com/photo-1690571100303-cb86f92b9b01?w=400" alt="Cartagena">
+                        <div class="offer-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Paquete
+                        </div>
+                    </div>
+                    <div class="offer-content">
+                        <h3>Cartagena Mágica</h3>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span>4.8</span>
+                            <span class="reviews">(245 reseñas)</span>
+                        </div>
+                        <div class="tags">
+                            <span class="tag">Vuelo</span>
+                            <span class="tag">Hotel 4★</span>
+                            <span class="tag">3 Noches</span>
+                        </div>
+                        <div class="offer-footer">
+                            <div class="price">
+                                <span class="price-label">Desde</span>
+                                <span class="price-value">$1.250.000</span>
+                                <span class="price-label">por persona</span>
+                            </div>
+                            <a href="src/views/client/offer-detail.html" class="btn-primary">Ver oferta</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer Card 2 -->
+                <div class="offer-card">
+                    <div class="offer-image">
+                        <img src="https://images.unsplash.com/photo-1770955114269-464cba027fba?w=400" alt="Medellín">
+                        <div class="offer-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Paquete
+                        </div>
+                    </div>
+                    <div class="offer-content">
+                        <h3>Ciudad de la Eterna Primavera</h3>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span>4.9</span>
+                            <span class="reviews">(312 reseñas)</span>
+                        </div>
+                        <div class="tags">
+                            <span class="tag">Vuelo</span>
+                            <span class="tag">Hotel 3★</span>
+                            <span class="tag">2 Noches</span>
+                        </div>
+                        <div class="offer-footer">
+                            <div class="price">
+                                <span class="price-label">Desde</span>
+                                <span class="price-value">$980.000</span>
+                                <span class="price-label">por persona</span>
+                            </div>
+                            <a href="src/views/client/offer-detail.html" class="btn-primary">Ver oferta</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer Card 3 -->
+                <div class="offer-card">
+                    <div class="offer-image">
+                        <img src="https://images.unsplash.com/photo-1642840067750-783acb36632b?w=400" alt="San Andrés">
+                        <div class="offer-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Paquete
+                        </div>
+                    </div>
+                    <div class="offer-content">
+                        <h3>Mar de los 7 Colores</h3>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span>4.7</span>
+                            <span class="reviews">(189 reseñas)</span>
+                        </div>
+                        <div class="tags">
+                            <span class="tag">Vuelo</span>
+                            <span class="tag">Hotel 5★</span>
+                            <span class="tag">4 Noches</span>
+                        </div>
+                        <div class="offer-footer">
+                            <div class="price">
+                                <span class="price-label">Desde</span>
+                                <span class="price-value">$1.580.000</span>
+                                <span class="price-label">por persona</span>
+                            </div>
+                            <a href="src/views/client/offer-detail.html" class="btn-primary">Ver oferta</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer Card 4 -->
+                <div class="offer-card">
+                    <div class="offer-image">
+                        <img src="https://images.unsplash.com/photo-1536334906170-ffa95819c4d4?w=400" alt="Bogotá">
+                        <div class="offer-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                            </svg>
+                            Solo vuelo
+                        </div>
+                    </div>
+                    <div class="offer-content">
+                        <h3>Capital Gastronómica</h3>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span>4.6</span>
+                            <span class="reviews">(156 reseñas)</span>
+                        </div>
+                        <div class="tags">
+                            <span class="tag">Vuelo ida y vuelta</span>
+                        </div>
+                        <div class="offer-footer">
+                            <div class="price">
+                                <span class="price-label">Desde</span>
+                                <span class="price-value">$450.000</span>
+                                <span class="price-label">por persona</span>
+                            </div>
+                            <a href="src/views/client/offer-detail.html" class="btn-primary">Ver oferta</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer Card 5 -->
+                <div class="offer-card">
+                    <div class="offer-image">
+                        <img src="https://images.unsplash.com/photo-1710478515670-9661d0b1eaea?w=400" alt="Santa Marta">
+                        <div class="offer-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Paquete
+                        </div>
+                    </div>
+                    <div class="offer-content">
+                        <h3>Tayrona y Playa</h3>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span>4.8</span>
+                            <span class="reviews">(278 reseñas)</span>
+                        </div>
+                        <div class="tags">
+                            <span class="tag">Vuelo</span>
+                            <span class="tag">Hotel 4★</span>
+                            <span class="tag">3 Noches</span>
+                        </div>
+                        <div class="offer-footer">
+                            <div class="price">
+                                <span class="price-label">Desde</span>
+                                <span class="price-value">$1.120.000</span>
+                                <span class="price-label">por persona</span>
+                            </div>
+                            <a href="src/views/client/offer-detail.html" class="btn-primary">Ver oferta</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer Card 6 -->
+                <div class="offer-card">
+                    <div class="offer-image">
+                        <img src="https://images.unsplash.com/photo-1493925410384-84f842e616fb?w=400" alt="Eje Cafetero">
+                        <div class="offer-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            Paquete
+                        </div>
+                    </div>
+                    <div class="offer-content">
+                        <h3>Ruta del Café</h3>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span>4.9</span>
+                            <span class="reviews">(201 reseñas)</span>
+                        </div>
+                        <div class="tags">
+                            <span class="tag">Vuelo</span>
+                            <span class="tag">Hotel 3★</span>
+                            <span class="tag">2 Noches</span>
+                            <span class="tag">Tour</span>
+                        </div>
+                        <div class="offer-footer">
+                            <div class="price">
+                                <span class="price-label">Desde</span>
+                                <span class="price-value">$890.000</span>
+                                <span class="price-label">por persona</span>
+                            </div>
+                            <a href="src/views/client/offer-detail.html" class="btn-primary">Ver oferta</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Complementary Services -->
+    <section class="services">
+        <div class="container">
+            <h2 class="text-center">Complementa tu experiencia</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
+                    <h3>Reserva de hoteles</h3>
+                    <p>Encuentra el alojamiento perfecto para tu viaje entre miles de opciones.</p>
+                    <a href="#" class="service-link">Explorar hoteles →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <h3>Tours y excursiones</h3>
+                    <p>Descubre experiencias únicas y tours guiados en tu destino favorito.</p>
+                    <a href="#" class="service-link">Ver tours →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                        </svg>
+                    </div>
+                    <h3>Asistencia en viajes</h3>
+                    <p>Viaja tranquilo con nuestra cobertura médica y asistencia 24/7.</p>
+                    <a href="#" class="service-link">Conoce más →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>BiopochitoExpress</h3>
+                    <p>Tu aliado para descubrir los mejores destinos de Colombia y el mundo.</p>
+                </div>
+                <div>
+                    <h3>Contáctanos</h3>
+                    <p>📞 +57 1 234 5678<br>📧 info@viajecolombia.com</p>
+                </div>
+                <div>
+                    <h3>Síguenos</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">🎵</a>
+                        <a href="#" class="social-icon">▶️</a>
+                        <a href="#" class="social-icon">📘</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ViajesColombia. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Términos y condiciones</a>
+                    <a href="#">Política de privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="src/public/js/script.js"></script>
+</body>
+</html>

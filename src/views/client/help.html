@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayuda - BiopochitoExpress</title>
+    <link rel="stylesheet" href="../../public/css/styles.css">
+    <style>
+        .help-hero {
+            background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .help-hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .help-hero p {
+            font-size: 1.125rem;
+            color: #dbeafe;
+            margin-bottom: 2rem;
+        }
+
+        .help-search {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .help-search svg {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        .help-search input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border-radius: 0.75rem;
+            border: none;
+            font-size: 1rem;
+            color: #111827;
+        }
+
+        .help-search input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+        }
+
+        .help-content {
+            padding: 3rem 0;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .contact-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #dbeafe;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .contact-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .contact-link:hover {
+            color: #1d4ed8;
+        }
+
+        .faq-section {
+            margin-bottom: 2rem;
+        }
+
+        .faq-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .faq-header {
+            background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 1rem 1.5rem;
+            color: white;
+        }
+
+        .faq-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-content {
+            padding: 1.5rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .faq-question {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: none;
+            border: none;
+            padding: 0.5rem 0;
+            text-align: left;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .faq-question:hover {
+            color: #2563eb;
+        }
+
+        .faq-question-text {
+            font-weight: 600;
+            color: #111827;
+            padding-right: 1rem;
+        }
+
+        .faq-icon {
+            flex-shrink: 0;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0.5rem 0 0 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: #374151;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: #374151;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .btn-cta-primary {
+            padding: 0.75rem 1.5rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-cta-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-cta-secondary {
+            padding: 0.75rem 1.5rem;
+            background-color: white;
+            color: #2563eb;
+            border: 1px solid #2563eb;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-cta-secondary:hover {
+            background-color: #eff6ff;
+        }
+
+        @media (min-width: 640px) {
+            .help-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .contact-cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="../../../index.html" class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">BiopochitoExpress</span>
+            </a>
+
+            <nav class="nav-desktop">
+                <a href="../../../index.html" class="nav-link">Reservar</a>
+                <a href="results.html" class="nav-link">Ofertas y destinos</a>
+                <a href="my-reservation.html" class="nav-link">Tu reserva</a>
+                <a href="help.html" class="nav-link active">Información y ayuda</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="cart.html" class="cart-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span class="cart-badge">0</span>
+                </a>
+                <button class="btn-account">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span>Cuenta</span>
+                </button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <nav class="nav-mobile" id="mobileMenu">
+            <a href="../../../index.html" class="nav-mobile-link">Reservar</a>
+            <a href="results.html" class="nav-mobile-link">Ofertas y destinos</a>
+            <a href="my-reservation.html" class="nav-mobile-link">Tu reserva</a>
+            <a href="help.html" class="nav-mobile-link active">Información y ayuda</a>
+            <button class="btn-account mobile">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Mi Cuenta</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="help-hero">
+        <h1>¿Cómo podemos ayudarte?</h1>
+        <p>Encuentra respuestas rápidas a tus preguntas</p>
+        <div class="help-search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="text" placeholder="Busca tu pregunta...">
+        </div>
+    </div>
+
+    <!-- Help Content -->
+    <div class="container help-content">
+        <!-- Contact Cards -->
+        <div class="contact-cards">
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </div>
+                <h3>Chat en vivo</h3>
+                <p>Habla con nuestro equipo de soporte en tiempo real</p>
+                <a href="#" class="contact-link">Iniciar chat →</a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                </div>
+                <h3>Llámanos</h3>
+                <p>Atención telefónica 24/7 para emergencias</p>
+                <a href="tel:+5712345678" class="contact-link">+57 1 234 5678 →</a>
+            </div>
+
+            <div class="contact-card">
+                <div class="contact-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                </div>
+                <h3>Escríbenos</h3>
+                <p>Te respondemos en menos de 24 horas</p>
+                <a href="mailto:info@viajecolombia.com" class="contact-link">info@viajecolombia.com →</a>
+            </div>
+        </div>
+
+        <!-- FAQ Sections -->
+        <div class="faq-section">
+            <div class="faq-card">
+                <div class="faq-header">
+                    <h2>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        Tipos de tarifas
+                    </h2>
+                </div>
+                <div class="faq-content">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">¿Qué diferencia hay entre las tarifas básica, estándar y premium?</span>
+                            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            La tarifa básica incluye solo el vuelo con equipaje de mano. La estándar añade equipaje de bodega y cambios con cargo. La premium incluye equipaje adicional, cambios gratuitos y reembolso completo.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">¿Puedo cambiar de tarifa después de comprar?</span>
+                            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Sí, puedes hacer un upgrade a una tarifa superior pagando la diferencia de precio. Los cambios están sujetos a disponibilidad.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <div class="faq-card">
+                <div class="faq-header">
+                    <h2>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        Requisitos para viajar
+                    </h2>
+                </div>
+                <div class="faq-content">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">¿Qué documentos necesito para viajar dentro de Colombia?</span>
+                            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Para vuelos nacionales necesitas tu cédula de ciudadanía vigente o tarjeta de identidad para menores de edad. Es importante que el documento esté en buen estado.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">¿Necesito vacunas para viajar a ciertas regiones?</span>
+                            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Algunos destinos como el Amazonas o zonas selváticas requieren la vacuna contra la fiebre amarilla. Te recomendamos consultar con tu médico antes de viajar.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">¿Los menores de edad pueden viajar solos?</span>
+                            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Sí, menores entre 5 y 17 años pueden viajar solos con el servicio de menores acompañados. Se requiere autorización notarial de los padres o tutores legales.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <div class="faq-card">
+                <div class="faq-header">
+                    <h2>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        Equipaje
+                    </h2>
+                </div>
+                <div class="faq-content">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">¿Cuánto equipaje puedo llevar?</span>
+                            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            El equipaje de mano permitido es de hasta 10kg en tarifa básica. Las tarifas estándar y premium incluyen equipaje de bodega de 23kg. Puedes comprar equipaje adicional.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">¿Qué artículos están prohibidos en el equipaje?</span>
+                            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            No se permiten líquidos mayores a 100ml en cabina, objetos punzocortantes, armas, explosivos o sustancias inflamables. Consulta la lista completa en nuestra web.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span class="faq-question-text">¿Qué pasa si mi equipaje se pierde?</span>
+                            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            Debes reportarlo inmediatamente en el aeropuerto. Hacemos seguimiento y te lo entregamos a domicilio. Si no aparece en 21 días, procede la compensación económica.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>¿No encontraste lo que buscabas?</h2>
+            <p>Nuestro equipo de atención al cliente está listo para ayudarte con cualquier duda o inquietud</p>
+            <div class="cta-buttons">
+                <button class="btn-cta-primary">Contactar soporte</button>
+                <button class="btn-cta-secondary">Ver tutoriales en video</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>BiopochitoExpress</h3>
+                    <p>Tu aliado para descubrir los mejores destinos de Colombia y el mundo.</p>
+                </div>
+                <div>
+                    <h3>Contáctanos</h3>
+                    <p>📞 +57 1 234 5678<br>📧 info@viajecolombia.com</p>
+                </div>
+                <div>
+                    <h3>Síguenos</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">🎵</a>
+                        <a href="#" class="social-icon">▶️</a>
+                        <a href="#" class="social-icon">📘</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ViajesColombia. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Términos y condiciones</a>
+                    <a href="#">Política de privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../public/js/script.js"></script>
+    <script>
+        function toggleFaq(button) {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('.faq-icon');
+            const isActive = answer.classList.contains('active');
+            
+            // Close all other answers
+            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('active'));
+            
+            // Toggle current answer
+            if (!isActive) {
+                answer.classList.add('active');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                answer.classList.remove('active');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+</body>
+</html>

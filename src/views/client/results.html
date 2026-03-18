@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de búsqueda - BiopochitoExpress</title>
+    <link rel="stylesheet" href="../../public/css/styles.css">
+    <style>
+        .results-header {
+            background-color: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem 0;
+        }
+
+        .results-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .results-title h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .results-count {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+
+        .btn-filters {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background: white;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .btn-filters:hover {
+            background-color: #f9fafb;
+        }
+
+        .results-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .filters-sidebar {
+            display: none;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            position: sticky;
+            top: 5rem;
+        }
+
+        .filters-sidebar.active {
+            display: block;
+        }
+
+        .filters-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group h4 {
+            font-weight: 500;
+            color: #111827;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .filter-option input {
+            width: 1rem;
+            height: 1rem;
+            accent-color: #2563eb;
+        }
+
+        .filter-option label {
+            font-size: 0.875rem;
+            color: #374151;
+            cursor: pointer;
+        }
+
+        .btn-clear-filters {
+            width: 100%;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #2563eb;
+            border: 1px solid #2563eb;
+            border-radius: 0.5rem;
+            background: white;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-clear-filters:hover {
+            background-color: #eff6ff;
+        }
+
+        .results-list {
+            flex: 1;
+        }
+
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background-color: #eff6ff;
+            color: #2563eb;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+        }
+
+        .filter-chip button {
+            background: none;
+            border: none;
+            color: #2563eb;
+            cursor: pointer;
+            font-size: 1.25rem;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .result-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            cursor: pointer;
+            transition: box-shadow 0.3s;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-card-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-image {
+            width: 100%;
+            height: 192px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .result-card:hover .result-image img {
+            transform: scale(1.1);
+        }
+
+        .result-info {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-title h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.25rem;
+        }
+
+        .result-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .result-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            background-color: #fef3c7;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+
+        .result-rating .star {
+            color: #eab308;
+        }
+
+        .result-rating .score {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .result-rating .count {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .result-dates {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin: 1rem 0;
+        }
+
+        .result-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 1rem;
+        }
+
+        .result-price-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-price-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .result-price-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .btn-view-details {
+            padding: 0.75rem 1.5rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-view-details:hover {
+            background-color: #1d4ed8;
+        }
+
+        @media (min-width: 640px) {
+            .results-summary {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .result-card-content {
+                flex-direction: row;
+            }
+
+            .result-image {
+                width: 320px;
+                height: auto;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .results-content {
+                flex-direction: row;
+            }
+
+            .filters-sidebar {
+                display: block;
+                width: 256px;
+                flex-shrink: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="../../../index.html" class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">BiopochitoExpress</span>
+            </a>
+
+            <nav class="nav-desktop">
+                <a href="../../../index.html" class="nav-link">Reservar</a>
+                <a href="results.html" class="nav-link active">Ofertas y destinos</a>
+                <a href="my-reservation.html" class="nav-link">Tu reserva</a>
+                <a href="help.html" class="nav-link">Información y ayuda</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="cart.html" class="cart-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span class="cart-badge">0</span>
+                </a>
+                <button class="btn-account">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span>Cuenta</span>
+                </button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <nav class="nav-mobile" id="mobileMenu">
+            <a href="../../../index.html" class="nav-mobile-link">Reservar</a>
+            <a href="results.html" class="nav-mobile-link active">Ofertas y destinos</a>
+            <a href="my-reservation.html" class="nav-mobile-link">Tu reserva</a>
+            <a href="help.html" class="nav-mobile-link">Información y ayuda</a>
+            <button class="btn-account mobile">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Mi Cuenta</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Results Header -->
+    <div class="results-header">
+        <div class="container">
+            <div class="results-summary">
+                <div class="results-title">
+                    <h1>Resultados de búsqueda</h1>
+                    <p class="results-count">Se encontraron 6 ofertas disponibles</p>
+                </div>
+                <button class="btn-filters" onclick="toggleFilters()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/>
+                        <line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/>
+                        <line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/>
+                        <line x1="17" y1="16" x2="23" y2="16"/>
+                    </svg>
+                    Filtros
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="results-content">
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar" id="filtersSidebar">
+                <h3 class="filters-header">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                    </svg>
+                    Filtros
+                </h3>
+
+                <!-- Type Filter -->
+                <div class="filter-group">
+                    <h4>Tipo de oferta</h4>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="radio" id="all" name="type" checked>
+                            <label for="all">Todas</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" id="packages" name="type">
+                            <label for="packages">Paquetes</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="radio" id="flights" name="type">
+                            <label for="flights">Solo vuelos</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Range -->
+                <div class="filter-group">
+                    <h4>Rango de precio</h4>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="price1">
+                            <label for="price1">Hasta $500.000</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="price2">
+                            <label for="price2">$500.000 - $1.000.000</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="price3">
+                            <label for="price3">$1.000.000 - $1.500.000</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="price4">
+                            <label for="price4">Más de $1.500.000</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rating -->
+                <div class="filter-group">
+                    <h4>Calificación</h4>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="rating45">
+                            <label for="rating45">★ 4.5+ estrellas</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="rating40">
+                            <label for="rating40">★ 4.0+ estrellas</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="rating35">
+                            <label for="rating35">★ 3.5+ estrellas</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="rating30">
+                            <label for="rating30">★ 3.0+ estrellas</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-clear-filters">Limpiar filtros</button>
+            </aside>
+
+            <!-- Results List -->
+            <div class="results-list">
+                <!-- Result Card 1 -->
+                <div class="result-card" onclick="window.location.href='offer-detail.html'">
+                    <div class="result-card-content">
+                        <div class="result-image">
+                            <img src="https://images.unsplash.com/photo-1690571100303-cb86f92b9b01?w=600" alt="Cartagena">
+                            <div class="offer-badge">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                Paquete
+                            </div>
+                        </div>
+                        <div class="result-info">
+                            <div class="result-header">
+                                <div class="result-title">
+                                    <h3>Cartagena Mágica - Hotel Caribe</h3>
+                                    <div class="result-location">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                                        </svg>
+                                        Cartagena
+                                    </div>
+                                </div>
+                                <div class="result-rating">
+                                    <span class="star">★</span>
+                                    <span class="score">4.8</span>
+                                    <span class="count">(245)</span>
+                                </div>
+                            </div>
+                            <p class="result-dates">Mar 15 - Mar 18, 2026</p>
+                            <div class="tags">
+                                <span class="tag">Vuelo directo</span>
+                                <span class="tag">Hotel 4★</span>
+                                <span class="tag">3 Noches</span>
+                                <span class="tag">Desayuno</span>
+                            </div>
+                            <div class="result-footer">
+                                <div class="result-price-section">
+                                    <span class="result-price-label">Desde</span>
+                                    <span class="result-price-value">$1.250.000</span>
+                                    <span class="result-price-label">por persona</span>
+                                </div>
+                                <a href="offer-detail.html" class="btn-view-details" onclick="event.stopPropagation()">Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result Card 2 -->
+                <div class="result-card" onclick="window.location.href='offer-detail.html'">
+                    <div class="result-card-content">
+                        <div class="result-image">
+                            <img src="https://images.unsplash.com/photo-1770955114269-464cba027fba?w=600" alt="Medellín">
+                            <div class="offer-badge">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                Paquete
+                            </div>
+                        </div>
+                        <div class="result-info">
+                            <div class="result-header">
+                                <div class="result-title">
+                                    <h3>Medellín Moderna - Hotel Poblado</h3>
+                                    <div class="result-location">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                                        </svg>
+                                        Medellín
+                                    </div>
+                                </div>
+                                <div class="result-rating">
+                                    <span class="star">★</span>
+                                    <span class="score">4.9</span>
+                                    <span class="count">(312)</span>
+                                </div>
+                            </div>
+                            <p class="result-dates">Mar 20 - Mar 22, 2026</p>
+                            <div class="tags">
+                                <span class="tag">Vuelo directo</span>
+                                <span class="tag">Hotel 3★</span>
+                                <span class="tag">2 Noches</span>
+                                <span class="tag">Desayuno</span>
+                            </div>
+                            <div class="result-footer">
+                                <div class="result-price-section">
+                                    <span class="result-price-label">Desde</span>
+                                    <span class="result-price-value">$980.000</span>
+                                    <span class="result-price-label">por persona</span>
+                                </div>
+                                <a href="offer-detail.html" class="btn-view-details" onclick="event.stopPropagation()">Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result Card 3 -->
+                <div class="result-card" onclick="window.location.href='offer-detail.html'">
+                    <div class="result-card-content">
+                        <div class="result-image">
+                            <img src="https://images.unsplash.com/photo-1642840067750-783acb36632b?w=600" alt="San Andrés">
+                            <div class="offer-badge">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                Paquete
+                            </div>
+                        </div>
+                        <div class="result-info">
+                            <div class="result-header">
+                                <div class="result-title">
+                                    <h3>San Andrés Paradise - Resort Todo Incluido</h3>
+                                    <div class="result-location">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                                        </svg>
+                                        San Andrés
+                                    </div>
+                                </div>
+                                <div class="result-rating">
+                                    <span class="star">★</span>
+                                    <span class="score">4.7</span>
+                                    <span class="count">(189)</span>
+                                </div>
+                            </div>
+                            <p class="result-dates">Mar 25 - Mar 29, 2026</p>
+                            <div class="tags">
+                                <span class="tag">Vuelo directo</span>
+                                <span class="tag">Resort 5★</span>
+                                <span class="tag">4 Noches</span>
+                                <span class="tag">Todo incluido</span>
+                            </div>
+                            <div class="result-footer">
+                                <div class="result-price-section">
+                                    <span class="result-price-label">Desde</span>
+                                    <span class="result-price-value">$1.580.000</span>
+                                    <span class="result-price-label">por persona</span>
+                                </div>
+                                <a href="offer-detail.html" class="btn-view-details" onclick="event.stopPropagation()">Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>BiopochitoExpress</h3>
+                    <p>Tu aliado para descubrir los mejores destinos de Colombia y el mundo.</p>
+                </div>
+                <div>
+                    <h3>Contáctanos</h3>
+                    <p>📞 +57 1 234 5678<br>📧 info@viajecolombia.com</p>
+                </div>
+                <div>
+                    <h3>Síguenos</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">🎵</a>
+                        <a href="#" class="social-icon">▶️</a>
+                        <a href="#" class="social-icon">📘</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ViajesColombia. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Términos y condiciones</a>
+                    <a href="#">Política de privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../public/js/script.js"></script>
+    <script>
+        function toggleFilters() {
+            const sidebar = document.getElementById('filtersSidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

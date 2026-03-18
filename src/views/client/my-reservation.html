@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Reserva - BiopochitoExpress</title>
+    <link rel="stylesheet" href="../../public/css/styles.css">
+    <style>
+        .reservation-container {
+            padding: 2rem 0;
+            min-height: calc(100vh - 400px);
+        }
+
+        .reservation-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 2rem;
+        }
+
+        .reservation-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .reservation-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reservation-image {
+            width: 100%;
+            height: 256px;
+            object-fit: cover;
+        }
+
+        .reservation-info {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .reservation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: #d1fae5;
+            color: #065f46;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            margin-bottom: 0.5rem;
+        }
+
+        .reservation-title-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .reservation-code {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .code-value {
+            font-family: 'Courier New', monospace;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .reservation-details {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .detail-icon {
+            width: 20px;
+            height: 20px;
+            color: #2563eb;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+
+        .detail-content p {
+            margin: 0;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .detail-value {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .reservation-actions {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .actions-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-action-primary {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+        }
+
+        .btn-action-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-action-secondary {
+            background-color: white;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-action-secondary:hover {
+            background-color: #f9fafb;
+        }
+
+        .btn-action-danger {
+            background-color: white;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .btn-action-danger:hover {
+            background-color: #fef2f2;
+        }
+
+        .reservation-price {
+            background-color: #f9fafb;
+            padding: 1.5rem;
+            border-left: none;
+        }
+
+        .price-summary-title {
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .price-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+        }
+
+        .price-label {
+            color: #6b7280;
+        }
+
+        .price-value {
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .price-total {
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .payment-info {
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .policy-section {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .policy-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1.5rem;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .policy-item h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.75rem;
+        }
+
+        .policy-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .policy-item li {
+            font-size: 0.875rem;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .flight-status-box {
+            background-color: #eff6ff;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .flight-status-box h4 {
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .flight-status-box p {
+            font-size: 0.875rem;
+            color: #1e40af;
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-flight-status {
+            padding: 0.5rem 1rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-flight-status:hover {
+            background-color: #1d4ed8;
+        }
+
+        @media (min-width: 640px) {
+            .reservation-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .policy-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .reservation-content {
+                flex-direction: row;
+            }
+
+            .reservation-image {
+                width: 320px;
+                height: auto;
+            }
+
+            .reservation-details {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .reservation-price {
+                width: 256px;
+                border-left: 1px solid #e5e7eb;
+                border-top: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="../../../index.html" class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">BiopochitoExpress</span>
+            </a>
+
+            <nav class="nav-desktop">
+                <a href="../../../index.html" class="nav-link">Reservar</a>
+                <a href="results.html" class="nav-link">Ofertas y destinos</a>
+                <a href="my-reservation.html" class="nav-link active">Tu reserva</a>
+                <a href="help.html" class="nav-link">Información y ayuda</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="cart.html" class="cart-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span class="cart-badge">0</span>
+                </a>
+                <button class="btn-account">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span>Cuenta</span>
+                </button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <nav class="nav-mobile" id="mobileMenu">
+            <a href="../../../index.html" class="nav-mobile-link">Reservar</a>
+            <a href="results.html" class="nav-mobile-link">Ofertas y destinos</a>
+            <a href="my-reservation.html" class="nav-mobile-link active">Tu reserva</a>
+            <a href="help.html" class="nav-mobile-link">Información y ayuda</a>
+            <button class="btn-account mobile">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Mi Cuenta</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Reservation Content -->
+    <div class="container reservation-container">
+        <h1 class="reservation-title">Tus reservas</h1>
+
+        <!-- Reservation Card -->
+        <div class="reservation-card">
+            <div class="reservation-content">
+                <!-- Image -->
+                <img src="https://images.unsplash.com/photo-1690571100303-cb86f92b9b01?w=600" alt="Cartagena" class="reservation-image">
+
+                <!-- Info -->
+                <div class="reservation-info">
+                    <div class="reservation-header">
+                        <div>
+                            <span class="status-badge">Confirmada</span>
+                            <h2 class="reservation-title-text">Cartagena Mágica - Hotel Caribe</h2>
+                            <p class="reservation-code">
+                                Código de reserva: <span class="code-value">RES-2026-001234</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="reservation-details">
+                        <div class="detail-item">
+                            <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            <div class="detail-content">
+                                <p class="detail-label">Destino</p>
+                                <p class="detail-value">Cartagena</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            <div class="detail-content">
+                                <p class="detail-label">Fechas</p>
+                                <p class="detail-value">Mar 15 - Mar 18, 2026</p>
+                            </div>
+                        </div>
+
+                        <div class="detail-item">
+                            <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <div class="detail-content">
+                                <p class="detail-label">Fecha de reserva</p>
+                                <p class="detail-value">Feb 28, 2026</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reservation-actions">
+                        <div class="actions-buttons">
+                            <button class="btn-action btn-action-primary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+                                    <polyline points="10 9 9 9 8 9"/>
+                                </svg>
+                                Ver detalles
+                            </button>
+                            <button class="btn-action btn-action-secondary">Descargar voucher</button>
+                            <button class="btn-action btn-action-secondary">Modificar reserva</button>
+                            <button class="btn-action btn-action-danger">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Summary -->
+                <div class="reservation-price">
+                    <h3 class="price-summary-title">Resumen de pago</h3>
+                    <div class="price-items">
+                        <div class="price-item">
+                            <span class="price-label">Pasajeros</span>
+                            <span class="price-value">2</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">Total pagado</span>
+                            <span class="price-value price-total">$2.750.000</span>
+                        </div>
+                    </div>
+                    <div class="payment-info">
+                        <div class="payment-method">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                            </svg>
+                            <span>Pagado con Visa ****1234</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Policy Section -->
+        <div class="policy-section">
+            <h2 class="policy-title">Gestiona tu reserva</h2>
+            
+            <div class="policy-grid">
+                <div class="policy-item">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                        Cambios y modificaciones
+                    </h3>
+                    <ul>
+                        <li>• Puedes cambiar tus fechas hasta 48 horas antes del viaje</li>
+                        <li>• Los cambios están sujetos a disponibilidad y diferencia tarifaria</li>
+                        <li>• Modificaciones de nombre tienen un cargo adicional de $50.000</li>
+                        <li>• Cambios de destino no están permitidos</li>
+                    </ul>
+                </div>
+
+                <div class="policy-item">
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                        </svg>
+                        Política de reembolsos
+                    </h3>
+                    <ul>
+                        <li>• Cancelación gratuita hasta 7 días antes del viaje</li>
+                        <li>• Entre 7 y 3 días: cargo del 30% del total</li>
+                        <li>• Menos de 3 días: cargo del 50% del total</li>
+                        <li>• Los reembolsos se procesan en 7-10 días hábiles</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flight-status-box">
+                <h4>Estado de vuelos en tiempo real</h4>
+                <p>Mantente informado sobre el estado de tu vuelo</p>
+                <button class="btn-flight-status">Ver estado de vuelo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>BiopochitoExpress</h3>
+                    <p>Tu aliado para descubrir los mejores destinos de Colombia y el mundo.</p>
+                </div>
+                <div>
+                    <h3>Contáctanos</h3>
+                    <p>📞 +57 1 234 5678<br>📧 info@viajecolombia.com</p>
+                </div>
+                <div>
+                    <h3>Síguenos</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">🎵</a>
+                        <a href="#" class="social-icon">▶️</a>
+                        <a href="#" class="social-icon">📘</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ViajesColombia. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Términos y condiciones</a>
+                    <a href="#">Política de privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../public/js/script.js"></script>
+</body>
+</html>

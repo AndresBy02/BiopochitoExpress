@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Oferta - BiopochitoExpress</title>
+    <link rel="stylesheet" href="../../public/css/styles.css">
+    <style>
+        .gallery {
+            position: relative;
+            background-color: #000;
+            height: 400px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .gallery-nav:hover {
+            background-color: white;
+        }
+
+        .gallery-prev {
+            left: 1rem;
+        }
+
+        .gallery-next {
+            right: 1rem;
+        }
+
+        .gallery-dots {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .gallery-dot {
+            width: 8px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .gallery-dot.active {
+            width: 32px;
+            background-color: white;
+        }
+
+        .detail-content {
+            padding: 2rem 0;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .detail-main {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .detail-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .detail-title h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+        }
+
+        .detail-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            background-color: #fef3c7;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+        }
+
+        .detail-rating .star {
+            color: #eab308;
+            font-size: 1.25rem;
+        }
+
+        .detail-rating .score {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .detail-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #374151;
+        }
+
+        .info-item svg {
+            color: #2563eb;
+        }
+
+        .info-item-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .info-item-value {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .includes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .include-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .include-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #eff6ff;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            flex-shrink: 0;
+        }
+
+        .include-text {
+            font-size: 0.875rem;
+            color: #374151;
+        }
+
+        .tariff-option {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 1rem;
+        }
+
+        .tariff-option:hover {
+            border-color: #93c5fd;
+        }
+
+        .tariff-option.selected {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+
+        .tariff-option input {
+            margin-top: 0.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: #2563eb;
+        }
+
+        .tariff-content {
+            flex: 1;
+        }
+
+        .tariff-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .tariff-name {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .tariff-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .tariff-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tariff-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+
+        .tariff-features svg {
+            color: #10b981;
+            flex-shrink: 0;
+        }
+
+        .complement-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .complement-item:hover {
+            border-color: #93c5fd;
+        }
+
+        .complement-item input {
+            margin-top: 0.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: #2563eb;
+        }
+
+        .complement-content {
+            flex: 1;
+        }
+
+        .complement-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.25rem;
+        }
+
+        .complement-name {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .complement-price {
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .complement-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+
+        .complement-duration {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .detail-sidebar {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            position: sticky;
+            top: 5rem;
+        }
+
+        .sidebar-price-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-price-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-price-value {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+        }
+
+        .breakdown-label {
+            color: #6b7280;
+        }
+
+        .breakdown-value {
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .sidebar-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .total-label {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .total-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .btn-reserve {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-reserve:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-save {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background-color: white;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-save:hover {
+            background-color: #f9fafb;
+        }
+
+        .sidebar-benefits {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-item svg {
+            color: #10b981;
+        }
+
+        @media (min-width: 640px) {
+            .includes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .detail-info-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .gallery {
+                height: 500px;
+            }
+
+            .detail-grid {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="../../../index.html" class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">BiopochitoExpress</span>
+            </a>
+
+            <nav class="nav-desktop">
+                <a href="../../../index.html" class="nav-link">Reservar</a>
+                <a href="results.html" class="nav-link">Ofertas y destinos</a>
+                <a href="my-reservation.html" class="nav-link">Tu reserva</a>
+                <a href="help.html" class="nav-link">Información y ayuda</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="cart.html" class="cart-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span class="cart-badge">0</span>
+                </a>
+                <button class="btn-account">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span>Cuenta</span>
+                </button>
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <nav class="nav-mobile" id="mobileMenu">
+            <a href="../../../index.html" class="nav-mobile-link">Reservar</a>
+            <a href="results.html" class="nav-mobile-link">Ofertas y destinos</a>
+            <a href="my-reservation.html" class="nav-mobile-link">Tu reserva</a>
+            <a href="help.html" class="nav-mobile-link">Información y ayuda</a>
+            <button class="btn-account mobile">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Mi Cuenta</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Gallery -->
+    <div class="gallery">
+        <img id="galleryImage" src="https://images.unsplash.com/photo-1690571100303-cb86f92b9b01?w=1200" alt="Cartagena">
+        <button class="gallery-nav gallery-prev" onclick="changeImage(-1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+        </button>
+        <button class="gallery-nav gallery-next" onclick="changeImage(1)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"/>
+            </svg>
+        </button>
+        <div class="gallery-dots">
+            <button class="gallery-dot active" onclick="setImage(0)"></button>
+            <button class="gallery-dot" onclick="setImage(1)"></button>
+            <button class="gallery-dot" onclick="setImage(2)"></button>
+        </div>
+    </div>
+
+    <!-- Detail Content -->
+    <div class="container detail-content">
+        <div class="detail-grid">
+            <!-- Main Content -->
+            <div class="detail-main">
+                <!-- Header -->
+                <div class="detail-card">
+                    <div class="detail-header">
+                        <div class="detail-title">
+                            <h1>Cartagena Mágica - Hotel Caribe</h1>
+                            <div class="detail-location">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                <span>Cartagena de Indias, Colombia</span>
+                            </div>
+                        </div>
+                        <div class="detail-rating">
+                            <span class="star">★</span>
+                            <span class="score">4.8</span>
+                            <span class="count">(245)</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-info-grid">
+                        <div class="info-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            <div>
+                                <p class="info-item-label">Fechas</p>
+                                <p class="info-item-value">Mar 15-18</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                            <div>
+                                <p class="info-item-label">Pasajeros</p>
+                                <p class="info-item-value">2 adultos</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                            </svg>
+                            <div>
+                                <p class="info-item-label">Noches</p>
+                                <p class="info-item-value">3 noches</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Includes -->
+                <div class="detail-card">
+                    <h2 style="font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 1rem;">Este paquete incluye</h2>
+                    <div class="includes-grid">
+                        <div class="include-item">
+                            <div class="include-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                                </svg>
+                            </div>
+                            <span class="include-text">Vuelo directo ida y vuelta</span>
+                        </div>
+                        <div class="include-item">
+                            <div class="include-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                                </svg>
+                            </div>
+                            <span class="include-text">Hotel 4 estrellas</span>
+                        </div>
+                        <div class="include-item">
+                            <div class="include-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <span class="include-text">Desayuno buffet incluido</span>
+                        </div>
+                        <div class="include-item">
+                            <div class="include-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <span class="include-text">Impuestos y tasas incluidos</span>
+                        </div>
+                        <div class="include-item">
+                            <div class="include-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <span class="include-text">Equipaje de mano y bodega</span>
+                        </div>
+                        <div class="include-item">
+                            <div class="include-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <span class="include-text">Asistencia 24/7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tariff Selection -->
+                <div class="detail-card">
+                    <h2 style="font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 1rem;">Selecciona tu tarifa</h2>
+                    
+                    <div class="tariff-option">
+                        <input type="radio" name="tariff" id="basic">
+                        <div class="tariff-content">
+                            <div class="tariff-header">
+                                <label for="basic" class="tariff-name">Tarifa Básica</label>
+                                <span class="tariff-price">$1.250.000</span>
+                            </div>
+                            <ul class="tariff-features">
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Equipaje de mano 10kg
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Sin cambios
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Sin reembolso
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tariff-option selected">
+                        <input type="radio" name="tariff" id="standard" checked>
+                        <div class="tariff-content">
+                            <div class="tariff-header">
+                                <label for="standard" class="tariff-name">Tarifa Estándar</label>
+                                <span class="tariff-price">$1.450.000</span>
+                            </div>
+                            <ul class="tariff-features">
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Equipaje 23kg
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Cambios con cargo
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Reembolso con cargo
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Selección de asiento
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tariff-option">
+                        <input type="radio" name="tariff" id="premium">
+                        <div class="tariff-content">
+                            <div class="tariff-header">
+                                <label for="premium" class="tariff-name">Tarifa Premium</label>
+                                <span class="tariff-price">$1.850.000</span>
+                            </div>
+                            <ul class="tariff-features">
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Equipaje 2x23kg
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Cambios gratis
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Reembolso completo
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Asiento preferencial
+                                </li>
+                                <li>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Prioridad abordaje
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complements -->
+                <div class="detail-card">
+                    <h2 style="font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 1rem;">Complementa tu experiencia</h2>
+                    
+                    <div class="complement-item">
+                        <input type="checkbox" id="tour">
+                        <div class="complement-content">
+                            <div class="complement-header">
+                                <label for="tour" class="complement-name">Tour Ciudad Amurallada</label>
+                                <span class="complement-price">$120.000</span>
+                            </div>
+                            <p class="complement-description">Recorrido guiado por el centro histórico de Cartagena</p>
+                            <p class="complement-duration">4 horas</p>
+                        </div>
+                    </div>
+
+                    <div class="complement-item">
+                        <input type="checkbox" id="transfer">
+                        <div class="complement-content">
+                            <div class="complement-header">
+                                <label for="transfer" class="complement-name">Traslado Aeropuerto-Hotel</label>
+                                <span class="complement-price">$80.000</span>
+                            </div>
+                            <p class="complement-description">Servicio privado desde/hasta el aeropuerto</p>
+                            <p class="complement-duration">Ida y vuelta</p>
+                        </div>
+                    </div>
+
+                    <div class="complement-item">
+                        <input type="checkbox" id="insurance">
+                        <div class="complement-content">
+                            <div class="complement-header">
+                                <label for="insurance" class="complement-name">Seguro de Viaje</label>
+                                <span class="complement-price">$95.000</span>
+                            </div>
+                            <p class="complement-description">Cobertura médica y asistencia 24/7</p>
+                            <p class="complement-duration">Todo el viaje</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="detail-sidebar">
+                <div class="sidebar-price-section">
+                    <p class="sidebar-price-label">Precio desde</p>
+                    <p class="sidebar-price-value">$1.250.000</p>
+                    <p class="sidebar-price-label">por persona</p>
+                </div>
+
+                <div class="sidebar-breakdown">
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Tarifa base (2 personas)</span>
+                        <span class="breakdown-value">$2.500.000</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span class="breakdown-label">Impuestos y tasas</span>
+                        <span class="breakdown-value">$250.000</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-total">
+                    <span class="total-label">Total</span>
+                    <span class="total-value">$2.750.000</span>
+                </div>
+
+                <a href="cart.html" class="btn-reserve">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    Reservar ahora
+                </a>
+
+                <button class="btn-save">Guardar para después</button>
+
+                <div class="sidebar-benefits">
+                    <div class="benefit-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        <span>Cancelación gratis hasta 7 días antes</span>
+                    </div>
+                    <div class="benefit-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        <span>Pago seguro y protegido</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>BiopochitoExpress</h3>
+                    <p>Tu aliado para descubrir los mejores destinos de Colombia y el mundo.</p>
+                </div>
+                <div>
+                    <h3>Contáctanos</h3>
+                    <p>📞 +57 1 234 5678<br>📧 info@viajecolombia.com</p>
+                </div>
+                <div>
+                    <h3>Síguenos</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">🎵</a>
+                        <a href="#" class="social-icon">▶️</a>
+                        <a href="#" class="social-icon">📘</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ViajesColombia. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Términos y condiciones</a>
+                    <a href="#">Política de privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../public/js/script.js"></script>
+    <script>
+        const images = [
+            'https://images.unsplash.com/photo-1690571100303-cb86f92b9b01?w=1200',
+            'https://images.unsplash.com/photo-1642840067750-783acb36632b?w=1200',
+            'https://images.unsplash.com/photo-1710478515670-9661d0b1eaea?w=1200'
+        ];
+        let currentIndex = 0;
+
+        function changeImage(direction) {
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            updateGallery();
+        }
+
+        function setImage(index) {
+            currentIndex = index;
+            updateGallery();
+        }
+
+        function updateGallery() {
+            document.getElementById('galleryImage').src = images[currentIndex];
+            document.querySelectorAll('.gallery-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        // Tariff selection
+        document.querySelectorAll('.tariff-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.tariff-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input').checked = true;
+            });
+        });
+    </script>
+</body>
+</html>
