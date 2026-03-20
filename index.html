@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BiopochitoExpress - Descubre tu próximo destino</title>
+    <title>BiopochitoExpress - descubre tu próximo destino</title>
     <link rel="stylesheet" href="src/public/css/styles.css">
 </head>
 <body>
@@ -78,10 +78,12 @@
             <div class="search-form-card">
                 <form class="search-form">
                     <!-- Trip Type Toggle -->
+                      <!-- 1 i -->
                     <div class="form-header">
-                        <div class="trip-toggle">
-                            <button type="button" class="toggle-btn active">Ida y vuelta</button>
-                            <button type="button" class="toggle-btn">Solo ida</button>
+                        <div class="trip-toggle" role="tablist" aria-label="Tipo de viaje">
+                            <button type="button" class="toggle-btn active" data-trip-type="roundtrip">Ida y vuelta</button>
+                            <button type="button" class="toggle-btn" data-trip-type="oneway">Solo ida</button>
+                             <!-- 1 f -->
                         </div>
                         <label class="checkbox-label">
                             <input type="checkbox">
@@ -110,15 +112,47 @@
                                 <input type="text" placeholder="¿A dónde quieres ir?">
                             </div>
                         </div>
+                      <!-- 2 i-->
+                        <div class="form-field form-field-dates">
+                            <label id="tripDateLabel" for="fechas">Ida y vuelta</label>
+                            <div class="date-picker" id="datePicker">
+                                <div class="input-with-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                                        <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                                    </svg>
+                                    <input type="text" id="fechas" placeholder="Selecciona fechas" readonly autocomplete="off" aria-haspopup="dialog" aria-expanded="false">
+                                </div>
+                                <div class="date-picker-panel" id="datePickerPanel" hidden>
+                                    <div class="date-picker-header">
+                                        <div>
+                                            <p class="date-picker-kicker">Calendario</p>
+                                            <h3 id="datePickerTitle">Ida y vuelta</h3>
+                                            <p class="date-picker-helper" id="datePickerHelper">Selecciona la fecha de salida y luego una fecha de regreso posterior.</p>
+                                        </div>
+                                        <button type="button" class="date-picker-close" id="datePickerClose" aria-label="Cerrar calendario">&times;</button>
+                                    </div>
 
-                        <div class="form-field">
-                            <label>Ida y vuelta</label>
-                            <div class="input-with-icon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/>
-                                    <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-                                </svg>
-                                <input type="text" placeholder="Selecciona fechas">
+                                    <div class="date-selection-summary">
+                                        <button type="button" class="date-summary-card active" id="departureSummary" data-selection-target="departure">
+                                            <span class="date-summary-label">Salida</span>
+                                            <strong class="date-summary-value" id="departureSummaryValue">Selecciona fecha</strong>
+                                        </button>
+                                        <button type="button" class="date-summary-card" id="returnSummary" data-selection-target="return">
+                                            <span class="date-summary-label">Regreso</span>
+                                            <strong class="date-summary-value" id="returnSummaryValue">Selecciona fecha</strong>
+                                        </button>
+                                    </div>
+
+                                    <div class="calendar-controls">
+                                        <button type="button" class="calendar-nav-btn" id="calendarPrev" aria-label="Mes anterior">&lsaquo;</button>
+                                        <span class="calendar-controls-title">Elige tus fechas</span>
+                                        <button type="button" class="calendar-nav-btn" id="calendarNext" aria-label="Mes siguiente">&rsaquo;</button>
+                                    </div>
+
+                                    <div class="calendar-months" id="calendarMonths"></div>
+                                </div>
+                                 <!-- 2 f -->
                             </div>
                         </div>
 
