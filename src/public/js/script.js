@@ -408,6 +408,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // inicio cambio: cerrar calendario con tecla Esc
+    document.addEventListener('keydown', function(event) {
+        if (event.key !== 'Escape' || datePickerPanel.hidden) {
+            return;
+        }
+
+        event.preventDefault();
+        closeDatePicker();
+        inputFechas.focus();
+    });
+    // fin cambio: cerrar calendario con tecla Esc
+
     updateSummaries();
      /* 4 f */
     // Offer card clicks
