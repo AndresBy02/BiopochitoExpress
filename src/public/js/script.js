@@ -69,6 +69,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const calendarNext = document.getElementById('calendarNext');
     const calendarMonths = document.getElementById('calendarMonths');
     const today = stripTime(new Date());
+    // inicio cambio: restringir reservas a maximo 1 ano en el futuro
+    const maxReservationDate = stripTime(new Date(today));
+    maxReservationDate.setFullYear(maxReservationDate.getFullYear() + 1);
+    // fin cambio: restringir reservas a maximo 1 ano en el futuro
 
     if (!searchForm || !inputFechas || !datePicker || !datePickerPanel || !calendarMonths) {
         return;
@@ -105,6 +109,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // cambio f 4
 
     function openDatePicker() {
+        // inicio cambio: abrir calendario listo mejorado
+        calendarState.selecting = 'departure';
+
+        if (calendarState.tripType === 'oneway') {
+            calendarState.returnDate = null;
+        }
+        // fin cambio: abrir calendario mejorado
+
         if (calendarState.departureDate) {
             calendarState.visibleMonth = startOfMonth(calendarState.departureDate);
         } else {
@@ -132,11 +144,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isRoundTrip) {
             datePickerTitle.textContent = calendarState.selecting === 'return' ? 'Selecciona tu regreso' : 'Ida y vuelta';
             datePickerHelper.textContent = calendarState.selecting === 'return'
-                ? 'Ahora elige una fecha de regreso posterior a la ida.'
-                : 'Selecciona la fecha de salida y luego una fecha de regreso posterior.';
+                ? 'Ahora elige una fecha de regreso posterior a la ida y dentro del proximo ano.'
+                : 'Selecciona la fecha de salida y luego una fecha de regreso posterior dentro del proximo ano.';
         } else {
             datePickerTitle.textContent = 'Solo ida';
-            datePickerHelper.textContent = 'Selecciona la fecha en la que deseas viajar.';
+            datePickerHelper.textContent = 'Selecciona la fecha en la que deseas viajar dentro del proximo ano.';
         }
 
         departureSummaryValue.textContent = hasDeparture ? formatLongDate(calendarState.departureDate) : 'Selecciona fecha';
@@ -199,8 +211,9 @@ document.addEventListener('DOMContentLoaded', function() {
             dayButton.textContent = String(dayNumber);
 
             const isPastDate = currentDate < today;
+            const exceedsReservationLimit = currentDate > maxReservationDate;
             const blocksReturnDate = shouldLimitReturnDates && currentDate <= calendarState.departureDate;
-            dayButton.disabled = isPastDate || blocksReturnDate;
+            dayButton.disabled = isPastDate || exceedsReservationLimit || blocksReturnDate;
 
             if (isSameDate(currentDate, today)) {
                 dayButton.classList.add('today');
@@ -278,8 +291,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const isCurrentMonth = calendarState.visibleMonth.getFullYear() === today.getFullYear()
             && calendarState.visibleMonth.getMonth() === today.getMonth();
+        const isLastAllowedMonth = calendarState.visibleMonth.getFullYear() === maxReservationDate.getFullYear()
+            && calendarState.visibleMonth.getMonth() === maxReservationDate.getMonth();
 
         calendarPrev.disabled = isCurrentMonth;
+        calendarNext.disabled = isLastAllowedMonth;
     }
 
     // cambio i 5
@@ -299,9 +315,12 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('active');
 
             calendarState.tripType = nextTripType;
-            calendarState.selecting = nextTripType === 'roundtrip' && calendarState.departureDate && !calendarState.returnDate
-                ? 'return'
-                : 'departure';
+            // inicio cambio: limpiar regreso al cambiar a solo ida
+            if (nextTripType === 'oneway') {
+                calendarState.returnDate = null;
+            }
+            // fin cambio: limpiar regreso al cambiar a solo ida
+            calendarState.selecting = 'departure';
 
             updateSummaries();
 
@@ -367,7 +386,14 @@ document.addEventListener('DOMContentLoaded', function() {
     calendarNext.addEventListener('click', function(event) {
         event.preventDefault();
         runWithoutScrollJump(function() {
-            calendarState.visibleMonth = addMonths(calendarState.visibleMonth, 1);
+            const nextMonth = addMonths(calendarState.visibleMonth, 1);
+            const lastAllowedMonth = startOfMonth(maxReservationDate);
+
+            if (nextMonth > lastAllowedMonth) {
+                return;
+            }
+
+            calendarState.visibleMonth = nextMonth;
             renderCalendar();
         });
     });
@@ -388,6 +414,22 @@ document.addEventListener('DOMContentLoaded', function() {
             openDatePicker();
             return;
         }
+
+        // inicio cambio: validar limite maximo de reserva a 1 año
+        if (calendarState.departureDate > maxReservationDate) {
+            alert('La fecha de ida no puede ser mayor a un ano en el futuro.');
+            openDatePicker();
+            return;
+        }
+
+        if (calendarState.tripType === 'roundtrip' && calendarState.returnDate > maxReservationDate) {
+            alert('La fecha de regreso no puede ser mayor a un ano en el futuro.');
+            calendarState.selecting = 'return';
+            updateSummaries();
+            openDatePicker();
+            return;
+        }
+        // fin cambio: validar limite maximo de reserva a 1 año
 
         localStorage.setItem('tipoViajeSeleccionado', calendarState.tripType);
         localStorage.setItem('fechaIda', formatIsoDate(calendarState.departureDate));
