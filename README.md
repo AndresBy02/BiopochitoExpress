@@ -8,7 +8,8 @@ Proyecto integrador para la asignatura de **Programación en Ambiente Web I** y 
 * **Andres Felipe Vargas Ceballos** - [GitHub Profile](https://github.com/AndresBy02)
 * **Diego Laverde** - [GitHub Profile](https://github.com/imitador01)
 * **Juan Pablo Montoya** - [GitHub Profile](https://github.com/Juan-Pablo-M)
-* **Valentina Salazar** - [GitHub Profile](https://github.com/valentinasalazar04-cpu)
+* **Valentina Salazar** - [GitHub Profile](https://github.com/valentinasalazar04-cpu) 
+  
 ---
 
 ## 🚀 Tecnologías Utilizadas
@@ -42,6 +43,16 @@ Actualmente, el proyecto se encuentra en la fase inicial de diseño y planeació
 ## 🎨 Diseño y Prototipado
 Puedes ver el diseño interactivo de nuestra aplicación en el siguiente enlace:
 🔗 [https://www.figma.com/make/0sgWxKIyCeQKHOuXqWKGXq/Prototipo?fullscreen=1&t=IeARCZpfVFdgKCLM-1]
+
+Aportes individuales del equipo:
+Desarrollo web (Froned y backend)
+-Andres Felipe Vargas:configuracion incicial del entorno de desarrollo,desarrollo de componentes base en HTML,CSS  JavaScript 
+-Diego laverde:Implementacion de funcionalidades dinamicas con Java,apoyo en logica de backend (estrucura de rutas y controladores)
+validacion de formularios de tiquetes,pruebas iniciales de funcionamiento del sistema 
+Documentacion  modelado:
+-Juan Pablo Montoya:elaboracion de diagramas (casos de E-R),organizacoion de la documentacion,definicion de la estrucura conceptual de la base de datos
+-Valentina Salazar:Redaccion y mejora del README,apoyo en la documentacion geeral y presentacion,diseño de diagramas E-R y funcionalidades 
+
 
 ---
 
