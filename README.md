@@ -46,12 +46,12 @@ Puedes ver el diseño interactivo de nuestra aplicación en el siguiente enlace:
 
 Aportes individuales del equipo:
 * Desarrollo web (Froned y backend)
-* -Andres Felipe Vargas:configuracion incicial del entorno de desarrollo,desarrollo de componentes base en HTML,CSS  JavaScript 
--Diego laverde:Implementacion de funcionalidades dinamicas con Java,apoyo en logica de backend (estrucura de rutas y controladores)
+* Andres Felipe Vargas:configuracion incicial del entorno de desarrollo,desarrollo de componentes base en HTML,CSS  JavaScript
+* Diego laverde:Implementacion de funcionalidades dinamicas con Java,apoyo en logica de backend (estrucura de rutas y controladores)
 validacion de formularios de tiquetes,pruebas iniciales de funcionamiento del sistema 
-Documentacion  modelado:
--Juan Pablo Montoya:elaboracion de diagramas (casos de E-R),organizacoion de la documentacion,definicion de la estrucura conceptual de la base de datos
--Valentina Salazar:Redaccion y mejora del README,apoyo en la documentacion geeral y presentacion,diseño de diagramas E-R y funcionalidades 
+*Documentacion  modelado:
+* Juan Pablo Montoya:elaboracion de diagramas (casos de E-R),organizacoion de la documentacion,definicion de la estrucura conceptual de la base de datos
+* Valentina Salazar:Redaccion y mejora del README,apoyo en la documentacion geeral y presentacion,diseño de diagramas E-R y funcionalidades 
 
 
 ---
