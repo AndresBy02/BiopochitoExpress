@@ -46,7 +46,7 @@ Puedes ver el diseño interactivo de nuestra aplicación en el siguiente enlace:
 
 Aportes individuales del equipo:
 * Desarrollo web (Froned y backend)
--Andres Felipe Vargas:configuracion incicial del entorno de desarrollo,desarrollo de componentes base en HTML,CSS  JavaScript 
+* -Andres Felipe Vargas:configuracion incicial del entorno de desarrollo,desarrollo de componentes base en HTML,CSS  JavaScript 
 -Diego laverde:Implementacion de funcionalidades dinamicas con Java,apoyo en logica de backend (estrucura de rutas y controladores)
 validacion de formularios de tiquetes,pruebas iniciales de funcionamiento del sistema 
 Documentacion  modelado:
