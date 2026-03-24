@@ -45,7 +45,7 @@ Puedes ver el diseño interactivo de nuestra aplicación en el siguiente enlace:
 🔗 [https://www.figma.com/make/0sgWxKIyCeQKHOuXqWKGXq/Prototipo?fullscreen=1&t=IeARCZpfVFdgKCLM-1]
 
 Aportes individuales del equipo:
-** Desarrollo web (Froned y backend)
+* Desarrollo web (Froned y backend)
 * Andres Felipe Vargas:configuracion incicial del entorno de desarrollo,desarrollo de componentes base en HTML,CSS  JavaScript
 * Diego laverde:Implementacion de funcionalidades dinamicas con Java,apoyo en logica de backend (estrucura de rutas y controladores)
 validacion de formularios de tiquetes,pruebas iniciales de funcionamiento del sistema 
