@@ -29,7 +29,7 @@ body {
 
 .header-content {
     display: flex;
-    justify-content: space-between;
+   justify-content: space-between;
     align-items: center;
     height: 64px;
 }
@@ -504,7 +504,7 @@ body {
 
 /* Services Section */
 .services {
-    background-color: #dce0e6;
+    background-color: #f3f4f6;
     padding: 2.75rem 1rem;
 }
 
