@@ -44,11 +44,11 @@ Actualmente, el proyecto se encuentra en la fase inicial de diseño y planeació
 Puedes ver el diseño interactivo de nuestra aplicación en el siguiente enlace:
 🔗 [https://www.figma.com/make/0sgWxKIyCeQKHOuXqWKGXq/Prototipo?fullscreen=1&t=IeARCZpfVFdgKCLM-1]
 
-Aportes individuales del equipo: Desarrollo web (Frontend y backend)
+Aportes individuales del equipo: Desarrollo web(Frontend y backend)
 * Andres Felipe Vargas: Configuración incicial del entorno de desarrollo, desarrollo de componentes base en HTML, CSS y JavaScript
 * Diego laverde: Implementacion de funcionalidades dinamicas con Java, apoyo en logica de backend(estrucura de rutas y controladores)
 validacion de formularios de tiquetes, pruebas iniciales de funcionamiento del sistema 
-*Documentacion  modelado:
+* Documentacion  modelado:
 * Juan Pablo Montoya: Elaboracion de diagramas(casos de E-R), organización de la documentacion, definición de la estrucura conceptual de la base de datos
 * Valentina Salazar: Redaccion y mejora del README, apoyo en la documentacion general y presentacion, diseño de diagramas E-R y funcionalidades 
 
