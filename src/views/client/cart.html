@@ -422,6 +422,605 @@
             margin-bottom: 1.5rem;
         }
 
+        .cart-ticket-manager {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+
+        .cart-ticket-manager-header h3,
+        .cart-seat-panel-header h3 {
+            margin: 0 0 0.5rem;
+            color: #111827;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .cart-ticket-manager-header p,
+        .cart-seat-panel-header p {
+            margin: 0;
+            color: #6b7280;
+        }
+
+        .cart-ticket-kicker,
+        .cart-seat-cabin-kicker {
+            margin: 0 0 0.35rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .cart-ticket-list {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .cart-ticket-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 1rem;
+            background-color: #fff;
+        }
+
+        .cart-ticket-card.is-active {
+            border-color: #93c5fd;
+            background-color: #f8fbff;
+            box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.08);
+        }
+
+        .cart-ticket-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .cart-ticket-card-header h4 {
+            margin: 0;
+            color: #111827;
+            font-size: 1.05rem;
+        }
+
+        .cart-ticket-price {
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .cart-ticket-controls {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .cart-ticket-field {
+            display: block;
+        }
+
+        .cart-ticket-field span,
+        .cart-ticket-seat span,
+        .cart-ticket-seat-trigger span {
+            display: block;
+            margin-bottom: 0.45rem;
+            color: #6b7280;
+            font-size: 0.82rem;
+        }
+
+        .cart-ticket-field select {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 0.75rem;
+            padding: 0.75rem 0.9rem;
+            font-size: 0.95rem;
+            background-color: #fff;
+        }
+
+        .cart-ticket-seat,
+        .cart-ticket-seat-trigger {
+            padding: 0.75rem 0.9rem;
+            border-radius: 0.75rem;
+            background-color: #f8fafc;
+            border: 1px solid #e5e7eb;
+        }
+
+        .cart-ticket-seat strong,
+        .cart-ticket-seat-trigger strong {
+            color: #111827;
+            font-size: 1rem;
+        }
+
+        .cart-ticket-seat-trigger {
+            width: 100%;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            cursor: pointer;
+        }
+
+        .cart-ticket-seat-trigger:hover {
+            border-color: #93c5fd;
+        }
+
+        .cart-ticket-focus-btn {
+            border: none;
+            border-radius: 0.75rem;
+            padding: 0.85rem 1rem;
+            background-color: #2563eb;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cart-seat-map-panel {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1.5rem;
+        }
+
+        .cart-ticket-seat-map {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .cart-seat-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.85rem;
+            margin: 1rem 0 1.25rem;
+        }
+
+        .cart-seat-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.875rem;
+            color: #374151;
+        }
+
+        .cart-seat-legend-swatch {
+            width: 0.95rem;
+            height: 0.95rem;
+            border-radius: 0.3rem;
+            border: 1px solid #cbd5e1;
+        }
+
+        .cart-seat-legend-swatch.available {
+            background-color: #fff;
+        }
+
+        .cart-seat-legend-swatch.selected {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+
+        .cart-seat-legend-swatch.occupied {
+            background-color: #cbd5e1;
+            border-color: #cbd5e1;
+        }
+
+        .cart-seat-legend-swatch.locked {
+            background-color: #fee2e2;
+            border-color: #fecaca;
+        }
+
+        .cart-seat-map-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .cart-seat-cabin {
+            border: 1px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 1rem;
+            background-color: #fff;
+        }
+
+        .cart-seat-cabin.is-active {
+            border-color: #93c5fd;
+            background-color: #f8fbff;
+        }
+
+        .cart-seat-cabin.is-locked {
+            background-color: #f8fafc;
+        }
+
+        .cart-seat-cabin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .cart-seat-cabin-header h4 {
+            margin: 0;
+            color: #111827;
+            font-size: 1rem;
+        }
+
+        .cart-seat-cabin-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            background-color: #e5e7eb;
+            color: #374151;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .cart-seat-cabin.is-active .cart-seat-cabin-badge {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .cart-seat-rows {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .cart-seat-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .cart-seat-row-label {
+            width: 2rem;
+            color: #6b7280;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .cart-seat-button {
+            min-width: 3.1rem;
+            height: 3rem;
+            border-radius: 0.8rem;
+            border: 1px solid #cbd5e1;
+            background-color: #fff;
+            color: #111827;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .cart-seat-button.seat-first {
+            box-shadow: inset 0 -3px 0 #b45309;
+        }
+
+        .cart-seat-button.seat-executive {
+            box-shadow: inset 0 -3px 0 #0f766e;
+        }
+
+        .cart-seat-button.seat-economy {
+            box-shadow: inset 0 -3px 0 #2563eb;
+        }
+
+        .cart-seat-button.is-selected {
+            background-color: #2563eb;
+            border-color: #2563eb;
+            color: #fff;
+            box-shadow: none;
+        }
+
+        .cart-seat-button.is-occupied {
+            background-color: #cbd5e1;
+            border-color: #cbd5e1;
+            color: #64748b;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .cart-seat-button.is-locked {
+            background-color: #fef2f2;
+            border-color: #fecaca;
+            color: #b91c1c;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .cart-seat-button.is-available:hover {
+            border-color: #2563eb;
+        }
+
+        .cart-seat-aisle {
+            width: 1rem;
+            height: 1px;
+        }
+
+        /* Estilos para modal de asientos */
+        .seat-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .seat-modal-overlay.active {
+            display: flex;
+        }
+
+        .seat-modal {
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .seat-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .seat-modal-header h3 {
+            margin: 0;
+            color: #111827;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .seat-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .seat-modal-close:hover {
+            color: #111827;
+        }
+
+        .seat-modal-content {
+            margin-bottom: 1.5rem;
+        }
+
+        .seat-modal-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .seat-modal-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #374151;
+        }
+
+        .seat-modal-legend-swatch {
+            width: 20px;
+            height: 20px;
+            border-radius: 0.4rem;
+            border: 1px solid #cbd5e1;
+        }
+
+        .seat-modal-legend-swatch.available {
+            background-color: white;
+        }
+
+        .seat-modal-legend-swatch.selected {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+
+        .seat-modal-legend-swatch.occupied {
+            background-color: #cbd5e1;
+            border-color: #cbd5e1;
+        }
+
+        .seat-modal-grid {
+            display: grid;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .seat-modal-cabin {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+
+        .seat-modal-cabin-title {
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .seat-modal-rows {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .seat-modal-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .seat-modal-row-label {
+            width: 1.5rem;
+            color: #6b7280;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .seat-modal-btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1;
+            background-color: white;
+            color: #111827;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .seat-modal-btn.available:hover {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+
+        .seat-modal-btn.selected {
+            background-color: #2563eb;
+            border-color: #2563eb;
+            color: white;
+        }
+
+        .seat-modal-btn.occupied {
+            background-color: #cbd5e1;
+            border-color: #cbd5e1;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+
+        .seat-modal-aisle {
+            width: 0.5rem;
+        }
+
+        .seat-modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 1.5rem;
+        }
+
+        .seat-modal-btn-cancel {
+            padding: 0.75rem 1.5rem;
+            background-color: white;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .seat-modal-btn-cancel:hover {
+            background-color: #f9fafb;
+        }
+
+        .seat-modal-btn-confirm {
+            padding: 0.75rem 1.5rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .seat-modal-btn-confirm:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Estilos para selector de tarifa */
+        .tariff-selector {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tariff-selector-label {
+            display: block;
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .tariff-selector-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .tariff-selector-option {
+            padding: 0.85rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .tariff-selector-option:hover {
+            border-color: #93c5fd;
+            background-color: #f0f9ff;
+        }
+
+        .tariff-selector-option.active {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+            box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.1);
+        }
+
+        .tariff-selector-option-name {
+            font-weight: 600;
+            color: #111827;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .tariff-selector-option-price {
+            font-weight: 700;
+            color: #2563eb;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 640px) {
+            .tariff-selector-options {
+                grid-template-columns: 1fr;
+            }
+
+            .seat-modal {
+                padding: 1.5rem;
+                width: 90vw;
+            }
+
+            .seat-modal-btn {
+                width: 2.2rem;
+                height: 2.2rem;
+                font-size: 0.75rem;
+            }
+        }
+
         @media (min-width: 640px) {
             .cart-item-content {
                 flex-direction: row;
@@ -437,6 +1036,36 @@
             .cart-grid {
                 grid-template-columns: 2fr 1fr;
             }
+        }
+
+        @media (max-width: 767px) {
+            .cart-item-footer,
+            .cart-ticket-card-header,
+            .cart-seat-cabin-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cart-ticket-controls {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Estilos para tarjetas de selección de tarifa */
+        .tariff-choice-card {
+            cursor: pointer;
+            transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .tariff-choice-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .tariff-choice-card.active {
+            border-color: #2563eb !important;
+            background-color: #f8fbff !important;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
         }
     </style>
 </head>
@@ -565,6 +1194,133 @@
                     </div>
                 </div>
 
+                <!-- Tariff Selector -->
+                <div class="info-box">
+                    <h3>Selecciona tu tarifa</h3>
+                    <p style="color: #6b7280; margin-bottom: 1rem; font-size: 0.875rem;">Elige la tarifa que mejor se ajuste a tus necesidades. Puedes cambiarla después sin problema.</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+                        <!-- Tarifa Básica -->
+                        <div style="border: 2px solid #e5e7eb; border-radius: 0.75rem; padding: 1.25rem; cursor: pointer; transition: all 0.2s; background-color: white;" class="tariff-choice-card" data-tariff="basic" onclick="selectTariffChoice('basic', this)">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                <div>
+                                    <h4 style="margin: 0 0 0.25rem; color: #111827; font-size: 1.05rem; font-weight: 700;">Tarifa Básica</h4>
+                                    <p style="margin: 0; color: #6b7280; font-size: 0.875rem;">Opción económica</p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 1.25rem; font-weight: 700; color: #2563eb;">$1.250.000</div>
+                                    <div style="font-size: 0.75rem; color: #6b7280;">por persona</div>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.875rem; color: #374151; padding-top: 1rem; border-top: 1px solid #e5e7eb;">
+                                <div>✓ Vuelo ida y vuelta</div>
+                                <div style="color: #dc2626;">✗ Equipaje 10kg mano</div>
+                                <div style="color: #dc2626;">✗ Sin cambios</div>
+                                <div style="color: #dc2626;">✗ Sin reembolso</div>
+                            </div>
+                        </div>
+
+                        <!-- Tarifa Estándar (Recomendada) -->
+                        <div style="border: 2px solid #2563eb; background-color: #f8fbff; border-radius: 0.75rem; padding: 1.25rem; cursor: pointer; transition: all 0.2s; position: relative;" class="tariff-choice-card active" data-tariff="standard" onclick="selectTariffChoice('standard', this)">
+                            <div style="position: absolute; top: 1rem; right: 1rem; background-color: #dbeafe; color: #1d4ed8; padding: 0.4rem 0.85rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Recomendada</div>
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; padding-right: 5rem;">
+                                <div>
+                                    <h4 style="margin: 0 0 0.25rem; color: #111827; font-size: 1.05rem; font-weight: 700;">Tarifa Estándar</h4>
+                                    <p style="margin: 0; color: #6b7280; font-size: 0.875rem;">La mejor relación precio-beneficios</p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 1.25rem; font-weight: 700; color: #2563eb;">$1.450.000</div>
+                                    <div style="font-size: 0.75rem; color: #6b7280;">por persona</div>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.875rem; color: #374151; padding-top: 1rem; border-top: 1px solid #93c5fd;">
+                                <div>✓ Vuelo ida y vuelta</div>
+                                <div style="color: #059669;">✓ Equipaje 23kg bodega</div>
+                                <div>✓ Cambios con cargo</div>
+                                <div>✓ Selección asiento</div>
+                                <div>✓ Asistencia 24/7</div>
+                                <div style="color: #f97316;">→ Reembolso 50%</div>
+                            </div>
+                        </div>
+
+                        <!-- Tarifa Premium -->
+                        <div style="border: 2px solid #e5e7eb; border-radius: 0.75rem; padding: 1.25rem; cursor: pointer; transition: all 0.2s; background-color: white;" class="tariff-choice-card" data-tariff="premium" onclick="selectTariffChoice('premium', this)">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                                <div>
+                                    <h4 style="margin: 0 0 0.25rem; color: #111827; font-size: 1.05rem; font-weight: 700;">Tarifa Premium</h4>
+                                    <p style="margin: 0; color: #6b7280; font-size: 0.875rem;">Máxima comodidad y flexibilidad</p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 1.25rem; font-weight: 700; color: #2563eb;">$1.850.000</div>
+                                    <div style="font-size: 0.75rem; color: #6b7280;">por persona</div>
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.875rem; color: #374151; padding-top: 1rem; border-top: 1px solid #e5e7eb;">
+                                <div>✓ Vuelo ida y vuelta</div>
+                                <div style="color: #059669;">✓ 2 Equipajes 23kg</div>
+                                <div style="color: #059669;">✓ Cambios gratis</div>
+                                <div style="color: #059669;">✓ Asiento preferencial</div>
+                                <div style="color: #059669;">✓ Reembolso completo</div>
+                                <div style="color: #059669;">✓ Prioridad abordaje</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seat Selection -->
+                <div class="info-box">
+                    <h3>Configura tus asientos</h3>
+                    <p style="color: #6b7280; margin-bottom: 1rem; font-size: 0.875rem;">Haz clic en el botón de abajo para abrir el selector de asientos y elegir los que prefieras para cada pasajero.</p>
+                    <button class="btn-checkout" onclick="openSeatModal()" style="margin-bottom: 0;">
+                        📍 Abre el selector de asientos →
+                    </button>
+                </div>
+
+                <!-- Seat Modal -->
+                <div class="seat-modal-overlay" id="seatModalOverlay">
+                    <div class="seat-modal">
+                        <div class="seat-modal-header">
+                            <h3>Selecciona tus asientos</h3>
+                            <button class="seat-modal-close" onclick="closeSeatModal()">✕</button>
+                        </div>
+
+                        <div class="seat-modal-content">
+                            <div style="margin-bottom: 1.5rem; padding: 0 1rem;">
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #111827; font-size: 0.875rem;">Selecciona la clase:</label>
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem;">
+                                    <button type="button" class="seat-class-btn active" data-class="economy" onclick="changeSeatClass('economy')" style="padding: 0.75rem; border: 2px solid #2563eb; border-radius: 0.5rem; background-color: #eff6ff; color: #1d4ed8; font-weight: 600; cursor: pointer; transition: all 0.2s;">Económica</button>
+                                    <button type="button" class="seat-class-btn" data-class="executive" onclick="changeSeatClass('executive')" style="padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; background-color: white; color: #374151; font-weight: 600; cursor: pointer; transition: all 0.2s;">Ejecutiva</button>
+                                    <button type="button" class="seat-class-btn" data-class="first" onclick="changeSeatClass('first')" style="padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; background-color: white; color: #374151; font-weight: 600; cursor: pointer; transition: all 0.2s;">Primera</button>
+                                </div>
+                            </div>
+
+                            <div class="seat-modal-legend">
+                                <div class="seat-modal-legend-item">
+                                    <div class="seat-modal-legend-swatch available"></div>
+                                    <span>Disponible</span>
+                                </div>
+                                <div class="seat-modal-legend-item">
+                                    <div class="seat-modal-legend-swatch selected"></div>
+                                    <span>Seleccionado</span>
+                                </div>
+                                <div class="seat-modal-legend-item">
+                                    <div class="seat-modal-legend-swatch occupied"></div>
+                                    <span>Ocupado</span>
+                                </div>
+                            </div>
+
+                            <div class="seat-modal-grid" id="seatGrid">
+                                <!-- Asientos se generarán aquí con JavaScript -->
+                            </div>
+                        </div>
+
+                        <div class="seat-modal-actions">
+                            <button class="seat-modal-btn-cancel" onclick="closeSeatModal()">Cancelar</button>
+                            <button class="seat-modal-btn-confirm" onclick="confirmSeatSelection()">Confirmar selección</button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Info Box -->
                 <div class="info-box">
                     <h3>Información importante</h3>
@@ -656,24 +1412,185 @@
     <script src="../../public/js/flujo-reserva.js"></script>
     <script>
         let quantity = 1;
-        const basePrice = 2500000;
+        let selectedTariff = 'standard';
+        let selectedSeats = new Set();
+        let selectedSeatClass = 'economy';
+
+        const seatCabinConfig = {
+            first: { rows: [1, 2], columns: ['A', 'C', 'D', 'F'], accent: '#b45309' },
+            executive: { rows: [3, 4, 5], columns: ['A', 'C', 'D', 'F'], accent: '#0f766e' },
+            economy: { rows: [6, 7, 8, 9, 10, 11, 12], columns: ['A', 'B', 'C', 'D', 'E', 'F'], accent: '#2563eb' }
+        };
+
+        const occupiedSeats = new Set(['1A', '1F', '3C', '4A', '4F', '6B', '6E', '7C', '8A', '8F', '9D', '10B', '11E', '12C']);
+
+        function selectTariffChoice(tariffId, element) {
+            selectedTariff = tariffId;
+            document.querySelectorAll('.tariff-choice-card').forEach(e => {
+                e.style.borderColor = '#e5e7eb';
+                e.style.backgroundColor = 'white';
+                e.classList.remove('active');
+            });
+            element.style.borderColor = '#2563eb';
+            element.style.backgroundColor = '#f8fbff';
+            element.classList.add('active');
+            updatePrices();
+        }
 
         function updateQuantity(change) {
-            quantity = Math.max(1, quantity + change);
+            quantity = Math.max(1, Math.min(6, quantity + change));
             document.getElementById('quantity').textContent = quantity;
             updatePrices();
         }
 
         function updatePrices() {
-            const subtotal = basePrice * quantity;
+            const tariffPrices = {
+                basic: 1250000,
+                standard: 1450000,
+                premium: 1850000
+            };
+            const perPersonPrice = tariffPrices[selectedTariff];
+            const subtotal = perPersonPrice * quantity;
             const taxes = subtotal * 0.1;
             const total = subtotal + taxes;
 
             document.getElementById('itemPrice').textContent = '$' + subtotal.toLocaleString('es-CO');
             document.getElementById('subtotal').textContent = '$' + subtotal.toLocaleString('es-CO');
-            document.getElementById('taxes').textContent = '$' + taxes.toLocaleString('es-CO');
-            document.getElementById('total').textContent = '$' + total.toLocaleString('es-CO');
+            document.getElementById('taxes').textContent = '$' + Math.round(taxes).toLocaleString('es-CO');
+            document.getElementById('total').textContent = '$' + Math.round(total).toLocaleString('es-CO');
         }
+
+        function changeSeatClass(classId) {
+            selectedSeatClass = classId;
+            
+            // Actualizar botones de clase
+            document.querySelectorAll('.seat-class-btn').forEach(btn => {
+                if (btn.dataset.class === classId) {
+                    btn.style.borderColor = '#2563eb';
+                    btn.style.backgroundColor = '#eff6ff';
+                    btn.style.color = '#1d4ed8';
+                    btn.classList.add('active');
+                } else {
+                    btn.style.borderColor = '#e5e7eb';
+                    btn.style.backgroundColor = 'white';
+                    btn.style.color = '#374151';
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Re-renderizar los asientos
+            renderSeatGrid();
+        }
+
+        function openSeatModal() {
+            renderSeatGrid();
+            document.getElementById('seatModalOverlay').classList.add('active');
+        }
+
+        function closeSeatModal() {
+            document.getElementById('seatModalOverlay').classList.remove('active');
+        }
+
+        function renderSeatGrid() {
+            const grid = document.getElementById('seatGrid');
+            grid.innerHTML = '';
+
+            // Solo renderizar la clase de asiento seleccionada
+            const config = seatCabinConfig[selectedSeatClass];
+            if (!config) return;
+
+            const cabin = document.createElement('div');
+            cabin.className = 'seat-modal-cabin';
+
+            const title = document.createElement('div');
+            title.className = 'seat-modal-cabin-title';
+            title.textContent = selectedSeatClass === 'first' ? 'Primera Clase' : selectedSeatClass === 'executive' ? 'Ejecutiva' : 'Económica';
+            cabin.appendChild(title);
+
+            const rows = document.createElement('div');
+            rows.className = 'seat-modal-rows';
+
+            config.rows.forEach(row => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'seat-modal-row';
+
+                const label = document.createElement('div');
+                label.className = 'seat-modal-row-label';
+                label.textContent = row;
+                rowDiv.appendChild(label);
+
+                config.columns.forEach(col => {
+                    const seatNumber = `${row}${col}`;
+                    const btn = document.createElement('button');
+                    btn.className = 'seat-modal-btn';
+                    btn.textContent = col;
+                    btn.type = 'button';
+
+                    if (occupiedSeats.has(seatNumber)) {
+                        btn.classList.add('occupied');
+                        btn.disabled = true;
+                    } else {
+                        btn.classList.add('available');
+                        if (selectedSeats.has(seatNumber)) {
+                            btn.classList.add('selected');
+                        }
+                        btn.addEventListener('click', () => toggleSeat(seatNumber, btn));
+                    }
+
+                    rowDiv.appendChild(btn);
+
+                    if (col === 'C') {
+                        const aisle = document.createElement('div');
+                        aisle.className = 'seat-modal-aisle';
+                        rowDiv.appendChild(aisle);
+                    }
+                });
+
+                rows.appendChild(rowDiv);
+            });
+
+            cabin.appendChild(rows);
+            grid.appendChild(cabin);
+        }
+
+        function toggleSeat(seatNumber, element) {
+            if (selectedSeats.has(seatNumber)) {
+                selectedSeats.delete(seatNumber);
+                element.classList.remove('selected');
+            } else {
+                if (selectedSeats.size < quantity) {
+                    selectedSeats.add(seatNumber);
+                    element.classList.add('selected');
+                } else {
+                    alert(`Solo puedes seleccionar ${quantity} asientos.`);
+                }
+            }
+        }
+
+        function confirmSeatSelection() {
+            closeSeatModal();
+            if (selectedSeats.size > 0) {
+                alert(`Asientos seleccionados: ${Array.from(selectedSeats).join(', ')}`);
+            }
+        }
+
+        // Cerrar modal al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            const overlay = document.getElementById('seatModalOverlay');
+            const modal = document.querySelector('.seat-modal');
+            if (event.target === overlay) {
+                closeSeatModal();
+            }
+        });
+
+        // Cerrar modal con Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeSeatModal();
+            }
+        });
+
+        updatePrices();
     </script>
 </body>
 </html>

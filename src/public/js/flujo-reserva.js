@@ -243,19 +243,51 @@ function appNormalizePurchaseData(data) {
     }
 
     const normalizedComplements = appNormalizeComplements(data);
-    const pricePerPassenger = Number(data.pricePerPassenger) || 0;
-    const passengers = Number(data.passengers) || APP_LIMITS.minPassengers;
-    const fallbackPricing = appCalculatePricing({
-        pricePerPassenger,
-        passengers,
+    const legacyTariff = appGetTariffById(data.tariffId || 'standard');
+    const desiredPassengers = Math.min(
+        APP_LIMITS.maxPassengers,
+        Math.max(
+            APP_LIMITS.minPassengers,
+            Number(data.passengers) || data.tickets?.length || APP_LIMITS.minPassengers
+        )
+    );
+    const normalizedTickets = appSyncTickets({
+        tickets: Array.isArray(data.tickets) && data.tickets.length
+            ? data.tickets
+            : appBuildLegacyTickets(data),
+        desiredCount: desiredPassengers,
+        defaultTariffId: legacyTariff.id
+    });
+    const pricing = appCalculatePricing({
+        tickets: normalizedTickets,
         complements: normalizedComplements
     });
+    const tickets = appBuildTickets({
+        tickets: normalizedTickets,
+        complements: normalizedComplements,
+        pricing,
+        code: data.code
+    });
+    const passengers = tickets.length;
+    const seats = tickets.map(ticket => ({
+        seatNumber: ticket.seatNumber,
+        classId: ticket.ticketClassId,
+        classLabel: ticket.ticketClassLabel
+    }));
+    const uniqueTariffLabels = [...new Set(tickets.map(ticket => ticket.tariffLabel))];
+    const uniqueClassLabels = [...new Set(tickets.map(ticket => ticket.ticketClassLabel))];
 
     return {
         ...data,
         passengers,
+        tariffId: tickets[0]?.tariffId || legacyTariff.id,
+        tariffLabel: uniqueTariffLabels.length === 1 ? uniqueTariffLabels[0] : 'Tarifa mixta',
+        ticketClassId: tickets[0]?.ticketClassId || 'economy',
+        ticketClassLabel: uniqueClassLabels.length === 1 ? uniqueClassLabels[0] : 'Mixta',
         complements: normalizedComplements,
-        pricing: data.pricing?.total ? data.pricing : fallbackPricing
+        seats,
+        tickets,
+        pricing
     };
 }
 
@@ -305,6 +337,11 @@ function appGetTariffConfig() {
     };
 }
 
+function appGetTariffById(tariffId) {
+    const tariffConfig = appGetTariffConfig();
+    return tariffConfig[tariffId] || tariffConfig.standard;
+}
+
 function appGetComplementConfig() {
     return {
         tour: {
@@ -325,10 +362,276 @@ function appGetComplementConfig() {
     };
 }
 
-function appCalculatePricing(data) {
-    const passengers = Number(data.passengers) || APP_LIMITS.minPassengers;
+function appGetSeatClassConfig() {
+    return {
+        first: {
+            id: 'first',
+            label: 'Primera clase',
+            rows: [1, 2],
+            columns: ['A', 'C', 'D', 'F'],
+            accent: '#b45309',
+            aisleAfter: 'C',
+            surcharge: 600000
+        },
+        executive: {
+            id: 'executive',
+            label: 'Ejecutiva',
+            rows: [3, 4, 5],
+            columns: ['A', 'C', 'D', 'F'],
+            accent: '#0f766e',
+            aisleAfter: 'C',
+            surcharge: 250000
+        },
+        economy: {
+            id: 'economy',
+            label: 'Economica',
+            rows: [6, 7, 8, 9, 10, 11, 12],
+            columns: ['A', 'B', 'C', 'D', 'E', 'F'],
+            accent: '#2563eb',
+            aisleAfter: 'C',
+            surcharge: 0
+        }
+    };
+}
+
+function appGetSeatClassById(classId) {
+    const seatClassConfig = appGetSeatClassConfig();
+    return seatClassConfig[classId] || seatClassConfig.economy;
+}
+
+function appGetTicketBasePrice(ticket) {
+    return appGetTariffById(ticket.tariffId).pricePerPassenger + appGetSeatClassById(ticket.ticketClassId).surcharge;
+}
+
+function appGetBaseOccupiedSeats() {
+    return new Set([
+        '1A', '1F',
+        '3C',
+        '4A', '4F',
+        '6B', '6E',
+        '7C',
+        '8A', '8F',
+        '9D',
+        '10B',
+        '11E',
+        '12C'
+    ]);
+}
+
+function appBuildSeatInventory() {
+    return Object.values(appGetSeatClassConfig()).flatMap(seatClass =>
+        seatClass.rows.flatMap(row =>
+            seatClass.columns.map(column => ({
+                seatNumber: `${row}${column}`,
+                row,
+                column,
+                classId: seatClass.id,
+                classLabel: seatClass.label,
+                accent: seatClass.accent,
+                aisleAfter: seatClass.aisleAfter
+            }))
+        )
+    );
+}
+
+function appGetSeatByNumber(seatNumber) {
+    return appBuildSeatInventory().find(seat => seat.seatNumber === seatNumber) || null;
+}
+
+function appGetRawSeatNumber(rawSeat) {
+    return typeof rawSeat === 'string'
+        ? rawSeat
+        : rawSeat?.seatNumber || rawSeat?.seat?.seatNumber || '';
+}
+
+function appNormalizeSeat(rawSeat) {
+    const seatNumber = appGetRawSeatNumber(rawSeat);
+
+    const seat = appGetSeatByNumber(seatNumber);
+    if (!seat) {
+        return null;
+    }
+
+    return {
+        seatNumber: seat.seatNumber,
+        classId: seat.classId,
+        classLabel: seat.classLabel
+    };
+}
+
+function appFormatSeatList(seats) {
+    return (Array.isArray(seats) && seats.length)
+        ? seats.map(seat => typeof seat === 'string' ? seat : seat.seatNumber).filter(Boolean).join(', ')
+        : 'Por asignar';
+}
+
+function appCreateTicketId() {
+    const randomValue = Math.floor(Math.random() * 900000) + 100000;
+    return `TKT-${Date.now().toString(36).toUpperCase()}-${randomValue}`;
+}
+
+function appCreateDraftTicketId() {
+    const randomValue = Math.floor(Math.random() * 900000) + 100000;
+    return `DRF-${Date.now().toString(36).toUpperCase()}-${randomValue}`;
+}
+
+function appSplitAmount(totalAmount, totalItems) {
+    const safeItems = Math.max(1, Number(totalItems) || 1);
+    const baseAmount = Math.floor(totalAmount / safeItems);
+    const amounts = Array.from({ length: safeItems }, () => baseAmount);
+    const remainder = totalAmount - (baseAmount * safeItems);
+
+    amounts[safeItems - 1] += remainder;
+    return amounts;
+}
+
+function appDistributeAmountByWeight(totalAmount, weights) {
+    if (!weights.length) {
+        return [];
+    }
+
+    const safeWeights = weights.map(weight => Math.max(0, Number(weight) || 0));
+    const totalWeight = safeWeights.reduce((sum, weight) => sum + weight, 0);
+
+    if (!totalWeight) {
+        return appSplitAmount(totalAmount, safeWeights.length);
+    }
+
+    const distributed = safeWeights.map(weight => Math.floor((totalAmount * weight) / totalWeight));
+    let remainder = totalAmount - distributed.reduce((sum, value) => sum + value, 0);
+    let index = 0;
+
+    while (remainder > 0) {
+        distributed[index % distributed.length] += 1;
+        remainder -= 1;
+        index += 1;
+    }
+
+    return distributed;
+}
+
+function appCreateTicketDraft(tariffId, ticketClassId) {
+    const tariff = appGetTariffById(tariffId);
+    const seatClass = appGetSeatClassById(ticketClassId || 'economy');
+
+    return {
+        id: '',
+        draftId: appCreateDraftTicketId(),
+        tariffId: tariff.id,
+        tariffLabel: tariff.label,
+        ticketClassId: seatClass.id,
+        ticketClassLabel: seatClass.label,
+        seatNumber: '',
+        finalPrice: 0
+    };
+}
+
+function appNormalizeTicket(rawTicket, fallbackTariffId, fallbackClassId) {
+    const tariff = appGetTariffById(rawTicket?.tariffId || fallbackTariffId || 'standard');
+    const seatClass = appGetSeatClassById(rawTicket?.ticketClassId || rawTicket?.classId || fallbackClassId || 'economy');
+    const seat = appNormalizeSeat(rawTicket?.seatNumber || rawTicket?.seat);
+
+    return {
+        id: rawTicket?.id || '',
+        draftId: rawTicket?.draftId || appCreateDraftTicketId(),
+        tariffId: tariff.id,
+        tariffLabel: tariff.label,
+        ticketClassId: seatClass.id,
+        ticketClassLabel: seatClass.label,
+        seatNumber: seat && seat.classId === seatClass.id ? seat.seatNumber : '',
+        finalPrice: Number(rawTicket?.finalPrice) || 0
+    };
+}
+
+function appBuildLegacyTickets(data) {
+    const passengers = Math.min(
+        APP_LIMITS.maxPassengers,
+        Math.max(APP_LIMITS.minPassengers, Number(data?.passengers) || APP_LIMITS.minPassengers)
+    );
+    const legacySeats = Array.isArray(data?.seats) ? data.seats : [];
+    const fallbackTariffId = data?.tariffId || 'standard';
+    const fallbackClassId = data?.ticketClassId || 'economy';
+
+    return Array.from({ length: passengers }, function(_, index) {
+        return {
+            tariffId: fallbackTariffId,
+            ticketClassId: fallbackClassId,
+            seatNumber: appGetRawSeatNumber(legacySeats[index] || '')
+        };
+    });
+}
+
+function appFindFirstAvailableSeatNumber(ticketClassId, takenSeats) {
+    const targetClass = appGetSeatClassById(ticketClassId);
+    const seat = appBuildSeatInventory().find(function(item) {
+        return item.classId === targetClass.id && !takenSeats.has(item.seatNumber);
+    });
+
+    return seat?.seatNumber || '';
+}
+
+function appSyncTickets(data) {
+    const desiredCount = Math.min(
+        APP_LIMITS.maxPassengers,
+        Math.max(APP_LIMITS.minPassengers, Number(data.desiredCount) || APP_LIMITS.minPassengers)
+    );
+    const defaultTariffId = data.defaultTariffId || 'standard';
+    const defaultClassId = data.defaultClassId || 'economy';
+    let normalizedTickets = (Array.isArray(data.tickets) ? data.tickets : [])
+        .map(ticket => appNormalizeTicket(ticket, defaultTariffId, defaultClassId));
+
+    while (normalizedTickets.length < desiredCount) {
+        const previousTariffId = normalizedTickets[normalizedTickets.length - 1]?.tariffId || defaultTariffId;
+        const previousClassId = normalizedTickets[normalizedTickets.length - 1]?.ticketClassId || defaultClassId;
+        normalizedTickets.push(appCreateTicketDraft(previousTariffId, previousClassId));
+    }
+
+    normalizedTickets = normalizedTickets.slice(0, desiredCount);
+
+    const takenSeats = appGetBaseOccupiedSeats();
+
+    return normalizedTickets.map(function(ticket) {
+        const normalizedSeat = appNormalizeSeat(ticket.seatNumber);
+        let seatNumber = normalizedSeat && normalizedSeat.classId === ticket.ticketClassId && !takenSeats.has(normalizedSeat.seatNumber)
+            ? normalizedSeat.seatNumber
+            : appFindFirstAvailableSeatNumber(ticket.ticketClassId, takenSeats);
+
+        if (seatNumber) {
+            takenSeats.add(seatNumber);
+        }
+
+        return {
+            ...ticket,
+            seatNumber
+        };
+    });
+}
+
+function appBuildTickets(data) {
+    const tickets = Array.isArray(data.tickets) ? data.tickets : [];
     const complementPrice = (data.complements || []).reduce((total, complement) => total + complement.price, 0);
-    const subtotal = (data.pricePerPassenger * passengers) + complementPrice;
+    const complementShares = appSplitAmount(complementPrice, tickets.length || 1);
+    const pretaxWeights = tickets.map((ticket, index) => appGetTicketBasePrice(ticket) + (complementShares[index] || 0));
+    const taxShares = appDistributeAmountByWeight(Number(data.pricing?.taxes) || 0, pretaxWeights);
+
+    return tickets.map(function(ticket, index) {
+        const baseFare = appGetTicketBasePrice(ticket);
+        const finalPrice = baseFare + (complementShares[index] || 0) + (taxShares[index] || 0);
+
+        return {
+            ...ticket,
+            id: data.code ? (ticket.id || appCreateTicketId()) : '',
+            classLabel: ticket.ticketClassLabel,
+            finalPrice
+        };
+    });
+}
+
+function appCalculatePricing(data) {
+    const tickets = Array.isArray(data.tickets) ? data.tickets : [];
+    const ticketsSubtotal = tickets.reduce((total, ticket) => total + appGetTicketBasePrice(ticket), 0);
+    const complementPrice = (data.complements || []).reduce((total, complement) => total + complement.price, 0);
+    const subtotal = ticketsSubtotal + complementPrice;
     const taxes = Math.round(subtotal * 0.1);
 
     return {
@@ -339,7 +642,8 @@ function appCalculatePricing(data) {
 }
 
 function appSyncCartBadge() {
-    const badgeValue = appGetCart() ? '1' : '0';
+    const cart = appGetCart();
+    const badgeValue = cart ? String(cart.passengers || cart.tickets?.length || 1) : '0';
     document.querySelectorAll('.cart-badge').forEach(badge => {
         badge.textContent = badgeValue;
     });
@@ -522,6 +826,10 @@ function appApplyOfferToDetailPage(offer) {
     }
 }
 
+function appGetOfferDetailPassengerCount() {
+    return 2;
+}
+
 function appGetOfferDetailSelection() {
     const tariffConfig = appGetTariffConfig();
     const complementConfig = appGetComplementConfig();
@@ -530,10 +838,21 @@ function appGetOfferDetailSelection() {
     const complements = Array.from(document.querySelectorAll('.complement-item input:checked'))
         .map(input => complementConfig[input.id])
         .filter(Boolean);
+    const passengers = appGetOfferDetailPassengerCount();
+    const tickets = appSyncTickets({
+        tickets: Array.from({ length: passengers }, function() {
+            return { tariffId: selectedTariff.id, ticketClassId: 'economy' };
+        }),
+        desiredCount: passengers,
+        defaultTariffId: selectedTariff.id,
+        defaultClassId: 'economy'
+    });
 
     return {
         tariff: selectedTariff,
-        complements
+        complements,
+        passengers,
+        tickets
     };
 }
 
@@ -544,10 +863,8 @@ function appUpdateOfferDetailSummary() {
     }
 
     const selection = appGetOfferDetailSelection();
-    const passengers = 2;
     const pricing = appCalculatePricing({
-        pricePerPassenger: selection.tariff.pricePerPassenger,
-        passengers,
+        tickets: selection.tickets,
         complements: selection.complements
     });
 
@@ -571,8 +888,16 @@ function appUpdateOfferDetailSummary() {
 
         sidebarBreakdown.innerHTML = `
             <div class="breakdown-item">
-                <span class="breakdown-label">${selection.tariff.label} (${passengers} pasajeros)</span>
-                <span class="breakdown-value">${appFormatCurrency(selection.tariff.pricePerPassenger * passengers)}</span>
+                <span class="breakdown-label">${selection.tariff.label} (${selection.passengers} pasajeros)</span>
+                <span class="breakdown-value">${appFormatCurrency(selection.tariff.pricePerPassenger * selection.passengers)}</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Clase de cabina</span>
+                <span class="breakdown-value">La eliges por boleto en el carrito</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Asientos</span>
+                <span class="breakdown-value">Se eligen en el carrito</span>
             </div>
             ${complementsMarkup}
             <div class="breakdown-item">
@@ -590,12 +915,6 @@ function appUpdateOfferDetailSummary() {
 function appBuildCartFromDetail() {
     const offer = appGetSelectedOffer();
     const selection = appGetOfferDetailSelection();
-    const passengers = 2;
-    const pricing = appCalculatePricing({
-        pricePerPassenger: selection.tariff.pricePerPassenger,
-        passengers,
-        complements: selection.complements
-    });
 
     return {
         id: offer.id,
@@ -605,12 +924,13 @@ function appBuildCartFromDetail() {
         image: offer.image,
         departureDate: offer.travelDates.departureDate,
         returnDate: offer.travelDates.returnDate,
-        passengers,
-        tariffId: selection.tariff.id,
-        tariffLabel: selection.tariff.label,
-        pricePerPassenger: selection.tariff.pricePerPassenger,
+        passengers: selection.passengers,
+        tickets: selection.tickets,
         complements: selection.complements,
-        pricing
+        pricing: appCalculatePricing({
+            tickets: selection.tickets,
+            complements: selection.complements
+        })
     };
 }
 
@@ -642,6 +962,157 @@ function appUpdateReserveButton() {
     }
 }
 
+function appBuildTicketMixSummary(tickets, labelKey) {
+    const counts = new Map();
+
+    (Array.isArray(tickets) ? tickets : []).forEach(function(ticket) {
+        const label = ticket[labelKey];
+        counts.set(label, (counts.get(label) || 0) + 1);
+    });
+
+    return Array.from(counts.entries())
+        .map(([label, count]) => `${count} ${label}`)
+        .join(', ');
+}
+
+function appGetActiveCartTicket(tickets, preferredDraftId) {
+    return tickets.find(ticket => ticket.draftId === preferredDraftId) || tickets[0] || null;
+}
+
+function appBuildCartSeatMapMarkup(tickets, activeDraftId) {
+    const activeTicket = appGetActiveCartTicket(tickets, activeDraftId);
+
+    if (!activeTicket) {
+        return '';
+    }
+
+    const occupiedSeats = appGetBaseOccupiedSeats();
+    tickets.forEach(function(ticket) {
+        if (ticket.draftId !== activeTicket.draftId && ticket.seatNumber) {
+            occupiedSeats.add(ticket.seatNumber);
+        }
+    });
+
+    return Object.values(appGetSeatClassConfig()).map(function(seatClass) {
+        const classIsActive = seatClass.id === activeTicket.ticketClassId;
+
+        return `
+            <section class="cart-seat-cabin ${classIsActive ? 'is-active' : 'is-locked'}">
+                <div class="cart-seat-cabin-header">
+                    <div>
+                        <p class="cart-seat-cabin-kicker">Cabina</p>
+                        <h4>${seatClass.label}</h4>
+                    </div>
+                    <span class="cart-seat-cabin-badge">${classIsActive ? 'Disponible para este boleto' : 'Bloqueada por clase'}</span>
+                </div>
+                <div class="cart-seat-rows">
+                    ${seatClass.rows.map(function(row) {
+                        return `
+                            <div class="cart-seat-row">
+                                <span class="cart-seat-row-label">${row}</span>
+                                ${seatClass.columns.map(function(column) {
+                                    const seatNumber = `${row}${column}`;
+                                    const seat = appGetSeatByNumber(seatNumber);
+                                    const isSelected = activeTicket.seatNumber === seatNumber;
+                                    const isOccupied = occupiedSeats.has(seatNumber);
+                                    const isLocked = !classIsActive;
+                                    const stateClass = isSelected
+                                        ? 'is-selected'
+                                        : isOccupied
+                                            ? 'is-occupied'
+                                            : isLocked
+                                                ? 'is-locked'
+                                                : 'is-available';
+
+                                    return `
+                                        <button
+                                            type="button"
+                                            class="cart-seat-button ${stateClass} seat-${seat.classId}"
+                                            data-cart-seat="${seatNumber}"
+                                            data-active-ticket="${activeTicket.draftId}"
+                                            aria-pressed="${isSelected ? 'true' : 'false'}"
+                                            ${isOccupied || isLocked ? 'disabled' : ''}
+                                        >
+                                            ${seatNumber}
+                                        </button>
+                                        ${column === seatClass.aisleAfter ? '<span class="cart-seat-aisle" aria-hidden="true"></span>' : ''}
+                                    `;
+                                }).join('')}
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            </section>
+        `;
+    }).join('');
+}
+
+function appResizeCartTickets(cart, nextPassengers) {
+    return {
+        ...cart,
+        passengers: nextPassengers,
+        tickets: appSyncTickets({
+            tickets: cart.tickets,
+            desiredCount: nextPassengers,
+            defaultTariffId: cart.tickets[cart.tickets.length - 1]?.tariffId || cart.tariffId || 'standard',
+            defaultClassId: cart.tickets[cart.tickets.length - 1]?.ticketClassId || cart.ticketClassId || 'economy'
+        })
+    };
+}
+
+function appUpdateCartTicketTariff(cart, draftId, tariffId) {
+    const nextTickets = cart.tickets.map(function(ticket) {
+        return ticket.draftId === draftId
+            ? {
+                ...ticket,
+                tariffId,
+                tariffLabel: appGetTariffById(tariffId).label,
+                seatNumber: ticket.seatNumber
+            }
+            : ticket;
+    });
+
+    return {
+        ...cart,
+        passengers: nextTickets.length,
+        tickets: nextTickets
+    };
+}
+
+function appUpdateCartTicketClass(cart, draftId, ticketClassId) {
+    const seatClass = appGetSeatClassById(ticketClassId);
+    const nextTickets = cart.tickets.map(function(ticket) {
+        return ticket.draftId === draftId
+            ? {
+                ...ticket,
+                ticketClassId: seatClass.id,
+                ticketClassLabel: seatClass.label,
+                seatNumber: ''
+            }
+            : ticket;
+    });
+
+    return {
+        ...cart,
+        passengers: nextTickets.length,
+        tickets: nextTickets
+    };
+}
+
+function appUpdateCartTicketSeat(cart, draftId, seatNumber) {
+    const nextTickets = cart.tickets.map(function(ticket) {
+        return ticket.draftId === draftId
+            ? { ...ticket, seatNumber }
+            : ticket;
+    });
+
+    return {
+        ...cart,
+        passengers: nextTickets.length,
+        tickets: nextTickets
+    };
+}
+
 function appInitOfferDetailPage() {
     if (!document.querySelector('.detail-sidebar')) {
         return;
@@ -661,7 +1132,9 @@ function appInitOfferDetailPage() {
     });
 
     document.querySelectorAll('.complement-item input').forEach(input => {
-        input.addEventListener('change', appUpdateOfferDetailSummary);
+        input.addEventListener('change', function() {
+            appUpdateOfferDetailSummary();
+        });
     });
 
     if (!reserveButton) {
@@ -684,7 +1157,7 @@ function appInitOfferDetailPage() {
         }
 
         appSetCart(appBuildCartFromDetail());
-        appSetNotice('La compra se agrego al carrito. Ya puedes revisar, modificar pasajeros o continuar al pago.', 'success');
+        appSetNotice('La compra se agrego al carrito. En el carrito podras elegir clase y asientos por cada boleto.', 'success');
         appUpdateReserveButton();
         window.location.href = getClientPagePath('cart.html');
     });
@@ -743,6 +1216,10 @@ function appRenderCartPage() {
     const complementSummary = cart.complements.length
         ? cart.complements.map(complement => complement.label).join(', ')
         : 'Sin complementos';
+    const seatSummary = appFormatSeatList(cart.tickets);
+    const classSummary = appBuildTicketMixSummary(cart.tickets, 'ticketClassLabel');
+    const tariffSummary = appBuildTicketMixSummary(cart.tickets, 'tariffLabel');
+    const activeDraftId = cartGrid.dataset.activeTicketDraftId || '';
 
     cartGrid.innerHTML = `
         <div class="cart-items">
@@ -784,7 +1261,7 @@ function appRenderCartPage() {
                         <p class="cart-item-dates">${appFormatReservationRange(cart.departureDate, cart.returnDate)}</p>
                         <div class="cart-item-footer">
                             <div class="quantity-control">
-                                <span class="quantity-label">Pasajeros:</span>
+                                <span class="quantity-label">Boletos:</span>
                                 <div class="quantity-buttons">
                                     <button class="quantity-btn" type="button" data-passenger-change="-1" ${canDecreasePassengers ? '' : 'disabled style="opacity: 0.5; cursor: not-allowed;"'}>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -801,7 +1278,8 @@ function appRenderCartPage() {
                                 </div>
                             </div>
                             <div class="cart-item-price-section">
-                                <p class="cart-item-passengers">${cart.tariffLabel} &middot; ${complementSummary}</p>
+                                <p class="cart-item-passengers">${tariffSummary || cart.tariffLabel} &middot; ${complementSummary}</p>
+                                <p style="margin: 0.35rem 0 0; color: #6b7280; font-size: 0.875rem;">Clases: ${classSummary || 'Sin definir'} | Asientos: ${seatSummary}</p>
                                 <p class="cart-item-price">${appFormatCurrency(cart.pricing.total)}</p>
                             </div>
                         </div>
@@ -809,11 +1287,76 @@ function appRenderCartPage() {
                 </div>
             </div>
 
+            <div class="cart-ticket-manager">
+                <div class="cart-ticket-manager-header">
+                    <div>
+                        <p class="cart-ticket-kicker">Tiquetes</p>
+                        <h3>Clase y asiento por boleto</h3>
+                        <p>Al agregar mas boletos se asignan automaticamente. Luego puedes cambiar clase y asiento aqui mismo.</p>
+                    </div>
+                </div>
+
+                <div class="cart-ticket-list">
+                    ${cart.tickets.map(function(ticket, index) {
+                        const isActive = ticket.draftId === activeDraftId;
+
+                        return `
+                            <article class="cart-ticket-card ${isActive ? 'is-active' : ''}" data-ticket-card="${ticket.draftId}">
+                                <div class="cart-ticket-card-header">
+                                    <div>
+                                        <p class="cart-ticket-kicker">Boleto ${index + 1}</p>
+                                        <h4>${ticket.ticketClassLabel}</h4>
+                                    </div>
+                                    <span class="cart-ticket-price">${appFormatCurrency(ticket.finalPrice || appGetTicketBasePrice(ticket))}</span>
+                                </div>
+                                <div class="cart-ticket-controls">
+                                    <label class="cart-ticket-field">
+                                        <span>Tarifa</span>
+                                        <select data-ticket-tariff="${ticket.draftId}">
+                                            ${Object.values(appGetTariffConfig()).map(function(tariff) {
+                                                return `<option value="${tariff.id}" ${tariff.id === ticket.tariffId ? 'selected' : ''}>${tariff.label}</option>`;
+                                            }).join('')}
+                                        </select>
+                                    </label>
+                                    <label class="cart-ticket-field">
+                                        <span>Clase</span>
+                                        <select data-ticket-class="${ticket.draftId}">
+                                            ${Object.values(appGetSeatClassConfig()).map(function(seatClass) {
+                                                return `<option value="${seatClass.id}" ${seatClass.id === ticket.ticketClassId ? 'selected' : ''}>${seatClass.label}</option>`;
+                                            }).join('')}
+                                        </select>
+                                    </label>
+                                    <button type="button" class="cart-ticket-seat-trigger" data-toggle-ticket-seat="${ticket.draftId}">
+                                        <span>Asiento</span>
+                                        <strong>${ticket.seatNumber || 'Sin asignar'}</strong>
+                                    </button>
+                                </div>
+                                ${isActive ? `
+                                    <div class="cart-ticket-seat-map">
+                                        <div class="cart-seat-legend">
+                                            <span class="cart-seat-legend-item"><span class="cart-seat-legend-swatch available"></span>Disponible</span>
+                                            <span class="cart-seat-legend-item"><span class="cart-seat-legend-swatch selected"></span>Seleccionado</span>
+                                            <span class="cart-seat-legend-item"><span class="cart-seat-legend-swatch occupied"></span>Ocupado</span>
+                                            <span class="cart-seat-legend-item"><span class="cart-seat-legend-swatch locked"></span>Bloqueado</span>
+                                        </div>
+                                        <p style="margin: 0 0 1rem; color: #6b7280;">La tarifa define equipaje y beneficios. La clase define la cabina y el asiento.</p>
+                                        <div class="cart-seat-map-grid">
+                                            ${appBuildCartSeatMapMarkup(cart.tickets, ticket.draftId)}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </article>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+
             <div class="info-box">
                 <h3>Informacion importante</h3>
                 <ul>
                     <li>- Solo puedes tener una compra pendiente a la vez en este flujo.</li>
-                    <li>- Puedes ajustar entre ${APP_LIMITS.minPassengers} y ${APP_LIMITS.maxPassengers} pasajeros antes de pagar.</li>
+                    <li>- Puedes ajustar entre ${APP_LIMITS.minPassengers} y ${APP_LIMITS.maxPassengers} boletos antes de pagar.</li>
+                    <li>- Cada boleto puede viajar en una clase distinta y con un asiento diferente.</li>
                     <li>- Si cambias de idea, puedes eliminar la compra desde el icono de papelera.</li>
                 </ul>
             </div>
@@ -829,6 +1372,18 @@ function appRenderCartPage() {
                 <div class="summary-item">
                     <span class="summary-label">Impuestos y tasas</span>
                     <span class="summary-value">${appFormatCurrency(cart.pricing.taxes)}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Tarifas</span>
+                    <span class="summary-value">${tariffSummary || cart.tariffLabel}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Clases</span>
+                    <span class="summary-value">${classSummary || 'Sin definir'}</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Asientos</span>
+                    <span class="summary-value">${seatSummary}</span>
                 </div>
             </div>
             <div class="summary-total">
@@ -848,6 +1403,8 @@ function appRenderCartPage() {
             </div>
         </div>
     `;
+
+    cartGrid.dataset.activeTicketDraftId = activeDraftId;
 
     const removeButton = cartGrid.querySelector('[data-remove-cart="true"]');
     if (removeButton) {
@@ -869,16 +1426,41 @@ function appRenderCartPage() {
                 return;
             }
 
-            const updatedCart = {
-                ...cart,
-                passengers: nextPassengers,
-                pricing: appCalculatePricing({
-                    pricePerPassenger: cart.pricePerPassenger,
-                    passengers: nextPassengers,
-                    complements: cart.complements
-                })
-            };
+            appSetCart(appResizeCartTickets(cart, nextPassengers));
+            appRenderCartPage();
+        });
+    });
 
+    cartGrid.querySelectorAll('[data-toggle-ticket-seat]').forEach(button => {
+        button.addEventListener('click', function() {
+            cartGrid.dataset.activeTicketDraftId = cartGrid.dataset.activeTicketDraftId === this.dataset.toggleTicketSeat
+                ? ''
+                : this.dataset.toggleTicketSeat;
+            appRenderCartPage();
+        });
+    });
+
+    cartGrid.querySelectorAll('[data-ticket-tariff]').forEach(select => {
+        select.addEventListener('change', function() {
+            const updatedCart = appUpdateCartTicketTariff(cart, this.dataset.ticketTariff, this.value);
+            appSetCart(updatedCart);
+            appRenderCartPage();
+        });
+    });
+
+    cartGrid.querySelectorAll('[data-ticket-class]').forEach(select => {
+        select.addEventListener('change', function() {
+            const updatedCart = appUpdateCartTicketClass(cart, this.dataset.ticketClass, this.value);
+            cartGrid.dataset.activeTicketDraftId = this.dataset.ticketClass;
+            appSetCart(updatedCart);
+            appRenderCartPage();
+        });
+    });
+
+    cartGrid.querySelectorAll('[data-cart-seat]').forEach(button => {
+        button.addEventListener('click', function() {
+            const updatedCart = appUpdateCartTicketSeat(cart, this.dataset.activeTicket, this.dataset.cartSeat);
+            cartGrid.dataset.activeTicketDraftId = this.dataset.activeTicket;
             appSetCart(updatedCart);
             appRenderCartPage();
         });
@@ -887,12 +1469,34 @@ function appRenderCartPage() {
     const checkoutButton = cartGrid.querySelector('[data-checkout="true"]');
     if (checkoutButton) {
         checkoutButton.addEventListener('click', function() {
+            if (cart.tickets.some(ticket => !ticket.seatNumber)) {
+                alert('Todos los boletos deben tener un asiento asignado antes de pagar.');
+                return;
+            }
+
             const reservationCode = `RES-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 900000) + 100000)}`;
+            const syncedTickets = appSyncTickets({
+                tickets: cart.tickets,
+                desiredCount: cart.tickets.length,
+                defaultTariffId: cart.tickets[0]?.tariffId || 'standard'
+            });
+            const pricing = appCalculatePricing({
+                tickets: syncedTickets,
+                complements: cart.complements
+            });
             const reservation = {
                 ...cart,
+                passengers: syncedTickets.length,
                 code: reservationCode,
                 status: 'confirmed',
                 reservedAt: new Date().toISOString(),
+                tickets: appBuildTickets({
+                    tickets: syncedTickets,
+                    complements: cart.complements,
+                    pricing,
+                    code: reservationCode
+                }),
+                pricing,
                 paymentMethod: 'Visa ****1234'
             };
 
@@ -908,6 +1512,17 @@ function appBuildReservationDetailsMarkup(reservation) {
     const complementItems = reservation.complements.length
         ? reservation.complements.map(complement => `<li>- ${complement.label} (${appFormatCurrency(complement.price)})</li>`).join('')
         : '<li>- No agregaste complementos adicionales</li>';
+    const classSummary = appBuildTicketMixSummary(reservation.tickets, 'ticketClassLabel');
+    const tariffSummary = appBuildTicketMixSummary(reservation.tickets, 'tariffLabel');
+    const ticketItems = reservation.tickets.length
+        ? reservation.tickets.map(ticket => `
+            <div style="padding: 0.85rem 1rem; border: 1px solid #e5e7eb; border-radius: 0.75rem; background-color: #f8fafc; margin-bottom: 0.75rem;">
+                <p style="margin: 0 0 0.25rem; font-weight: 700; color: #111827;">${ticket.id}</p>
+                <p style="margin: 0 0 0.25rem; color: #374151;">${ticket.tariffLabel} | Asiento ${ticket.seatNumber} | ${ticket.ticketClassLabel}</p>
+                <p style="margin: 0; color: #2563eb; font-weight: 600;">${appFormatCurrency(ticket.finalPrice)}</p>
+            </div>
+        `).join('')
+        : '<p style="margin: 0; color: #6b7280;">Los tiquetes se emitiran al confirmar el pago.</p>';
 
     return `
         <div class="policy-section" id="reservationDetailsCard" style="margin-top: 1.5rem;">
@@ -920,12 +1535,18 @@ function appBuildReservationDetailsMarkup(reservation) {
                         <li>- Destino: ${reservation.destination}</li>
                         <li>- Fechas: ${appFormatReservationRange(reservation.departureDate, reservation.returnDate)}</li>
                         <li>- Pasajeros: ${reservation.passengers}</li>
-                        <li>- Tarifa: ${reservation.tariffLabel}</li>
+                        <li>- Tarifas: ${tariffSummary || reservation.tariffLabel}</li>
+                        <li>- Clases: ${classSummary || reservation.ticketClassLabel}</li>
+                        <li>- Asientos: ${appFormatSeatList(reservation.tickets)}</li>
                     </ul>
                 </div>
                 <div class="policy-item">
                     <h3>Complementos</h3>
                     <ul>${complementItems}</ul>
+                </div>
+                <div class="policy-item">
+                    <h3>Tiquetes emitidos</h3>
+                    ${ticketItems}
                 </div>
             </div>
         </div>
@@ -961,6 +1582,8 @@ function appBuildModifyReservationMarkup(reservation) {
 }
 
 function appDownloadVoucher(reservation) {
+    const classSummary = appBuildTicketMixSummary(reservation.tickets, 'ticketClassLabel');
+    const tariffSummary = appBuildTicketMixSummary(reservation.tickets, 'tariffLabel');
     const voucherContent = [
         'BIOPOCHITOEXPRESS - VOUCHER DE RESERVA',
         '',
@@ -969,9 +1592,14 @@ function appDownloadVoucher(reservation) {
         `Destino: ${reservation.destination}`,
         `Fechas: ${appFormatReservationRange(reservation.departureDate, reservation.returnDate)}`,
         `Pasajeros: ${reservation.passengers}`,
-        `Tarifa: ${reservation.tariffLabel}`,
+        `Tarifas: ${tariffSummary || reservation.tariffLabel}`,
+        `Clases: ${classSummary || reservation.ticketClassLabel}`,
+        `Asientos: ${appFormatSeatList(reservation.tickets)}`,
         `Total pagado: ${appFormatCurrency(reservation.pricing.total)}`,
-        `Metodo de pago: ${reservation.paymentMethod}`
+        `Metodo de pago: ${reservation.paymentMethod}`,
+        '',
+        'TIQUETES:',
+        ...(reservation.tickets || []).map(ticket => `${ticket.id} | ${ticket.tariffLabel} | Asiento ${ticket.seatNumber} | ${ticket.ticketClassLabel} | ${appFormatCurrency(ticket.finalPrice)}`)
     ].join('\n');
 
     const voucherBlob = new Blob([voucherContent], { type: 'text/plain;charset=utf-8' });
@@ -1048,6 +1676,7 @@ function appRenderReservationPage() {
     const disableModify = !modifyState.allowed ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : '';
     const disableCancel = !cancellationState.allowed ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : '';
     const reservedAt = new Date(reservation.reservedAt || new Date().toISOString());
+    const classSummary = appBuildTicketMixSummary(reservation.tickets, 'ticketClassLabel');
     const cancellationSummary = reservation.status === 'cancelled'
         ? `
             <div class="flight-status-box" style="background-color: #fef2f2;">
@@ -1127,6 +1756,18 @@ function appRenderReservationPage() {
                             <span class="price-value">${reservation.passengers}</span>
                         </div>
                         <div class="price-item">
+                            <span class="price-label">Clases</span>
+                            <span class="price-value">${classSummary || reservation.ticketClassLabel}</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">Asientos</span>
+                            <span class="price-value">${appFormatSeatList(reservation.tickets)}</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">Tiquetes</span>
+                            <span class="price-value">${reservation.tickets.length}</span>
+                        </div>
+                        <div class="price-item">
                             <span class="price-label">Total pagado</span>
                             <span class="price-value price-total">${appFormatCurrency(reservation.pricing.total)}</span>
                         </div>
@@ -1154,6 +1795,7 @@ function appRenderReservationPage() {
                         <li>- Puedes cambiar tus fechas hasta 48 horas antes del viaje.</li>
                         <li>- Las fechas modificadas deben seguir dentro del proximo ano.</li>
                         <li>- Los pasajeros deben mantenerse entre ${APP_LIMITS.minPassengers} y ${APP_LIMITS.maxPassengers}.</li>
+                        <li>- Si cambias la cantidad de pasajeros, los asientos se actualizan segun disponibilidad.</li>
                         <li>- Los cambios se guardan de inmediato en esta misma reserva.</li>
                     </ul>
                 </div>
@@ -1244,9 +1886,17 @@ function appRenderReservationPage() {
                         returnDate: nextValues.returnDate,
                         passengers: Number(nextValues.passengers),
                         pricing: appCalculatePricing({
-                            pricePerPassenger: reservation.pricePerPassenger,
-                            passengers: Number(nextValues.passengers),
+                            tickets: appSyncTickets({
+                                tickets: reservation.tickets,
+                                desiredCount: Number(nextValues.passengers),
+                                defaultTariffId: reservation.tickets[0]?.tariffId || reservation.tariffId || 'standard'
+                            }),
                             complements: reservation.complements
+                        }),
+                        tickets: appSyncTickets({
+                            tickets: reservation.tickets,
+                            desiredCount: Number(nextValues.passengers),
+                            defaultTariffId: reservation.tickets[0]?.tariffId || reservation.tariffId || 'standard'
                         }),
                         updatedAt: new Date().toISOString()
                     };
