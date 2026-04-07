@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Agente de Aerolínea - BiopochitoExpress</title>
+    <link rel="stylesheet" href="../../public/css/styles.css">
+    <link rel="stylesheet" href="../../public/css/admin-styles.css">
+</head>
+<body>
+    <!-- Header Agent -->
+    <header class="header admin-header">
+        <div class="container header-content">
+            <a href="agent.html" class="logo">
+                <div class="logo-icon admin-logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">BiopochitoExpress - Agente</span>
+            </a>
+
+            <div class="admin-info">
+                <span class="admin-role">Agente de Aerolínea</span>
+                <div class="user-menu">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span>Ana Martínez</span>
+                    <button class="btn-logout">Cerrar sesión</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar & Main Content -->
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <nav class="sidebar-nav">
+                <a href="#reservas" class="sidebar-link active" data-section="reservas">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                    <span>Gestión de Reservas</span>
+                </a>
+                <a href="#pagos" class="sidebar-link" data-section="pagos">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                        <line x1="1" y1="10" x2="23" y2="10"/>
+                    </svg>
+                    <span>Confirmación de Pagos</span>
+                </a>
+                <a href="#asientos" class="sidebar-link" data-section="asientos">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 16v-4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4M4 20h16M8 16v4m8-4v4"/>
+                    </svg>
+                    <span>Asignación de Asientos</span>
+                </a>
+                <a href="#solicitudes" class="sidebar-link" data-section="solicitudes">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <span>Solicitudes de Clientes</span>
+                </a>
+                <a href="#estadisticas" class="sidebar-link" data-section="estadisticas">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>
+                    </svg>
+                    <span>Mis Estadísticas</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Reservas Section -->
+            <section id="reservas-section" class="admin-section active">
+                <div class="section-header-admin">
+                    <div>
+                        <h1>Gestión de Reservas</h1>
+                        <p class="subtitle">Administra las reservas de tus clientes</p>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <div class="kpi-content">
+                            <h3>Pendientes hoy</h3>
+                            <p class="kpi-value">24</p>
+                            <span class="kpi-change">Requieren atención</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon green">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                        <div class="kpi-content">
+                            <h3>Confirmadas hoy</h3>
+                            <p class="kpi-value">18</p>
+                            <span class="kpi-change positive">+6 vs ayer</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon orange">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                        </div>
+                        <div class="kpi-content">
+                            <h3>Solicitudes urgentes</h3>
+                            <p class="kpi-value">5</p>
+                            <span class="kpi-change">Requieren respuesta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-filters">
+                    <input type="text" placeholder="Buscar por código, nombre del cliente..." class="search-input">
+                    <select class="filter-select">
+                        <option>Todos los estados</option>
+                        <option>Pendiente</option>
+                        <option>Confirmada</option>
+                        <option>En proceso</option>
+                        <option>Cancelada</option>
+                    </select>
+                    <select class="filter-select">
+                        <option>Todas las fechas</option>
+                        <option>Hoy</option>
+                        <option>Esta semana</option>
+                        <option>Este mes</option>
+                    </select>
+                </div>
+
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Reserva</th>
+                                <th>Cliente</th>
+                                <th>Vuelo</th>
+                                <th>Fecha</th>
+                                <th>Pasajeros</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>#RES-12345</strong></td>
+                                <td>María López García</td>
+                                <td>AV123 BOG→CTG</td>
+                                <td>2026-04-15 08:30</td>
+                                <td>2</td>
+                                <td>$900.000</td>
+                                <td><span class="badge warning">Pendiente pago</span></td>
+                                <td>
+                                    <button class="btn-icon" title="Ver detalles" onclick="viewReservation('12345')">👁️</button>
+                                    <button class="btn-icon" title="Confirmar">✅</button>
+                                    <button class="btn-icon" title="Contactar">📞</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#RES-12346</strong></td>
+                                <td>Carlos Gómez Ruiz</td>
+                                <td>LA456 MDE→SAP</td>
+                                <td>2026-04-16 14:20</td>
+                                <td>1</td>
+                                <td>$580.000</td>
+                                <td><span class="badge success">Confirmada</span></td>
+                                <td>
+                                    <button class="btn-icon" title="Ver detalles" onclick="viewReservation('12346')">👁️</button>
+                                    <button class="btn-icon" title="Asignar asiento">💺</button>
+                                    <button class="btn-icon" title="Contactar">📞</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#RES-12347</strong></td>
+                                <td>Ana Torres Pérez</td>
+                                <td>VV789 CLO→BOG</td>
+                                <td>2026-04-17 10:00</td>
+                                <td>3</td>
+                                <td>$960.000</td>
+                                <td><span class="badge info">En proceso</span></td>
+                                <td>
+                                    <button class="btn-icon" title="Ver detalles" onclick="viewReservation('12347')">👁️</button>
+                                    <button class="btn-icon" title="Confirmar">✅</button>
+                                    <button class="btn-icon" title="Contactar">📞</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#RES-12348</strong></td>
+                                <td>Luis Martínez Silva</td>
+                                <td>AV200 BOG→SMR</td>
+                                <td>2026-04-18 15:45</td>
+                                <td>4</td>
+                                <td>$1.800.000</td>
+                                <td><span class="badge success">Confirmada</span></td>
+                                <td>
+                                    <button class="btn-icon" title="Ver detalles" onclick="viewReservation('12348')">👁️</button>
+                                    <button class="btn-icon" title="Asignar asiento">💺</button>
+                                    <button class="btn-icon" title="Contactar">📞</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination">
+                    <button class="btn-pagination">Anterior</button>
+                    <span class="pagination-info">Página 1 de 8</span>
+                    <button class="btn-pagination">Siguiente</button>
+                </div>
+            </section>
+
+            <!-- Pagos Section -->
+            <section id="pagos-section" class="admin-section">
+                <div class="section-header-admin">
+                    <h1>Confirmación de Pagos</h1>
+                    <p class="subtitle">Verifica y confirma los pagos de las reservas</p>
+                </div>
+
+                <div class="admin-filters">
+                    <input type="text" placeholder="Buscar por código de reserva o referencia de pago..." class="search-input">
+                    <select class="filter-select">
+                        <option>Todos los métodos</option>
+                        <option>Tarjeta de crédito</option>
+                        <option>PSE</option>
+                        <option>Transferencia</option>
+                        <option>Efectivo</option>
+                    </select>
+                </div>
+
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Reserva</th>
+                                <th>Cliente</th>
+                                <th>Método de pago</th>
+                                <th>Referencia</th>
+                                <th>Monto</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>#RES-12345</strong></td>
+                                <td>María López García</td>
+                                <td>PSE</td>
+                                <td>PSE-789456123</td>
+                                <td>$900.000</td>
+                                <td>2026-04-07 10:23</td>
+                                <td><span class="badge warning">Pendiente</span></td>
+                                <td>
+                                    <button class="btn-secondary" onclick="confirmPayment('12345')">Confirmar</button>
+                                    <button class="btn-icon" title="Ver comprobante">📄</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#RES-12350</strong></td>
+                                <td>Pedro Ramírez Cruz</td>
+                                <td>Tarjeta de crédito</td>
+                                <td>TDC-456123789</td>
+                                <td>$1.250.000</td>
+                                <td>2026-04-07 09:15</td>
+                                <td><span class="badge warning">Pendiente</span></td>
+                                <td>
+                                    <button class="btn-secondary" onclick="confirmPayment('12350')">Confirmar</button>
+                                    <button class="btn-icon" title="Ver comprobante">📄</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#RES-12346</strong></td>
+                                <td>Carlos Gómez Ruiz</td>
+                                <td>Transferencia</td>
+                                <td>TRF-321654987</td>
+                                <td>$580.000</td>
+                                <td>2026-04-06 16:42</td>
+                                <td><span class="badge success">Confirmado</span></td>
+                                <td>
+                                    <button class="btn-icon" title="Ver detalles">👁️</button>
+                                    <button class="btn-icon" title="Descargar">⬇️</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Asientos Section -->
+            <section id="asientos-section" class="admin-section">
+                <div class="section-header-admin">
+                    <h1>Asignación de Asientos</h1>
+                    <p class="subtitle">Gestiona la asignación de asientos para los vuelos</p>
+                </div>
+
+                <div class="admin-filters">
+                    <select class="filter-select" onchange="loadSeatingMap(this.value)">
+                        <option value="">Seleccionar vuelo...</option>
+                        <option value="AV123">AV123 - BOG→CTG - 2026-04-15 08:30</option>
+                        <option value="LA456">LA456 - MDE→SAP - 2026-04-16 14:20</option>
+                        <option value="VV789">VV789 - CLO→BOG - 2026-04-17 10:00</option>
+                    </select>
+                </div>
+
+                <div class="seating-info">
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-content">
+                                <h3>Total de asientos</h3>
+                                <p class="kpi-value">180</p>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-content">
+                                <h3>Ocupados</h3>
+                                <p class="kpi-value">45</p>
+                                <span class="kpi-change">25% ocupación</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-content">
+                                <h3>Disponibles</h3>
+                                <p class="kpi-value">135</p>
+                                <span class="kpi-change positive">75% disponibles</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="seating-map-container">
+                    <div class="seating-legend">
+                        <div class="legend-item">
+                            <div class="seat-sample available"></div>
+                            <span>Disponible</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="seat-sample occupied"></div>
+                            <span>Ocupado</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="seat-sample selected"></div>
+                            <span>Seleccionado</span>
+                        </div>
+                    </div>
+
+                    <div class="airplane-cabin">
+                        <div class="cabin-section">
+                            <h4>Clase Ejecutiva</h4>
+                            <div class="seating-grid executive">
+                                <!-- Row 1 -->
+                                <div class="seat-row">
+                                    <span class="row-number">1</span>
+                                    <button class="seat available" data-seat="1A">A</button>
+                                    <button class="seat available" data-seat="1B">B</button>
+                                    <div class="aisle"></div>
+                                    <button class="seat occupied" data-seat="1C">C</button>
+                                    <button class="seat available" data-seat="1D">D</button>
+                                </div>
+                                <!-- Row 2 -->
+                                <div class="seat-row">
+                                    <span class="row-number">2</span>
+                                    <button class="seat occupied" data-seat="2A">A</button>
+                                    <button class="seat available" data-seat="2B">B</button>
+                                    <div class="aisle"></div>
+                                    <button class="seat available" data-seat="2C">C</button>
+                                    <button class="seat occupied" data-seat="2D">D</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cabin-section">
+                            <h4>Clase Económica</h4>
+                            <div class="seating-grid economy">
+                                <!-- Row 3 -->
+                                <div class="seat-row">
+                                    <span class="row-number">3</span>
+                                    <button class="seat available" data-seat="3A">A</button>
+                                    <button class="seat available" data-seat="3B">B</button>
+                                    <button class="seat occupied" data-seat="3C">C</button>
+                                    <div class="aisle"></div>
+                                    <button class="seat available" data-seat="3D">D</button>
+                                    <button class="seat occupied" data-seat="3E">E</button>
+                                    <button class="seat available" data-seat="3F">F</button>
+                                </div>
+                                <!-- Row 4 -->
+                                <div class="seat-row">
+                                    <span class="row-number">4</span>
+                                    <button class="seat available" data-seat="4A">A</button>
+                                    <button class="seat available" data-seat="4B">B</button>
+                                    <button class="seat available" data-seat="4C">C</button>
+                                    <div class="aisle"></div>
+                                    <button class="seat available" data-seat="4D">D</button>
+                                    <button class="seat available" data-seat="4E">E</button>
+                                    <button class="seat occupied" data-seat="4F">F</button>
+                                </div>
+                                <!-- Row 5 -->
+                                <div class="seat-row">
+                                    <span class="row-number">5</span>
+                                    <button class="seat occupied" data-seat="5A">A</button>
+                                    <button class="seat available" data-seat="5B">B</button>
+                                    <button class="seat available" data-seat="5C">C</button>
+                                    <div class="aisle"></div>
+                                    <button class="seat available" data-seat="5D">D</button>
+                                    <button class="seat available" data-seat="5E">E</button>
+                                    <button class="seat available" data-seat="5F">F</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="seat-assignment-form">
+                        <h3>Asignar asiento seleccionado</h3>
+                        <div class="form-field">
+                            <label>Reserva</label>
+                            <select class="input-setting">
+                                <option>Seleccionar reserva...</option>
+                                <option>#RES-12345 - María López</option>
+                                <option>#RES-12346 - Carlos Gómez</option>
+                                <option>#RES-12347 - Ana Torres</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>Pasajero</label>
+                            <select class="input-setting">
+                                <option>Seleccionar pasajero...</option>
+                                <option>Pasajero 1</option>
+                                <option>Pasajero 2</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>Asiento seleccionado</label>
+                            <input type="text" class="input-setting" id="selectedSeat" readonly placeholder="Ninguno">
+                        </div>
+                        <button class="btn-primary">Asignar asiento</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Solicitudes Section -->
+            <section id="solicitudes-section" class="admin-section">
+                <div class="section-header-admin">
+                    <h1>Solicitudes de Clientes</h1>
+                    <p class="subtitle">Atiende las solicitudes y consultas de tus clientes</p>
+                </div>
+
+                <div class="admin-filters">
+                    <input type="text" placeholder="Buscar solicitud..." class="search-input">
+                    <select class="filter-select">
+                        <option>Todas las prioridades</option>
+                        <option>Alta</option>
+                        <option>Media</option>
+                        <option>Baja</option>
+                    </select>
+                    <select class="filter-select">
+                        <option>Todos los estados</option>
+                        <option>Pendiente</option>
+                        <option>En proceso</option>
+                        <option>Resuelto</option>
+                    </select>
+                </div>
+
+                <div class="reservations-grid">
+                    <div class="reservation-card">
+                        <div class="reservation-info">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                <h4>Cambio de fecha de vuelo</h4>
+                                <span class="badge danger">Alta prioridad</span>
+                            </div>
+                            <p class="reservation-details">
+                                <strong>Cliente:</strong> María López García<br>
+                                <strong>Reserva:</strong> #RES-12345<br>
+                                <strong>Solicitud:</strong> Necesito cambiar mi vuelo del 15 de abril al 18 de abril por un compromiso de trabajo.
+                            </p>
+                            <span class="activity-time">Hace 2 horas</span>
+                        </div>
+                        <div class="reservation-actions">
+                            <button class="btn-primary">Responder</button>
+                            <button class="btn-secondary">Ver detalles</button>
+                        </div>
+                    </div>
+
+                    <div class="reservation-card">
+                        <div class="reservation-info">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                <h4>Equipaje adicional</h4>
+                                <span class="badge warning">Media prioridad</span>
+                            </div>
+                            <p class="reservation-details">
+                                <strong>Cliente:</strong> Carlos Gómez Ruiz<br>
+                                <strong>Reserva:</strong> #RES-12346<br>
+                                <strong>Solicitud:</strong> Quiero agregar una maleta adicional a mi reserva. ¿Cuál es el costo?
+                            </p>
+                            <span class="activity-time">Hace 5 horas</span>
+                        </div>
+                        <div class="reservation-actions">
+                            <button class="btn-primary">Responder</button>
+                            <button class="btn-secondary">Ver detalles</button>
+                        </div>
+                    </div>
+
+                    <div class="reservation-card">
+                        <div class="reservation-info">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                <h4>Consulta sobre restricciones COVID</h4>
+                                <span class="badge success">Resuelto</span>
+                            </div>
+                            <p class="reservation-details">
+                                <strong>Cliente:</strong> Ana Torres Pérez<br>
+                                <strong>Reserva:</strong> #RES-12347<br>
+                                <strong>Solicitud:</strong> ¿Necesito presentar algún documento especial para viajar a San Andrés?
+                            </p>
+                            <span class="activity-time">Ayer a las 14:30</span>
+                        </div>
+                        <div class="reservation-actions">
+                            <button class="btn-secondary">Ver detalles</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Estadísticas Section -->
+            <section id="estadisticas-section" class="admin-section">
+                <div class="section-header-admin">
+                    <h1>Mis Estadísticas</h1>
+                    <p class="subtitle">Resumen de tu desempeño</p>
+                </div>
+
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                        </div>
+                        <div class="kpi-content">
+                            <h3>Reservas gestionadas</h3>
+                            <p class="kpi-value">342</p>
+                            <span class="kpi-change positive">+28 este mes</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon green">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                        <div class="kpi-content">
+                            <h3>Tasa de confirmación</h3>
+                            <p class="kpi-value">94%</p>
+                            <span class="kpi-change positive">+2% vs mes anterior</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon orange">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <div class="kpi-content">
+                            <h3>Tiempo promedio de respuesta</h3>
+                            <p class="kpi-value">1.2h</p>
+                            <span class="kpi-change positive">-15min vs mes anterior</span>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card">
+                        <div class="kpi-icon purple">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <div class="kpi-content">
+                            <h3>Calificación promedio</h3>
+                            <p class="kpi-value">4.8 ⭐</p>
+                            <span class="kpi-change positive">Excelente</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <h3>Actividad reciente</h3>
+                    <div class="data-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Acción</th>
+                                    <th>Reserva</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha y hora</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>✅ Pago confirmado</td>
+                                    <td>#RES-12346</td>
+                                    <td>Carlos Gómez</td>
+                                    <td>2026-04-07 10:45</td>
+                                </tr>
+                                <tr>
+                                    <td>💺 Asiento asignado</td>
+                                    <td>#RES-12348</td>
+                                    <td>Luis Martínez</td>
+                                    <td>2026-04-07 10:30</td>
+                                </tr>
+                                <tr>
+                                    <td>📧 Solicitud respondida</td>
+                                    <td>#RES-12347</td>
+                                    <td>Ana Torres</td>
+                                    <td>2026-04-07 09:15</td>
+                                </tr>
+                                <tr>
+                                    <td>✅ Reserva confirmada</td>
+                                    <td>#RES-12345</td>
+                                    <td>María López</td>
+                                    <td>2026-04-06 16:22</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../../public/js/script.js"></script>
+    <script src="../../public/js/admin-script.js"></script>
+    <script src="../../public/js/agent-script.js"></script>
+</body>
+</html>
