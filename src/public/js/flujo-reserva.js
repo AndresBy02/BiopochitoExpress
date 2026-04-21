@@ -361,7 +361,7 @@ function appGetComplementConfig() {
         }
     };
 }
-
+//inicio de añadir seleccion de puestos y clases de vuelo
 function appGetSeatClassConfig() {
     return {
         first: {
@@ -606,7 +606,7 @@ function appSyncTickets(data) {
         };
     });
 }
-
+//fin de añadir seleccion de puestos y clases de vuelo(creo)
 function appBuildTickets(data) {
     const tickets = Array.isArray(data.tickets) ? data.tickets : [];
     const complementPrice = (data.complements || []).reduce((total, complement) => total + complement.price, 0);

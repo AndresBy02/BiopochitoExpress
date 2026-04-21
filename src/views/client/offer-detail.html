@@ -312,6 +312,241 @@
             color: #6b7280;
         }
 
+        .seat-selection-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .seat-selection-kicker,
+        .seat-cabin-kicker,
+        .selected-seat-label {
+            margin: 0 0 0.35rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .seat-selection-helper {
+            margin: 0;
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        .seat-selection-counter {
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            border-radius: 9999px;
+            padding: 0.6rem 0.9rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .seat-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.85rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .seat-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #374151;
+            font-size: 0.875rem;
+        }
+
+        .seat-legend-swatch {
+            width: 0.95rem;
+            height: 0.95rem;
+            border-radius: 0.3rem;
+            border: 1px solid #cbd5e1;
+        }
+
+        .seat-legend-swatch.available {
+            background-color: white;
+        }
+
+        .seat-legend-swatch.selected {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+
+        .seat-legend-swatch.occupied {
+            background-color: #cbd5e1;
+            border-color: #cbd5e1;
+        }
+
+        .seat-legend-swatch.locked {
+            background-color: #fee2e2;
+            border-color: #fecaca;
+        }
+
+        .seat-map-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .seat-cabin-section {
+            border: 1px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 1rem;
+            background-color: #ffffff;
+        }
+
+        .seat-cabin-section.is-active {
+            border-color: #93c5fd;
+            background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+        }
+
+        .seat-cabin-section.is-locked {
+            background-color: #f8fafc;
+        }
+
+        .seat-cabin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .seat-cabin-header h3 {
+            margin: 0;
+            color: #111827;
+            font-size: 1.1rem;
+        }
+
+        .seat-cabin-badge {
+            padding: 0.4rem 0.75rem;
+            border-radius: 9999px;
+            background-color: #e5e7eb;
+            color: #374151;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .seat-cabin-section.is-active .seat-cabin-badge {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .seat-cabin-rows {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .seat-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .seat-row-label {
+            width: 2rem;
+            color: #6b7280;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .seat-button {
+            min-width: 3.2rem;
+            height: 3rem;
+            border-radius: 0.8rem;
+            border: 1px solid #cbd5e1;
+            background-color: #ffffff;
+            color: #111827;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .seat-button.seat-first {
+            box-shadow: inset 0 -3px 0 #b45309;
+        }
+
+        .seat-button.seat-executive {
+            box-shadow: inset 0 -3px 0 #0f766e;
+        }
+
+        .seat-button.seat-economy {
+            box-shadow: inset 0 -3px 0 #2563eb;
+        }
+
+        .seat-button.is-available:hover {
+            border-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
+        .seat-button.is-selected {
+            background-color: #2563eb;
+            border-color: #2563eb;
+            color: #ffffff;
+            box-shadow: none;
+        }
+
+        .seat-button.is-occupied {
+            background-color: #cbd5e1;
+            border-color: #cbd5e1;
+            color: #64748b;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .seat-button.is-locked {
+            background-color: #fef2f2;
+            border-color: #fecaca;
+            color: #b91c1c;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .seat-aisle {
+            width: 1rem;
+            height: 1px;
+        }
+
+        .selected-seat-panel {
+            margin-top: 1.25rem;
+            padding: 1rem;
+            border-radius: 1rem;
+            background-color: #f8fafc;
+            border: 1px solid #e5e7eb;
+        }
+
+        .selected-seat-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .selected-seat-pill {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 0.1rem;
+            padding: 0.75rem 0.9rem;
+            border-radius: 0.85rem;
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            min-width: 8rem;
+        }
+
+        .selected-seat-pill span {
+            font-size: 0.8rem;
+        }
+
+        .selected-seat-empty {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
         .detail-sidebar {
             background-color: white;
             border-radius: 0.75rem;
@@ -437,6 +672,111 @@
             color: #10b981;
         }
 
+        /* Estilos para tariffas informativas en offer-detail */
+        .tariff-info-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tariff-info-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            transition: all 0.2s;
+        }
+
+        .tariff-info-card:hover {
+            border-color: #93c5fd;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+
+        .tariff-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .tariff-info-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .tariff-info-badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tariff-info-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb;
+            text-align: right;
+        }
+
+        .tariff-info-divider {
+            border-bottom: 1px solid #e5e7eb;
+            margin: 1rem 0;
+        }
+
+        .tariff-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .tariff-info-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .tariff-info-value {
+            color: #111827;
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .tariff-info-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .tariff-info-feature svg {
+            color: #10b981;
+            flex-shrink: 0;
+        }
+
+        .tariff-info-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        @media (min-width: 640px) {
+            .tariff-info-section {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         @media (min-width: 640px) {
             .includes-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -454,6 +794,24 @@
 
             .detail-grid {
                 grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .seat-selection-header,
+            .seat-cabin-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .seat-selection-counter {
+                white-space: normal;
+            }
+
+            .seat-button {
+                min-width: 2.8rem;
+                height: 2.8rem;
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -647,122 +1005,162 @@
                     </div>
                 </div>
 
-                <!-- Tariff Selection -->
+                <!-- Tariff Information (Informative Only) -->
                 <div class="detail-card">
-                    <h2 style="font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 1rem;">Selecciona tu tarifa</h2>
+                    <div style="display: flex; align-items: flex-start; gap: 1rem; justify-content: space-between; margin-bottom: 1rem;">
+                        <div>
+                            <h2 style="font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 0.5rem;">Elige tu tarifa ideal</h2>
+                            <p style="color: #6b7280; margin-bottom: 0; font-size: 0.875rem;">Compara nuestras opciones y selecciona la que mejor se adapte a tus necesidades en el carrito.</p>
+                        </div>
+                        <div class="seat-selection-counter" style="flex-shrink: 0;">Paso 1</div>
+                    </div>
                     
-                    <div class="tariff-option">
-                        <input type="radio" name="tariff" id="basic">
-                        <div class="tariff-content">
-                            <div class="tariff-header">
-                                <label for="basic" class="tariff-name">Tarifa Básica</label>
-                                <span class="tariff-price">$1.250.000</span>
+                    <div class="tariff-info-section">
+                        <!-- Tarifa Básica -->
+                        <div class="tariff-info-card">
+                            <div class="tariff-info-header">
+                                <h3 class="tariff-info-name">Tarifa Básica</h3>
                             </div>
-                            <ul class="tariff-features">
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Equipaje de mano 10kg
-                                </li>
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Sin cambios
-                                </li>
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Sin reembolso
-                                </li>
-                            </ul>
+                            <div class="tariff-info-price">$1.250.000</div>
+                            <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">por persona</p>
+                            
+                            <div class="tariff-info-divider"></div>
+                            
+                            <div style="margin-bottom: 1rem;">
+                                <p style="color: #111827; font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem;">Incluye:</p>
+                                <div class="tariff-info-feature">
+                                    <svg class="tariff-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Vuelo ida y vuelta</span>
+                                </div>
+                                <div class="tariff-info-feature">
+                                    <svg class="tariff-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Equipaje de mano 10kg</span>
+                                </div>
+                                <div class="tariff-info-feature">
+                                    <svg class="tariff-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Asistencia básica</span>
+                                </div>
+                            </div>
+
+                            <p style="color: #dc2626; font-size: 0.875rem;">
+                                <strong>Limitaciones:</strong> Sin cambios, sin reembolso
+                            </p>
+                        </div>
+
+                        <!-- Tarifa Estándar -->
+                        <div class="tariff-info-card" style="background-color: #f8fbff;">
+                            <div class="tariff-info-header">
+                                <h3 class="tariff-info-name">Tarifa Estándar</h3>
+                                <span class="tariff-info-badge">Recomendada</span>
+                            </div>
+                            <div class="tariff-info-price">$1.450.000</div>
+                            <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">por persona</p>
+                            
+                            <div class="tariff-info-divider"></div>
+                            
+                            <div style="margin-bottom: 1rem;">
+                                <p style="color: #111827; font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem;">Incluye todo de básica, además:</p>
+                                <div class="tariff-info-feature">
+                                    <svg class="tariff-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Equipaje 23kg en bodega</span>
+                                </div>
+                                <div class="tariff-info-feature">
+                                    <svg class="tariff-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Cambios con cargo</span>
+                                </div>
+                                <div class="tariff-info-feature">
+                                    <svg class="tariff-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Selección de asiento</span>
+                                </div>
+                                <div class="tariff-info-feature">
+                                    <svg class="tariff-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Asistencia 24/7</span>
+                                </div>
+                            </div>
+
+                            <p style="color: #059669; font-size: 0.875rem;">
+                                <strong>✓ Ideal para viajeros con equipaje</strong>
+                            </p>
+                        </div>
+
+                        <!-- Tarifa Premium -->
+                        <div class="tariff-info-card">
+                            <div class="tariff-info-header">
+                                <h3 class="tariff-info-name">Tarifa Premium</h3>
+                            </div>
+                            <div class="tariff-info-price">$1.850.000</div>
+                            <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 1rem;">por persona</p>
+                            
+                            <div class="tariff-info-divider"></div>
+                            
+                            <div style="margin-bottom: 1rem;">
+                                <p style="color: #111827; font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem;">Incluye todo de estándar, además:</p>
+                                <div class="tariff-info-feature">
+                                    <svg class="tariff-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>2 equipajes de 23kg</span>
+                                </div>
+                                <div class="tariff-info-feature">
+                                    <svg class="tariff-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Cambios y reembolsos gratis</span>
+                                </div>
+                                <div class="tariff-info-feature">
+                                    <svg class="tariff-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Asiento preferencial</span>
+                                </div>
+                                <div class="tariff-info-feature">
+                                    <svg class="tariff-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    <span>Prioridad de abordaje</span>
+                                </div>
+                            </div>
+
+                            <p style="color: #b45309; font-size: 0.875rem;">
+                                <strong>✓ Máxima comodidad y flexibilidad</strong>
+                            </p>
                         </div>
                     </div>
+                </div>
 
-                    <div class="tariff-option selected">
-                        <input type="radio" name="tariff" id="standard" checked>
-                        <div class="tariff-content">
-                            <div class="tariff-header">
-                                <label for="standard" class="tariff-name">Tarifa Estándar</label>
-                                <span class="tariff-price">$1.450.000</span>
-                            </div>
-                            <ul class="tariff-features">
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Equipaje 23kg
-                                </li>
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Cambios con cargo
-                                </li>
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Reembolso con cargo
-                                </li>
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Selección de asiento
-                                </li>
-                            </ul>
+                <div class="detail-card">
+                    <div class="seat-selection-header">
+                        <div>
+                            <p class="seat-selection-kicker">Configura despues</p>
+                            <h2 style="font-size: 1.25rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem;">Clases y asientos en el carrito</h2>
+                            <p class="seat-selection-helper">Despues de agregar la compra, podras elegir clase y asiento para cada boleto directamente en el carrito.</p>
                         </div>
+                        <div class="seat-selection-counter">Paso 2</div>
                     </div>
 
-                    <div class="tariff-option">
-                        <input type="radio" name="tariff" id="premium">
-                        <div class="tariff-content">
-                            <div class="tariff-header">
-                                <label for="premium" class="tariff-name">Tarifa Premium</label>
-                                <span class="tariff-price">$1.850.000</span>
-                            </div>
-                            <ul class="tariff-features">
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Equipaje 2x23kg
-                                </li>
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Cambios gratis
-                                </li>
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Reembolso completo
-                                </li>
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Asiento preferencial
-                                </li>
-                                <li>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <polyline points="20 6 9 17 4 12"/>
-                                    </svg>
-                                    Prioridad abordaje
-                                </li>
-                            </ul>
+                    <div class="seat-legend">
+                        <span class="seat-legend-item"><span class="seat-legend-swatch selected"></span>Elige asientos en el carrito</span>
+                        <span class="seat-legend-item"><span class="seat-legend-swatch available"></span>Mezcla clases por boleto</span>
+                        <span class="seat-legend-item"><span class="seat-legend-swatch occupied"></span>Asientos ocupados se bloquean solos</span>
+                    </div>
+
+                    <div class="selected-seat-panel">
+                        <p class="selected-seat-label">Como funcionara</p>
+                        <div class="selected-seat-list">
+                            <span class="selected-seat-pill">
+                                <strong>Boleto 1</strong>
+                                <span>Puede ser Economica</span>
+                            </span>
+                            <span class="selected-seat-pill">
+                                <strong>Boleto 2</strong>
+                                <span>Puede ser Premium</span>
+                            </span>
+                            <span class="selected-seat-pill">
+                                <strong>Asientos</strong>
+                                <span>Se asignan y editan alla</span>
+                            </span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Complements -->
                 <div class="detail-card">
-                    <h2 style="font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 1rem;">Complementa tu experiencia</h2>
+                    <div style="display: flex; align-items: flex-start; gap: 1rem; justify-content: space-between; margin-bottom: 1rem;">
+                        <h2 style="font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 0;">Complementa tu experiencia</h2>
+                        <div class="seat-selection-counter" style="flex-shrink: 0;">Paso 3</div>
+                    </div>
                     
                     <div class="complement-item">
                         <input type="checkbox" id="tour">
