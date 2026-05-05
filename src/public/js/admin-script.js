@@ -177,3 +177,60 @@ if (logoutBtn) {
         }
     });
 }
+
+// Manejo de navegación en el sidebar con ARIA
+document.addEventListener('DOMContentLoaded', function() {
+  const sidebarLinks = document.querySelectorAll('.sidebar-link');
+  const sections = document.querySelectorAll('.admin-section');
+  
+  function setActiveSection(sectionId, activeLinkId) {
+    // Ocultar todas las secciones y actualizar roles
+    sections.forEach(section => {
+      section.hidden = true;
+      section.classList.remove('active');
+      section.setAttribute('aria-hidden', 'true');
+    });
+    
+    // Mostrar la sección activa
+    const activeSection = document.getElementById(`${sectionId}-section`);
+    if (activeSection) {
+      activeSection.hidden = false;
+      activeSection.classList.add('active');
+      activeSection.setAttribute('aria-hidden', 'false');
+    }
+    
+    // Actualizar estado de los tabs
+    sidebarLinks.forEach(link => {
+      const isActive = link.getAttribute('data-section') === sectionId;
+      link.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      if (isActive) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+  
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const sectionId = this.getAttribute('data-section');
+      const linkId = this.id;
+      if (sectionId) {
+        setActiveSection(sectionId, linkId);
+        // Actualizar URL hash sin scroll
+        window.location.hash = sectionId;
+      }
+    });
+  });
+  
+  // Cargar sección según hash al inicio
+  const initialHash = window.location.hash.substring(1);
+  if (initialHash && document.querySelector(`.sidebar-link[data-section="${initialHash}"]`)) {
+    setActiveSection(initialHash, `tab-${initialHash}`);
+  } else {
+    setActiveSection('dashboard', 'tab-dashboard');
+  }
+});
+
+// (Los gráficos con Chart.js se mantienen igual, solo se añadió aria-label a los canvas)

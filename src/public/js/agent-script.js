@@ -48,3 +48,87 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Manejo de secciones con ARIA (similar a admin)
+document.addEventListener('DOMContentLoaded', function() {
+  const sidebarLinks = document.querySelectorAll('.sidebar-link');
+  const sections = document.querySelectorAll('.admin-section');
+  
+  function setActiveSection(sectionId) {
+    sections.forEach(section => {
+      section.hidden = true;
+      section.classList.remove('active');
+      section.setAttribute('aria-hidden', 'true');
+    });
+    const activeSection = document.getElementById(`${sectionId}-section`);
+    if (activeSection) {
+      activeSection.hidden = false;
+      activeSection.classList.add('active');
+      activeSection.setAttribute('aria-hidden', 'false');
+    }
+    sidebarLinks.forEach(link => {
+      const isActive = link.getAttribute('data-section') === sectionId;
+      link.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      if (isActive) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  }
+  
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const sectionId = this.getAttribute('data-section');
+      if (sectionId) {
+        setActiveSection(sectionId);
+        window.location.hash = sectionId;
+      }
+    });
+  });
+  
+  const initialHash = window.location.hash.substring(1);
+  if (initialHash && document.querySelector(`.sidebar-link[data-section="${initialHash}"]`)) {
+    setActiveSection(initialHash);
+  } else {
+    setActiveSection('reservas');
+  }
+  
+  // Navegación por teclado en asientos
+  const seats = document.querySelectorAll('.seat');
+  seats.forEach(seat => {
+    seat.setAttribute('tabindex', '0');
+    seat.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        seat.click();
+      }
+    });
+    // Selección visual de asiento (simulación)
+    seat.addEventListener('click', function() {
+      if (!this.classList.contains('occupied')) {
+        document.querySelectorAll('.seat').forEach(s => s.classList.remove('selected'));
+        this.classList.add('selected');
+        const seatName = this.getAttribute('data-seat') || this.innerText;
+        const selectedSeatInput = document.getElementById('selectedSeat');
+        if (selectedSeatInput) selectedSeatInput.value = seatName;
+      }
+    });
+  });
+});
+
+// Funciones dummy para demostración
+function viewReservation(id) {
+  alert(`Ver detalles de reserva ${id}`);
+}
+
+function confirmPayment(id) {
+  alert(`Confirmar pago de reserva ${id}`);
+}
+
+function loadSeatingMap(flightId) {
+  if (!flightId) return;
+  alert(`Cargando mapa de asientos para vuelo ${flightId}`);
+  // Aquí se actualizaría el mapa dinámicamente
+}
