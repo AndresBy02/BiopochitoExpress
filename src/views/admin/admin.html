@@ -13,9 +13,9 @@
   <!-- Header Admin -->
   <header class="header admin-header">
     <div class="container header-content">
-      <a href="admin.html" class="logo">
+      <a href="admin.html" class="logo" aria-label="Panel de administración">
         <div class="logo-icon admin-logo">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M12 2L2 7l10 5 10-5-10-5z" />
             <polyline points="2 17 12 22 22 17" />
             <polyline points="2 12 12 17 22 12" />
@@ -27,12 +27,12 @@
       <div class="admin-info">
         <span class="admin-role">Súper Administrador</span>
         <div class="user-menu">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
             <circle cx="12" cy="7" r="4" />
           </svg>
           <span>Juan Pérez</span>
-          <button class="btn-logout">Cerrar sesión</button>
+          <button class="btn-logout" aria-label="Cerrar sesión">Cerrar sesión</button>
         </div>
       </div>
     </div>
@@ -41,11 +41,11 @@
   <!-- Sidebar & Main Content -->
   <div class="admin-layout">
 
-    <!-- Sidebar -->
-    <aside class="admin-sidebar">
-      <nav class="sidebar-nav">
-        <a href="#dashboard" class="sidebar-link active" data-section="dashboard">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <!-- Sidebar con roles ARIA -->
+    <aside class="admin-sidebar" aria-label="Menú de administración">
+      <nav class="sidebar-nav" role="tablist" aria-label="Secciones del panel">
+        <a href="#dashboard" class="sidebar-link active" data-section="dashboard" role="tab" aria-selected="true" id="tab-dashboard">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <rect x="3" y="3" width="7" height="9" />
             <rect x="14" y="3" width="7" height="5" />
             <rect x="14" y="12" width="7" height="9" />
@@ -53,29 +53,29 @@
           </svg>
           <span>Dashboard</span>
         </a>
-        <a href="#vuelos" class="sidebar-link" data-section="vuelos">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="#vuelos" class="sidebar-link" data-section="vuelos" role="tab" aria-selected="false" id="tab-vuelos">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
           </svg>
           <span>Gestión de Vuelos</span>
         </a>
-        <a href="#destinos" class="sidebar-link" data-section="destinos">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="#destinos" class="sidebar-link" data-section="destinos" role="tab" aria-selected="false" id="tab-destinos">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
             <circle cx="12" cy="10" r="3" />
           </svg>
           <span>Gestión de Destinos</span>
         </a>
-        <a href="#paquetes" class="sidebar-link" data-section="paquetes">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="#paquetes" class="sidebar-link" data-section="paquetes" role="tab" aria-selected="false" id="tab-paquetes">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
             <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
             <line x1="12" y1="22.08" x2="12" y2="12" />
           </svg>
           <span>Paquetes Turísticos</span>
         </a>
-        <a href="#clientes" class="sidebar-link" data-section="clientes">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="#clientes" class="sidebar-link" data-section="clientes" role="tab" aria-selected="false" id="tab-clientes">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
             <circle cx="9" cy="7" r="4" />
             <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
@@ -83,8 +83,8 @@
           </svg>
           <span>Gestión de Clientes</span>
         </a>
-        <a href="#parametros" class="sidebar-link" data-section="parametros">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="#parametros" class="sidebar-link" data-section="parametros" role="tab" aria-selected="false" id="tab-parametros">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="12" cy="12" r="3" />
             <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m6.36 6.36l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m6.36-6.36l4.24-4.24" />
           </svg>
@@ -97,7 +97,7 @@
     <main class="admin-main">
 
       <!-- Dashboard Section -->
-      <section id="dashboard-section" class="admin-section active">
+      <section id="dashboard-section" class="admin-section active" role="tabpanel" aria-labelledby="tab-dashboard">
         <div class="section-header-admin">
           <h1>Dashboard</h1>
           <p class="subtitle">Resumen general del sistema</p>
@@ -107,7 +107,7 @@
         <div class="kpi-grid">
           <div class="kpi-card">
             <div class="kpi-icon blue">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="9" cy="21" r="1" />
                 <circle cx="20" cy="21" r="1" />
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
@@ -122,7 +122,7 @@
 
           <div class="kpi-card">
             <div class="kpi-icon green">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                 <circle cx="8.5" cy="7" r="4" />
                 <polyline points="17 11 19 13 23 9" />
@@ -137,7 +137,7 @@
 
           <div class="kpi-card">
             <div class="kpi-icon orange">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                 <circle cx="9" cy="7" r="4" />
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
@@ -153,7 +153,7 @@
 
           <div class="kpi-card">
             <div class="kpi-icon purple">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <line x1="12" y1="1" x2="12" y2="23" />
                 <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
               </svg>
@@ -170,19 +170,19 @@
         <div class="charts-grid">
           <div class="chart-card">
             <h3>Ventas por mes</h3>
-            <canvas id="salesChart"></canvas>
+            <canvas id="salesChart" aria-label="Gráfico de ventas mensuales" role="img"></canvas>
           </div>
           <div class="chart-card">
             <h3>Destinos más vendidos</h3>
-            <canvas id="destinationsChart"></canvas>
+            <canvas id="destinationsChart" aria-label="Gráfico de destinos más vendidos" role="img"></canvas>
           </div>
           <div class="chart-card">
             <h3>Reservas por tipo</h3>
-            <canvas id="bookingTypeChart"></canvas>
+            <canvas id="bookingTypeChart" aria-label="Gráfico de reservas por tipo" role="img"></canvas>
           </div>
           <div class="chart-card">
             <h3>Ingresos vs Gastos</h3>
-            <canvas id="revenueChart"></canvas>
+            <canvas id="revenueChart" aria-label="Gráfico de ingresos vs gastos" role="img"></canvas>
           </div>
         </div>
 
@@ -192,7 +192,7 @@
           <div class="activity-list">
             <div class="activity-item">
               <div class="activity-icon blue">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <circle cx="12" cy="12" r="10" />
                   <polyline points="12 6 12 12 16 14" />
                 </svg>
@@ -204,7 +204,7 @@
             </div>
             <div class="activity-item">
               <div class="activity-icon green">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
@@ -215,7 +215,7 @@
             </div>
             <div class="activity-item">
               <div class="activity-icon orange">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
                   <line x1="12" y1="9" x2="12" y2="13" />
                   <line x1="12" y1="17" x2="12.01" y2="17" />
@@ -231,11 +231,11 @@
       </section>
 
       <!-- Vuelos Section -->
-      <section id="vuelos-section" class="admin-section">
+      <section id="vuelos-section" class="admin-section" role="tabpanel" aria-labelledby="tab-vuelos" hidden>
         <div class="section-header-admin">
           <h1>Gestión de Vuelos</h1>
-          <button class="btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button class="btn-primary" aria-label="Nuevo vuelo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
@@ -244,14 +244,14 @@
         </div>
 
         <div class="admin-filters">
-          <input type="text" placeholder="Buscar por número de vuelo, origen o destino..." class="search-input">
-          <select class="filter-select">
+          <input type="text" placeholder="Buscar por número de vuelo, origen o destino..." class="search-input" id="flightSearch" aria-label="Buscar vuelos">
+          <select class="filter-select" aria-label="Filtrar por estado">
             <option>Todos los estados</option>
             <option>Activo</option>
             <option>Cancelado</option>
             <option>Completado</option>
           </select>
-          <select class="filter-select">
+          <select class="filter-select" aria-label="Filtrar por aerolínea">
             <option>Todas las aerolíneas</option>
             <option>Avianca</option>
             <option>LATAM</option>
@@ -283,9 +283,9 @@
                 <td>45/180</td>
                 <td><span class="badge success">Activo</span></td>
                 <td>
-                  <button class="btn-icon" title="Editar">✏️</button>
-                  <button class="btn-icon" title="Eliminar">🗑️</button>
-                </td>
+                  <button class="btn-icon" title="Editar" aria-label="Editar vuelo AV123">✏️</button>
+                  <button class="btn-icon" title="Eliminar" aria-label="Eliminar vuelo AV123">🗑️</button>
+                 </td>
               </tr>
               <tr>
                 <td><strong>LA456</strong></td>
@@ -296,9 +296,9 @@
                 <td>120/150</td>
                 <td><span class="badge success">Activo</span></td>
                 <td>
-                  <button class="btn-icon" title="Editar">✏️</button>
-                  <button class="btn-icon" title="Eliminar">🗑️</button>
-                </td>
+                  <button class="btn-icon" title="Editar" aria-label="Editar vuelo LA456">✏️</button>
+                  <button class="btn-icon" title="Eliminar" aria-label="Eliminar vuelo LA456">🗑️</button>
+                 </td>
               </tr>
               <tr>
                 <td><strong>VV789</strong></td>
@@ -309,27 +309,27 @@
                 <td>78/180</td>
                 <td><span class="badge success">Activo</span></td>
                 <td>
-                  <button class="btn-icon" title="Editar">✏️</button>
-                  <button class="btn-icon" title="Eliminar">🗑️</button>
-                </td>
+                  <button class="btn-icon" title="Editar" aria-label="Editar vuelo VV789">✏️</button>
+                  <button class="btn-icon" title="Eliminar" aria-label="Eliminar vuelo VV789">🗑️</button>
+                 </td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="pagination">
-          <button class="btn-pagination">Anterior</button>
+          <button class="btn-pagination" aria-label="Página anterior">Anterior</button>
           <span class="pagination-info">Página 1 de 12</span>
-          <button class="btn-pagination">Siguiente</button>
+          <button class="btn-pagination" aria-label="Página siguiente">Siguiente</button>
         </div>
       </section>
 
       <!-- Destinos Section -->
-      <section id="destinos-section" class="admin-section">
+      <section id="destinos-section" class="admin-section" role="tabpanel" aria-labelledby="tab-destinos" hidden>
         <div class="section-header-admin">
           <h1>Gestión de Destinos</h1>
-          <button class="btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button class="btn-primary" aria-label="Nuevo destino">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
@@ -339,7 +339,7 @@
 
         <div class="destinations-grid">
           <div class="destination-admin-card">
-            <img src="https://images.unsplash.com/photo-1690571100303-cb86f92b9b01?w=400" alt="Cartagena">
+            <img src="https://images.unsplash.com/photo-1690571100303-cb86f92b9b01?w=400" alt="Fotografía del centro histórico de Cartagena, murallas y cielo azul">
             <div class="destination-admin-content">
               <h3>Cartagena</h3>
               <p>Ciudad histórica del Caribe colombiano</p>
@@ -349,14 +349,14 @@
                 <span>🎫 1,245 reservas</span>
               </div>
               <div class="destination-actions">
-                <button class="btn-secondary">Editar</button>
-                <button class="btn-danger">Desactivar</button>
+                <button class="btn-secondary" aria-label="Editar Cartagena">Editar</button>
+                <button class="btn-danger" aria-label="Desactivar Cartagena">Desactivar</button>
               </div>
             </div>
           </div>
 
           <div class="destination-admin-card">
-            <img src="https://images.unsplash.com/photo-1770955114269-464cba027fba?w=400" alt="Medellín">
+            <img src="https://images.unsplash.com/photo-1770955114269-464cba027fba?w=400" alt="Vista panorámica de Medellín con edificios y montañas">
             <div class="destination-admin-content">
               <h3>Medellín</h3>
               <p>Ciudad de la eterna primavera</p>
@@ -366,14 +366,14 @@
                 <span>🎫 987 reservas</span>
               </div>
               <div class="destination-actions">
-                <button class="btn-secondary">Editar</button>
-                <button class="btn-danger">Desactivar</button>
+                <button class="btn-secondary" aria-label="Editar Medellín">Editar</button>
+                <button class="btn-danger" aria-label="Desactivar Medellín">Desactivar</button>
               </div>
             </div>
           </div>
 
           <div class="destination-admin-card">
-            <img src="https://images.unsplash.com/photo-1642840067750-783acb36632b?w=400" alt="San Andrés">
+            <img src="https://images.unsplash.com/photo-1642840067750-783acb36632b?w=400" alt="Playa de San Andrés con mar de siete colores">
             <div class="destination-admin-content">
               <h3>San Andrés</h3>
               <p>Mar de los 7 colores</p>
@@ -383,8 +383,8 @@
                 <span>🎫 1,567 reservas</span>
               </div>
               <div class="destination-actions">
-                <button class="btn-secondary">Editar</button>
-                <button class="btn-danger">Desactivar</button>
+                <button class="btn-secondary" aria-label="Editar San Andrés">Editar</button>
+                <button class="btn-danger" aria-label="Desactivar San Andrés">Desactivar</button>
               </div>
             </div>
           </div>
@@ -392,11 +392,11 @@
       </section>
 
       <!-- Paquetes Section -->
-      <section id="paquetes-section" class="admin-section">
+      <section id="paquetes-section" class="admin-section" role="tabpanel" aria-labelledby="tab-paquetes" hidden>
         <div class="section-header-admin">
           <h1>Paquetes Turísticos</h1>
-          <button class="btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button class="btn-primary" aria-label="Nuevo paquete">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
@@ -428,9 +428,9 @@
                 <td>15</td>
                 <td><span class="badge success">Activo</span></td>
                 <td>
-                  <button class="btn-icon" title="Editar">✏️</button>
-                  <button class="btn-icon" title="Eliminar">🗑️</button>
-                </td>
+                  <button class="btn-icon" title="Editar" aria-label="Editar paquete Cartagena Mágica">✏️</button>
+                  <button class="btn-icon" title="Eliminar" aria-label="Eliminar paquete Cartagena Mágica">🗑️</button>
+                 </td>
               </tr>
               <tr>
                 <td><strong>San Andrés Paradise</strong></td>
@@ -441,9 +441,9 @@
                 <td>8</td>
                 <td><span class="badge warning">Pocas plazas</span></td>
                 <td>
-                  <button class="btn-icon" title="Editar">✏️</button>
-                  <button class="btn-icon" title="Eliminar">🗑️</button>
-                </td>
+                  <button class="btn-icon" title="Editar" aria-label="Editar paquete San Andrés Paradise">✏️</button>
+                  <button class="btn-icon" title="Eliminar" aria-label="Eliminar paquete San Andrés Paradise">🗑️</button>
+                 </td>
               </tr>
             </tbody>
           </table>
@@ -451,11 +451,11 @@
       </section>
 
       <!-- Clientes Section -->
-      <section id="clientes-section" class="admin-section">
+      <section id="clientes-section" class="admin-section" role="tabpanel" aria-labelledby="tab-clientes" hidden>
         <div class="section-header-admin">
           <h1>Gestión de Clientes</h1>
           <div class="admin-filters">
-            <input type="text" placeholder="Buscar cliente por nombre, email o documento..." class="search-input">
+            <input type="text" placeholder="Buscar cliente por nombre, email o documento..." class="search-input" id="clientSearch" aria-label="Buscar cliente">
           </div>
         </div>
 
@@ -477,10 +477,10 @@
               <tr>
                 <td>
                   <div class="client-info">
-                    <div class="client-avatar">ML</div>
+                    <div class="client-avatar" aria-hidden="true">ML</div>
                     <strong>María López</strong>
                   </div>
-                </td>
+                 </td>
                 <td>maria.lopez@email.com</td>
                 <td>+57 300 123 4567</td>
                 <td>12</td>
@@ -488,17 +488,17 @@
                 <td>2026-04-05</td>
                 <td><span class="badge success">Activo</span></td>
                 <td>
-                  <button class="btn-icon" title="Ver">👁️</button>
-                  <button class="btn-icon" title="Editar">✏️</button>
-                </td>
+                  <button class="btn-icon" title="Ver" aria-label="Ver detalles de María López">👁️</button>
+                  <button class="btn-icon" title="Editar" aria-label="Editar cliente María López">✏️</button>
+                 </td>
               </tr>
               <tr>
                 <td>
                   <div class="client-info">
-                    <div class="client-avatar">CG</div>
+                    <div class="client-avatar" aria-hidden="true">CG</div>
                     <strong>Carlos Gómez</strong>
                   </div>
-                </td>
+                 </td>
                 <td>carlos.gomez@email.com</td>
                 <td>+57 301 987 6543</td>
                 <td>8</td>
@@ -506,9 +506,9 @@
                 <td>2026-03-28</td>
                 <td><span class="badge success">Activo</span></td>
                 <td>
-                  <button class="btn-icon" title="Ver">👁️</button>
-                  <button class="btn-icon" title="Editar">✏️</button>
-                </td>
+                  <button class="btn-icon" title="Ver" aria-label="Ver detalles de Carlos Gómez">👁️</button>
+                  <button class="btn-icon" title="Editar" aria-label="Editar cliente Carlos Gómez">✏️</button>
+                 </td>
               </tr>
             </tbody>
           </table>
@@ -516,7 +516,7 @@
       </section>
 
       <!-- Parámetros Section -->
-      <section id="parametros-section" class="admin-section">
+      <section id="parametros-section" class="admin-section" role="tabpanel" aria-labelledby="tab-parametros" hidden>
         <div class="section-header-admin">
           <h1>Parámetros del Sistema</h1>
         </div>
@@ -525,16 +525,16 @@
           <div class="settings-card">
             <h3>Configuración General</h3>
             <div class="setting-item">
-              <label>Nombre del sitio</label>
-              <input type="text" value="BiopochitoExpress" class="input-setting">
+              <label for="siteName">Nombre del sitio</label>
+              <input type="text" id="siteName" value="BiopochitoExpress" class="input-setting">
             </div>
             <div class="setting-item">
-              <label>Email de contacto</label>
-              <input type="email" value="info@BiopochitoExpress.com" class="input-setting">
+              <label for="contactEmail">Email de contacto</label>
+              <input type="email" id="contactEmail" value="info@BiopochitoExpress.com" class="input-setting">
             </div>
             <div class="setting-item">
-              <label>Teléfono de soporte</label>
-              <input type="text" value="+57 1 234 5678" class="input-setting">
+              <label for="supportPhone">Teléfono de soporte</label>
+              <input type="text" id="supportPhone" value="+57 1 234 5678" class="input-setting">
             </div>
             <button class="btn-primary">Guardar cambios</button>
           </div>
@@ -542,16 +542,16 @@
           <div class="settings-card">
             <h3>Comisiones y Tarifas</h3>
             <div class="setting-item">
-              <label>Comisión por reserva (%)</label>
-              <input type="number" value="8" class="input-setting">
+              <label for="commission">Comisión por reserva (%)</label>
+              <input type="number" id="commission" value="8" class="input-setting">
             </div>
             <div class="setting-item">
-              <label>IVA (%)</label>
-              <input type="number" value="19" class="input-setting">
+              <label for="iva">IVA (%)</label>
+              <input type="number" id="iva" value="19" class="input-setting">
             </div>
             <div class="setting-item">
-              <label>Tarifa de servicio</label>
-              <input type="number" value="25000" class="input-setting">
+              <label for="serviceFee">Tarifa de servicio</label>
+              <input type="number" id="serviceFee" value="25000" class="input-setting">
             </div>
             <button class="btn-primary">Guardar cambios</button>
           </div>
@@ -605,7 +605,7 @@
       <div class="footer-grid">
         <div>
           <h3>BiopochitoExpress</h3>
-          <p>Donde volar tambien es cuidar.</p>
+          <p>Donde volar también es cuidar.</p>
         </div>
         <div>
           <h3>Contáctanos</h3>
@@ -614,10 +614,10 @@
         <div>
           <h3>Síguenos</h3>
           <div class="social-icons">
-            <a href="#" class="social-icon">📷</a>
-            <a href="#" class="social-icon">🎵</a>
-            <a href="#" class="social-icon">▶️</a>
-            <a href="#" class="social-icon">📘</a>
+            <a href="#" class="social-icon" aria-label="Instagram">📷</a>
+            <a href="#" class="social-icon" aria-label="TikTok">🎵</a>
+            <a href="#" class="social-icon" aria-label="YouTube">▶️</a>
+            <a href="#" class="social-icon" aria-label="Facebook">📘</a>
           </div>
         </div>
       </div>

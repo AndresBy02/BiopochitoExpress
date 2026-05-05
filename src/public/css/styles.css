@@ -21,6 +21,41 @@ body {
 }
 
 /* ============================================
+   ACCESIBILIDAD: FOCUS VISIBLE
+   ============================================ */
+:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+.seat:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Mensajes de error accesibles */
+.error-messages {
+  color: #b91c1c;
+  background-color: #fee2e2;
+  border-left: 4px solid #dc2626;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+}
+
+.error-messages p {
+  margin: 0.25rem 0;
+}
+
+/* Resto del CSS original (sin cambios) */
+/* ============================================
    HEADER
    ============================================ */
 .header {
@@ -504,6 +539,8 @@ body {
   font-size: 0.875rem;
   font-weight: 500;
   transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
 }
 
 .btn-primary:hover {

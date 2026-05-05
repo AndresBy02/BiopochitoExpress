@@ -12,9 +12,9 @@
   <!-- Header Agent -->
   <header class="header admin-header">
     <div class="container header-content">
-      <a href="agent.html" class="logo">
+      <a href="agent.html" class="logo" aria-label="Panel de agente">
         <div class="logo-icon admin-logo">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />
           </svg>
         </div>
@@ -24,12 +24,12 @@
       <div class="admin-info">
         <span class="admin-role">Agente de Aerolínea</span>
         <div class="user-menu">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
             <circle cx="12" cy="7" r="4" />
           </svg>
           <span>Ana Martínez</span>
-          <button class="btn-logout">Cerrar sesión</button>
+          <button class="btn-logout" aria-label="Cerrar sesión">Cerrar sesión</button>
         </div>
       </div>
     </div>
@@ -38,11 +38,11 @@
   <!-- Sidebar & Main Content -->
   <div class="admin-layout">
 
-    <!-- Sidebar -->
-    <aside class="admin-sidebar">
-      <nav class="sidebar-nav">
-        <a href="#reservas" class="sidebar-link active" data-section="reservas">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <!-- Sidebar con ARIA -->
+    <aside class="admin-sidebar" aria-label="Menú del agente">
+      <nav class="sidebar-nav" role="tablist" aria-label="Secciones del agente">
+        <a href="#reservas" class="sidebar-link active" data-section="reservas" role="tab" aria-selected="true" id="tab-reservas">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
             <polyline points="14 2 14 8 20 8" />
             <line x1="16" y1="13" x2="8" y2="13" />
@@ -51,27 +51,27 @@
           </svg>
           <span>Gestión de Reservas</span>
         </a>
-        <a href="#pagos" class="sidebar-link" data-section="pagos">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="#pagos" class="sidebar-link" data-section="pagos" role="tab" aria-selected="false" id="tab-pagos">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
             <line x1="1" y1="10" x2="23" y2="10" />
           </svg>
           <span>Confirmación de Pagos</span>
         </a>
-        <a href="#asientos" class="sidebar-link" data-section="asientos">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="#asientos" class="sidebar-link" data-section="asientos" role="tab" aria-selected="false" id="tab-asientos">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M4 16v-4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4M4 20h16M8 16v4m8-4v4" />
           </svg>
           <span>Asignación de Asientos</span>
         </a>
-        <a href="#solicitudes" class="sidebar-link" data-section="solicitudes">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="#solicitudes" class="sidebar-link" data-section="solicitudes" role="tab" aria-selected="false" id="tab-solicitudes">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
           <span>Solicitudes de Clientes</span>
         </a>
-        <a href="#estadisticas" class="sidebar-link" data-section="estadisticas">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="#estadisticas" class="sidebar-link" data-section="estadisticas" role="tab" aria-selected="false" id="tab-estadisticas">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M3 3v18h18" />
             <path d="M18 17V9" />
             <path d="M13 17V5" />
@@ -86,7 +86,7 @@
     <main class="admin-main">
 
       <!-- Reservas Section -->
-      <section id="reservas-section" class="admin-section active">
+      <section id="reservas-section" class="admin-section active" role="tabpanel" aria-labelledby="tab-reservas">
         <div class="section-header-admin">
           <div>
             <h1>Gestión de Reservas</h1>
@@ -98,7 +98,7 @@
         <div class="kpi-grid">
           <div class="kpi-card">
             <div class="kpi-icon blue">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="12" cy="12" r="10" />
                 <polyline points="12 6 12 12 16 14" />
               </svg>
@@ -112,7 +112,7 @@
 
           <div class="kpi-card">
             <div class="kpi-icon green">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
@@ -125,7 +125,7 @@
 
           <div class="kpi-card">
             <div class="kpi-icon orange">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
                 <line x1="12" y1="9" x2="12" y2="13" />
                 <line x1="12" y1="17" x2="12.01" y2="17" />
@@ -140,15 +140,15 @@
         </div>
 
         <div class="admin-filters">
-          <input type="text" placeholder="Buscar por código, nombre del cliente..." class="search-input">
-          <select class="filter-select">
+          <input type="text" placeholder="Buscar por código, nombre del cliente..." class="search-input" id="reservationSearch" aria-label="Buscar reservas">
+          <select class="filter-select" aria-label="Filtrar por estado">
             <option>Todos los estados</option>
             <option>Pendiente</option>
             <option>Confirmada</option>
             <option>En proceso</option>
             <option>Cancelada</option>
           </select>
-          <select class="filter-select">
+          <select class="filter-select" aria-label="Filtrar por fecha">
             <option>Todas las fechas</option>
             <option>Hoy</option>
             <option>Esta semana</option>
@@ -180,10 +180,10 @@
                 <td>$900.000</td>
                 <td><span class="badge warning">Pendiente pago</span></td>
                 <td>
-                  <button class="btn-icon" title="Ver detalles" onclick="viewReservation('12345')">👁️</button>
-                  <button class="btn-icon" title="Confirmar">✅</button>
-                  <button class="btn-icon" title="Contactar">📞</button>
-                </td>
+                  <button class="btn-icon" aria-label="Ver detalles reserva 12345" onclick="viewReservation('12345')">👁️</button>
+                  <button class="btn-icon" aria-label="Confirmar reserva 12345">✅</button>
+                  <button class="btn-icon" aria-label="Contactar cliente">📞</button>
+                 </td>
               </tr>
               <tr>
                 <td><strong>#RES-12346</strong></td>
@@ -194,10 +194,10 @@
                 <td>$580.000</td>
                 <td><span class="badge success">Confirmada</span></td>
                 <td>
-                  <button class="btn-icon" title="Ver detalles" onclick="viewReservation('12346')">👁️</button>
-                  <button class="btn-icon" title="Asignar asiento">💺</button>
-                  <button class="btn-icon" title="Contactar">📞</button>
-                </td>
+                  <button class="btn-icon" aria-label="Ver detalles reserva 12346" onclick="viewReservation('12346')">👁️</button>
+                  <button class="btn-icon" aria-label="Asignar asiento">💺</button>
+                  <button class="btn-icon" aria-label="Contactar cliente">📞</button>
+                 </td>
               </tr>
               <tr>
                 <td><strong>#RES-12347</strong></td>
@@ -208,10 +208,10 @@
                 <td>$960.000</td>
                 <td><span class="badge info">En proceso</span></td>
                 <td>
-                  <button class="btn-icon" title="Ver detalles" onclick="viewReservation('12347')">👁️</button>
-                  <button class="btn-icon" title="Confirmar">✅</button>
-                  <button class="btn-icon" title="Contactar">📞</button>
-                </td>
+                  <button class="btn-icon" aria-label="Ver detalles reserva 12347" onclick="viewReservation('12347')">👁️</button>
+                  <button class="btn-icon" aria-label="Confirmar reserva 12347">✅</button>
+                  <button class="btn-icon" aria-label="Contactar cliente">📞</button>
+                 </td>
               </tr>
               <tr>
                 <td><strong>#RES-12348</strong></td>
@@ -222,32 +222,32 @@
                 <td>$1.800.000</td>
                 <td><span class="badge success">Confirmada</span></td>
                 <td>
-                  <button class="btn-icon" title="Ver detalles" onclick="viewReservation('12348')">👁️</button>
-                  <button class="btn-icon" title="Asignar asiento">💺</button>
-                  <button class="btn-icon" title="Contactar">📞</button>
-                </td>
+                  <button class="btn-icon" aria-label="Ver detalles reserva 12348" onclick="viewReservation('12348')">👁️</button>
+                  <button class="btn-icon" aria-label="Asignar asiento">💺</button>
+                  <button class="btn-icon" aria-label="Contactar cliente">📞</button>
+                 </td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="pagination">
-          <button class="btn-pagination">Anterior</button>
+          <button class="btn-pagination" aria-label="Página anterior">Anterior</button>
           <span class="pagination-info">Página 1 de 8</span>
-          <button class="btn-pagination">Siguiente</button>
+          <button class="btn-pagination" aria-label="Página siguiente">Siguiente</button>
         </div>
       </section>
 
       <!-- Pagos Section -->
-      <section id="pagos-section" class="admin-section">
+      <section id="pagos-section" class="admin-section" role="tabpanel" aria-labelledby="tab-pagos" hidden>
         <div class="section-header-admin">
           <h1>Confirmación de Pagos</h1>
           <p class="subtitle">Verifica y confirma los pagos de las reservas</p>
         </div>
 
         <div class="admin-filters">
-          <input type="text" placeholder="Buscar por código de reserva o referencia de pago..." class="search-input">
-          <select class="filter-select">
+          <input type="text" placeholder="Buscar por código de reserva o referencia de pago..." class="search-input" id="paymentSearch" aria-label="Buscar pagos">
+          <select class="filter-select" aria-label="Filtrar por método de pago">
             <option>Todos los métodos</option>
             <option>Tarjeta de crédito</option>
             <option>PSE</option>
@@ -280,9 +280,9 @@
                 <td>2026-04-07 10:23</td>
                 <td><span class="badge warning">Pendiente</span></td>
                 <td>
-                  <button class="btn-secondary" onclick="confirmPayment('12345')">Confirmar</button>
-                  <button class="btn-icon" title="Ver comprobante">📄</button>
-                </td>
+                  <button class="btn-secondary" onclick="confirmPayment('12345')" aria-label="Confirmar pago reserva 12345">Confirmar</button>
+                  <button class="btn-icon" aria-label="Ver comprobante de pago">📄</button>
+                 </td>
               </tr>
               <tr>
                 <td><strong>#RES-12350</strong></td>
@@ -293,9 +293,9 @@
                 <td>2026-04-07 09:15</td>
                 <td><span class="badge warning">Pendiente</span></td>
                 <td>
-                  <button class="btn-secondary" onclick="confirmPayment('12350')">Confirmar</button>
-                  <button class="btn-icon" title="Ver comprobante">📄</button>
-                </td>
+                  <button class="btn-secondary" onclick="confirmPayment('12350')" aria-label="Confirmar pago reserva 12350">Confirmar</button>
+                  <button class="btn-icon" aria-label="Ver comprobante de pago">📄</button>
+                 </td>
               </tr>
               <tr>
                 <td><strong>#RES-12346</strong></td>
@@ -306,9 +306,9 @@
                 <td>2026-04-06 16:42</td>
                 <td><span class="badge success">Confirmado</span></td>
                 <td>
-                  <button class="btn-icon" title="Ver detalles">👁️</button>
-                  <button class="btn-icon" title="Descargar">⬇️</button>
-                </td>
+                  <button class="btn-icon" aria-label="Ver detalles de pago">👁️</button>
+                  <button class="btn-icon" aria-label="Descargar comprobante">⬇️</button>
+                 </td>
               </tr>
             </tbody>
           </table>
@@ -316,14 +316,14 @@
       </section>
 
       <!-- Asientos Section -->
-      <section id="asientos-section" class="admin-section">
+      <section id="asientos-section" class="admin-section" role="tabpanel" aria-labelledby="tab-asientos" hidden>
         <div class="section-header-admin">
           <h1>Asignación de Asientos</h1>
           <p class="subtitle">Gestiona la asignación de asientos para los vuelos</p>
         </div>
 
         <div class="admin-filters">
-          <select class="filter-select" onchange="loadSeatingMap(this.value)">
+          <select class="filter-select" id="flightSelect" aria-label="Seleccionar vuelo" onchange="loadSeatingMap(this.value)">
             <option value="">Seleccionar vuelo...</option>
             <option value="AV123">AV123 - BOG→CTG - 2026-04-15 08:30</option>
             <option value="LA456">LA456 - MDE→SAP - 2026-04-16 14:20</option>
@@ -359,15 +359,15 @@
         <div class="seating-map-container">
           <div class="seating-legend">
             <div class="legend-item">
-              <div class="seat-sample available"></div>
+              <div class="seat-sample available" aria-hidden="true"></div>
               <span>Disponible</span>
             </div>
             <div class="legend-item">
-              <div class="seat-sample occupied"></div>
+              <div class="seat-sample occupied" aria-hidden="true"></div>
               <span>Ocupado</span>
             </div>
             <div class="legend-item">
-              <div class="seat-sample selected"></div>
+              <div class="seat-sample selected" aria-hidden="true"></div>
               <span>Seleccionado</span>
             </div>
           </div>
@@ -376,23 +376,21 @@
             <div class="cabin-section">
               <h4>Clase Ejecutiva</h4>
               <div class="seating-grid executive">
-                <!-- Row 1 -->
                 <div class="seat-row">
                   <span class="row-number">1</span>
-                  <button class="seat available" data-seat="1A">A</button>
-                  <button class="seat available" data-seat="1B">B</button>
-                  <div class="aisle"></div>
-                  <button class="seat occupied" data-seat="1C">C</button>
-                  <button class="seat available" data-seat="1D">D</button>
+                  <button class="seat available" data-seat="1A" aria-label="Asiento 1A, disponible">A</button>
+                  <button class="seat available" data-seat="1B" aria-label="Asiento 1B, disponible">B</button>
+                  <div class="aisle" aria-hidden="true"></div>
+                  <button class="seat occupied" data-seat="1C" aria-label="Asiento 1C, ocupado" disabled>C</button>
+                  <button class="seat available" data-seat="1D" aria-label="Asiento 1D, disponible">D</button>
                 </div>
-                <!-- Row 2 -->
                 <div class="seat-row">
                   <span class="row-number">2</span>
-                  <button class="seat occupied" data-seat="2A">A</button>
-                  <button class="seat available" data-seat="2B">B</button>
-                  <div class="aisle"></div>
-                  <button class="seat available" data-seat="2C">C</button>
-                  <button class="seat occupied" data-seat="2D">D</button>
+                  <button class="seat occupied" data-seat="2A" aria-label="Asiento 2A, ocupado" disabled>A</button>
+                  <button class="seat available" data-seat="2B" aria-label="Asiento 2B, disponible">B</button>
+                  <div class="aisle" aria-hidden="true"></div>
+                  <button class="seat available" data-seat="2C" aria-label="Asiento 2C, disponible">C</button>
+                  <button class="seat occupied" data-seat="2D" aria-label="Asiento 2D, ocupado" disabled>D</button>
                 </div>
               </div>
             </div>
@@ -400,38 +398,35 @@
             <div class="cabin-section">
               <h4>Clase Económica</h4>
               <div class="seating-grid economy">
-                <!-- Row 3 -->
                 <div class="seat-row">
                   <span class="row-number">3</span>
-                  <button class="seat available" data-seat="3A">A</button>
-                  <button class="seat available" data-seat="3B">B</button>
-                  <button class="seat occupied" data-seat="3C">C</button>
-                  <div class="aisle"></div>
-                  <button class="seat available" data-seat="3D">D</button>
-                  <button class="seat occupied" data-seat="3E">E</button>
-                  <button class="seat available" data-seat="3F">F</button>
+                  <button class="seat available" data-seat="3A" aria-label="Asiento 3A, disponible">A</button>
+                  <button class="seat available" data-seat="3B" aria-label="Asiento 3B, disponible">B</button>
+                  <button class="seat occupied" data-seat="3C" aria-label="Asiento 3C, ocupado" disabled>C</button>
+                  <div class="aisle" aria-hidden="true"></div>
+                  <button class="seat available" data-seat="3D" aria-label="Asiento 3D, disponible">D</button>
+                  <button class="seat occupied" data-seat="3E" aria-label="Asiento 3E, ocupado" disabled>E</button>
+                  <button class="seat available" data-seat="3F" aria-label="Asiento 3F, disponible">F</button>
                 </div>
-                <!-- Row 4 -->
                 <div class="seat-row">
                   <span class="row-number">4</span>
-                  <button class="seat available" data-seat="4A">A</button>
-                  <button class="seat available" data-seat="4B">B</button>
-                  <button class="seat available" data-seat="4C">C</button>
-                  <div class="aisle"></div>
-                  <button class="seat available" data-seat="4D">D</button>
-                  <button class="seat available" data-seat="4E">E</button>
-                  <button class="seat occupied" data-seat="4F">F</button>
+                  <button class="seat available" data-seat="4A" aria-label="Asiento 4A, disponible">A</button>
+                  <button class="seat available" data-seat="4B" aria-label="Asiento 4B, disponible">B</button>
+                  <button class="seat available" data-seat="4C" aria-label="Asiento 4C, disponible">C</button>
+                  <div class="aisle" aria-hidden="true"></div>
+                  <button class="seat available" data-seat="4D" aria-label="Asiento 4D, disponible">D</button>
+                  <button class="seat available" data-seat="4E" aria-label="Asiento 4E, disponible">E</button>
+                  <button class="seat occupied" data-seat="4F" aria-label="Asiento 4F, ocupado" disabled>F</button>
                 </div>
-                <!-- Row 5 -->
                 <div class="seat-row">
                   <span class="row-number">5</span>
-                  <button class="seat occupied" data-seat="5A">A</button>
-                  <button class="seat available" data-seat="5B">B</button>
-                  <button class="seat available" data-seat="5C">C</button>
-                  <div class="aisle"></div>
-                  <button class="seat available" data-seat="5D">D</button>
-                  <button class="seat available" data-seat="5E">E</button>
-                  <button class="seat available" data-seat="5F">F</button>
+                  <button class="seat occupied" data-seat="5A" aria-label="Asiento 5A, ocupado" disabled>A</button>
+                  <button class="seat available" data-seat="5B" aria-label="Asiento 5B, disponible">B</button>
+                  <button class="seat available" data-seat="5C" aria-label="Asiento 5C, disponible">C</button>
+                  <div class="aisle" aria-hidden="true"></div>
+                  <button class="seat available" data-seat="5D" aria-label="Asiento 5D, disponible">D</button>
+                  <button class="seat available" data-seat="5E" aria-label="Asiento 5E, disponible">E</button>
+                  <button class="seat available" data-seat="5F" aria-label="Asiento 5F, disponible">F</button>
                 </div>
               </div>
             </div>
@@ -440,8 +435,8 @@
           <div class="seat-assignment-form">
             <h3>Asignar asiento seleccionado</h3>
             <div class="form-field">
-              <label>Reserva</label>
-              <select class="input-setting">
+              <label for="reservationSelect">Reserva</label>
+              <select id="reservationSelect" class="input-setting" aria-label="Seleccionar reserva">
                 <option>Seleccionar reserva...</option>
                 <option>#RES-12345 - María López</option>
                 <option>#RES-12346 - Carlos Gómez</option>
@@ -449,38 +444,38 @@
               </select>
             </div>
             <div class="form-field">
-              <label>Pasajero</label>
-              <select class="input-setting">
+              <label for="passengerSelect">Pasajero</label>
+              <select id="passengerSelect" class="input-setting" aria-label="Seleccionar pasajero">
                 <option>Seleccionar pasajero...</option>
                 <option>Pasajero 1</option>
                 <option>Pasajero 2</option>
               </select>
             </div>
             <div class="form-field">
-              <label>Asiento seleccionado</label>
-              <input type="text" class="input-setting" id="selectedSeat" readonly placeholder="Ninguno">
+              <label for="selectedSeat">Asiento seleccionado</label>
+              <input type="text" class="input-setting" id="selectedSeat" readonly placeholder="Ninguno" aria-label="Asiento seleccionado">
             </div>
-            <button class="btn-primary">Asignar asiento</button>
+            <button class="btn-primary" id="assignSeatBtn" aria-label="Asignar asiento">Asignar asiento</button>
           </div>
         </div>
       </section>
 
       <!-- Solicitudes Section -->
-      <section id="solicitudes-section" class="admin-section">
+      <section id="solicitudes-section" class="admin-section" role="tabpanel" aria-labelledby="tab-solicitudes" hidden>
         <div class="section-header-admin">
           <h1>Solicitudes de Clientes</h1>
           <p class="subtitle">Atiende las solicitudes y consultas de tus clientes</p>
         </div>
 
         <div class="admin-filters">
-          <input type="text" placeholder="Buscar solicitud..." class="search-input">
-          <select class="filter-select">
+          <input type="text" placeholder="Buscar solicitud..." class="search-input" id="requestSearch" aria-label="Buscar solicitudes">
+          <select class="filter-select" aria-label="Filtrar por prioridad">
             <option>Todas las prioridades</option>
             <option>Alta</option>
             <option>Media</option>
             <option>Baja</option>
           </select>
-          <select class="filter-select">
+          <select class="filter-select" aria-label="Filtrar por estado">
             <option>Todos los estados</option>
             <option>Pendiente</option>
             <option>En proceso</option>
@@ -503,8 +498,8 @@
               <span class="activity-time">Hace 2 horas</span>
             </div>
             <div class="reservation-actions">
-              <button class="btn-primary">Responder</button>
-              <button class="btn-secondary">Ver detalles</button>
+              <button class="btn-primary" aria-label="Responder solicitud">Responder</button>
+              <button class="btn-secondary" aria-label="Ver detalles de solicitud">Ver detalles</button>
             </div>
           </div>
 
@@ -522,8 +517,8 @@
               <span class="activity-time">Hace 5 horas</span>
             </div>
             <div class="reservation-actions">
-              <button class="btn-primary">Responder</button>
-              <button class="btn-secondary">Ver detalles</button>
+              <button class="btn-primary" aria-label="Responder solicitud">Responder</button>
+              <button class="btn-secondary" aria-label="Ver detalles de solicitud">Ver detalles</button>
             </div>
           </div>
 
@@ -541,14 +536,14 @@
               <span class="activity-time">Ayer a las 14:30</span>
             </div>
             <div class="reservation-actions">
-              <button class="btn-secondary">Ver detalles</button>
+              <button class="btn-secondary" aria-label="Ver detalles de solicitud">Ver detalles</button>
             </div>
           </div>
         </div>
       </section>
 
       <!-- Estadísticas Section -->
-      <section id="estadisticas-section" class="admin-section">
+      <section id="estadisticas-section" class="admin-section" role="tabpanel" aria-labelledby="tab-estadisticas" hidden>
         <div class="section-header-admin">
           <h1>Mis Estadísticas</h1>
           <p class="subtitle">Resumen de tu desempeño</p>
@@ -557,7 +552,7 @@
         <div class="kpi-grid">
           <div class="kpi-card">
             <div class="kpi-icon blue">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                 <polyline points="14 2 14 8 20 8" />
               </svg>
@@ -571,7 +566,7 @@
 
           <div class="kpi-card">
             <div class="kpi-icon green">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
@@ -584,7 +579,7 @@
 
           <div class="kpi-card">
             <div class="kpi-icon orange">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="12" cy="12" r="10" />
                 <polyline points="12 6 12 12 16 14" />
               </svg>
@@ -598,7 +593,7 @@
 
           <div class="kpi-card">
             <div class="kpi-icon purple">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
               </svg>
             </div>
@@ -661,7 +656,7 @@
       <div class="footer-grid">
         <div>
           <h3>BiopochitoExpress</h3>
-          <p>Donde volar tambien es cuidar.</p>
+          <p>Donde volar también es cuidar.</p>
         </div>
         <div>
           <h3>Contáctanos</h3>
@@ -670,10 +665,10 @@
         <div>
           <h3>Síguenos</h3>
           <div class="social-icons">
-            <a href="#" class="social-icon">📷</a>
-            <a href="#" class="social-icon">🎵</a>
-            <a href="#" class="social-icon">▶️</a>
-            <a href="#" class="social-icon">📘</a>
+            <a href="#" class="social-icon" aria-label="Instagram">📷</a>
+            <a href="#" class="social-icon" aria-label="TikTok">🎵</a>
+            <a href="#" class="social-icon" aria-label="YouTube">▶️</a>
+            <a href="#" class="social-icon" aria-label="Facebook">📘</a>
           </div>
         </div>
       </div>
