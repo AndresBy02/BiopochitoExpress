@@ -35,8 +35,8 @@ Actualmente, el proyecto se encuentra en la fase inicial de diseño y planeació
 - [x] Repositorio de Git configurado.
 - [x] Modelo de Navegación del sitio web (UML).
 - [x] Diseño de prototipos en Figma.
-- [ ] Implementación de Base de Datos (Próximamente).
-- [ ] Desarrollo de módulos CRUD (En desarrollo).
+- [x] Implementación de Base de Datos.
+- [ ] Desarrollo de módulos CRUD (Próximamente).
 
 ---
 
