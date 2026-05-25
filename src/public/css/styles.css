@@ -54,6 +54,29 @@ textarea:focus-visible,
   margin: 0.25rem 0;
 }
 
+.auth-message {
+  border-radius: 0.5rem;
+  padding: 0.8rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.auth-message p {
+  margin: 0.2rem 0;
+}
+
+.auth-message.error {
+  color: #991b1b;
+  background-color: #fee2e2;
+  border-left: 4px solid #dc2626;
+}
+
+.auth-message.success {
+  color: #065f46;
+  background-color: #d1fae5;
+  border-left: 4px solid #059669;
+}
+
 /* Resto del CSS original (sin cambios) */
 /* ============================================
    HEADER
@@ -157,6 +180,7 @@ textarea:focus-visible,
   padding: 0.5rem 1rem;
   background-color: #2563eb;
   color: white;
+  text-decoration: none;
   border: none;
   border-radius: 0.5rem;
   font-size: 0.875rem;
@@ -167,6 +191,36 @@ textarea:focus-visible,
 
 .btn-account:hover {
   background-color: #1d4ed8;
+}
+
+.btn-session-logout {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.85rem;
+  background-color: white;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn-session-logout:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.btn-session-logout.mobile {
+  display: flex;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.btn-session-logout[hidden] {
+  display: none !important;
 }
 
 .btn-account.mobile {
@@ -728,6 +782,14 @@ textarea:focus-visible,
   }
 
   .btn-account.mobile {
+    display: none;
+  }
+
+  .btn-session-logout {
+    display: flex;
+  }
+
+  .btn-session-logout.mobile {
     display: none;
   }
 

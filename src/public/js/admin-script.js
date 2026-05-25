@@ -173,6 +173,7 @@ const logoutBtn = document.querySelector('.btn-logout');
 if (logoutBtn) {
     logoutBtn.addEventListener('click', function() {
         if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+            localStorage.removeItem('usuarioActivo');
             window.location.href = '../../../index.html';
         }
     });

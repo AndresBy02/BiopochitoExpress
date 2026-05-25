@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta - BiopochitoExpress</title>
+    <link rel="stylesheet" href="../../public/css/styles.css">
+    <style>
+        .register-page {
+            min-height: calc(100vh - 64px);
+            background:
+                linear-gradient(135deg, rgba(37, 99, 235, 0.92), rgba(30, 58, 138, 0.96)),
+                url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1600&q=80");
+            background-size: cover;
+            background-position: center;
+            padding: 3rem 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .register-layout {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .register-intro {
+            color: white;
+            max-width: 560px;
+        }
+
+        .register-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.75rem;
+            background-color: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 9999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .register-intro h1 {
+            font-size: 2.25rem;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .register-intro p {
+            color: #dbeafe;
+            font-size: 1.05rem;
+            max-width: 34rem;
+        }
+
+        .register-benefits {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .register-benefit {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            color: #eff6ff;
+            font-size: 0.95rem;
+        }
+
+        .register-benefit svg {
+            flex-shrink: 0;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 520px;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22);
+            padding: 1.5rem;
+            justify-self: center;
+        }
+
+        .register-card-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .register-card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.35rem;
+        }
+
+        .register-card-header p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        .register-form {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .register-fields {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .register-submit {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.9rem 1rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            margin-top: 0.25rem;
+        }
+
+        .register-submit:hover {
+            background-color: #1d4ed8;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.26);
+        }
+
+        .register-login {
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .register-login a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .register-login a:hover {
+            color: #1d4ed8;
+        }
+
+        .register-note {
+            font-size: 0.82rem;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .register-note a {
+            color: #2563eb;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        @media (min-width: 640px) {
+            .register-fields.two-columns {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 900px) {
+            .register-page {
+                padding: 4rem 1rem;
+            }
+
+            .register-layout {
+                grid-template-columns: minmax(0, 1fr) 520px;
+            }
+
+            .register-card {
+                justify-self: end;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .register-intro h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-content">
+            <a href="../../../index.html" class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+                    </svg>
+                </div>
+                <span class="logo-text">BiopochitoExpress</span>
+            </a>
+
+            <nav class="nav-desktop" aria-label="Menu principal">
+                <a href="../../../index.html" class="nav-link">Reservar</a>
+                <a href="results.html" class="nav-link">Ofertas y destinos</a>
+                <a href="my-reservation.html" class="nav-link">Tu reserva</a>
+                <a href="help.html" class="nav-link">Informaci&oacute;n y ayuda</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="cart.html" class="cart-btn" aria-label="Carrito de compras">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    <span class="cart-badge" aria-label="0 productos">0</span>
+                </a>
+                <a href="inicio.html" class="btn-account">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span>Cuenta</span>
+                </a>
+                <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Abrir menu" aria-expanded="false">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <nav class="nav-mobile" id="mobileMenu" aria-label="Menu movil">
+            <a href="../../../index.html" class="nav-mobile-link">Reservar</a>
+            <a href="results.html" class="nav-mobile-link">Ofertas y destinos</a>
+            <a href="my-reservation.html" class="nav-mobile-link">Tu reserva</a>
+            <a href="help.html" class="nav-mobile-link">Informaci&oacute;n y ayuda</a>
+            <a href="inicio.html" class="btn-account mobile">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <span>Mi Cuenta</span>
+            </a>
+        </nav>
+    </header>
+
+    <main class="register-page">
+        <div class="container register-layout">
+            <section class="register-intro" aria-labelledby="registerTitle">
+                <div class="register-kicker">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+                    Nueva cuenta
+                </div>
+                <h1 id="registerTitle">Crea tu cuenta y deja tus proximos viajes mas cerca.</h1>
+                <p>Completa tu perfil para acceder a tus reservas, guardar tus datos de viaje y comprar mas rapido en BiopochitoExpress.</p>
+
+                <div class="register-benefits" aria-label="Beneficios de crear cuenta">
+                    <div class="register-benefit">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M20 6 9 17l-5-5"/>
+                        </svg>
+                        Guarda tus datos para futuras reservas
+                    </div>
+                    <div class="register-benefit">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M20 6 9 17l-5-5"/>
+                        </svg>
+                        Consulta tus vuelos y compras desde tu perfil
+                    </div>
+                </div>
+            </section>
+
+            <section class="register-card" aria-labelledby="formTitle">
+                <div class="register-card-header">
+                    <h2 id="formTitle">Crear cuenta</h2>
+                    <p>Completa tus datos para preparar tu registro.</p>
+                </div>
+
+                <form class="register-form" id="registerForm" action="#" method="post">
+                    <div class="register-fields two-columns">
+                        <div class="form-field">
+                            <label for="firstName">Nombre</label>
+                            <div class="input-with-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                <input id="firstName" name="firstName" type="text" autocomplete="given-name" placeholder="Tu nombre">
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="lastName">Apellido</label>
+                            <div class="input-with-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                <input id="lastName" name="lastName" type="text" autocomplete="family-name" placeholder="Tu apellido">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="email">Correo electr&oacute;nico</label>
+                        <div class="input-with-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <input id="email" name="email" type="email" autocomplete="email" placeholder="correo@ejemplo.com">
+                        </div>
+                    </div>
+
+                    <div class="register-fields two-columns">
+                        <div class="form-field">
+                            <label for="password">Contrase&ntilde;a</label>
+                            <div class="input-with-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                                <input id="password" name="password" type="password" autocomplete="new-password" placeholder="Crea una contrase&ntilde;a">
+                            </div>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="confirmPassword">Confirmar</label>
+                            <div class="input-with-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                                <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Repite la clave">
+                            </div>
+                        </div>
+                    </div>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="terms">
+                        <span>Acepto los terminos y la politica de privacidad</span>
+                    </label>
+
+                    <div class="auth-message" data-auth-message hidden></div>
+
+                    <button class="register-submit" type="submit">
+                        Crear cuenta
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                    </button>
+                </form>
+
+                <p class="register-login">
+                    &iquest;Ya tienes cuenta? <a href="inicio.html">Inicia sesion</a>
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>BiopochitoExpress</h3>
+                    <p>Donde volar también es cuidar.</p>
+                </div>
+                <div>
+                    <h3>Contáctanos</h3>
+                    <p>📞 +57 1 234 5678<br>📧 info@biopochitoexpress.com</p>
+                </div>
+                <div>
+                    <h3>Síguenos</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon" aria-label="Instagram">📷</a>
+                        <a href="#" class="social-icon" aria-label="TikTok">🎵</a>
+                        <a href="#" class="social-icon" aria-label="YouTube">▶️</a>
+                        <a href="#" class="social-icon" aria-label="Facebook">📘</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 BiopochitoExpress. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Términos y condiciones</a>
+                    <a href="#">Política de privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../public/js/script.js"></script>
+    <script src="../../public/js/auth.js"></script>
+</body>
+</html>

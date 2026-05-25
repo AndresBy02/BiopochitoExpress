@@ -1,0 +1,1 @@
+{"id":"fde25dcb-0fd5-40f7-9040-c8a4d64bd3d5","firstName":"Samuel","lastName":"Luque","email":"alumno@google.com","passwordHash":"e33bc644d9a85eae87c696d94edf1961a21bed75734d6b9625f9f04437c96d0e","createdAt":"2026-05-25T11:52:00.728Z"}

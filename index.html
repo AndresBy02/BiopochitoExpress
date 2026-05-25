@@ -38,13 +38,14 @@
           </svg>
           <span class="cart-badge" aria-label="0 productos">0</span>
         </a>
-        <button class="btn-account" aria-label="Mi cuenta">
+        <a href="src/views/client/inicio.html" class="btn-account" id="accountLink" aria-label="Mi cuenta">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
             <circle cx="12" cy="7" r="4" />
           </svg>
-          <span>Cuenta</span>
-        </button>
+          <span id="accountText">Cuenta</span>
+        </a>
+        <button class="btn-session-logout" id="logoutButton" type="button" hidden>Cerrar sesión</button>
         <button class="menu-toggle" onclick="toggleMobileMenu()" aria-label="Menú móvil" aria-expanded="false">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <line x1="3" y1="12" x2="21" y2="12" />
@@ -61,7 +62,8 @@
       <a href="src/views/client/results.html" class="nav-mobile-link">Ofertas y destinos</a>
       <a href="src/views/client/my-reservation.html" class="nav-mobile-link">Tu reserva</a>
       <a href="src/views/client/help.html" class="nav-mobile-link">Información y ayuda</a>
-      <button class="btn-account mobile">Mi Cuenta</button>
+      <a href="src/views/client/inicio.html" class="btn-account mobile" id="accountLinkMobile">Mi Cuenta</a>
+      <button class="btn-session-logout mobile" id="logoutButtonMobile" type="button" hidden>Cerrar sesión</button>
     </nav>
   </header>
 
@@ -492,5 +494,6 @@
   </footer>
 
   <script src="src/public/js/script.js"></script>
+  <script src="src/public/js/auth.js"></script>
 </body>
 </html>
