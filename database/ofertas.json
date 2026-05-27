@@ -1,0 +1,16 @@
+{
+  "destinations": [
+    {
+      "id": "498ae256-701b-40a3-aaf6-cdff0fed11c1",
+      "type": "destination",
+      "name": "Viejo sabroso",
+      "location": "Bajo el puente",
+      "description": "Fiesta en su boca venganse todos",
+      "imageUrl": "https://cdn.phototourl.com/free/2026-05-27-fe6447a5-7a31-4648-ac15-22ecce478279.jpg",
+      "price": 850001,
+      "rating": 5,
+      "createdAt": "2026-05-27T12:21:19.706Z"
+    }
+  ],
+  "packages": []
+}

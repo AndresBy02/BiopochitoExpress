@@ -7,6 +7,7 @@ const path = require('path');
 const PORT = Number(process.env.PORT || 3000);
 const ROOT_DIR = __dirname;
 const USERS_FILE = path.join(ROOT_DIR, 'database', 'usuarios.txt');
+const OFFERS_FILE = path.join(ROOT_DIR, 'database', 'ofertas.json');
 
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
@@ -113,6 +114,34 @@ async function readUsers() {
 async function appendUser(user) {
   await ensureUsersFile();
   await fsp.appendFile(USERS_FILE, `${JSON.stringify(user)}\n`, 'utf8');
+}
+
+async function ensureOffersFile() {
+  await fsp.mkdir(path.dirname(OFFERS_FILE), { recursive: true });
+
+  if (!fs.existsSync(OFFERS_FILE)) {
+    await fsp.writeFile(OFFERS_FILE, JSON.stringify({ destinations: [], packages: [] }, null, 2), 'utf8');
+  }
+}
+
+async function readOffers() {
+  await ensureOffersFile();
+  const content = await fsp.readFile(OFFERS_FILE, 'utf8');
+
+  if (!content.trim()) {
+    return { destinations: [], packages: [] };
+  }
+
+  const parsedOffers = JSON.parse(content);
+  return {
+    destinations: Array.isArray(parsedOffers.destinations) ? parsedOffers.destinations : [],
+    packages: Array.isArray(parsedOffers.packages) ? parsedOffers.packages : []
+  };
+}
+
+async function writeOffers(offers) {
+  await ensureOffersFile();
+  await fsp.writeFile(OFFERS_FILE, JSON.stringify(offers, null, 2), 'utf8');
 }
 
 function readRequestBody(request) {
@@ -260,6 +289,101 @@ async function handleLogin(request, response) {
   });
 }
 
+function parsePositiveNumber(value, fallback = 0) {
+  const number = Number(value);
+  return Number.isFinite(number) && number >= 0 ? number : fallback;
+}
+
+async function handleGetOffers(response) {
+  const offers = await readOffers();
+  sendJson(response, 200, { ok: true, offers });
+}
+
+async function handleCreateOffer(request, response) {
+  const body = await readRequestBody(request);
+  const type = String(body.type || '').trim();
+  const errors = [];
+
+  if (type !== 'destination' && type !== 'package') {
+    errors.push('El tipo de oferta no es válido.');
+  }
+
+  const name = String(body.name || '').trim();
+  const imageUrl = String(body.imageUrl || '').trim();
+  const price = parsePositiveNumber(body.price);
+  const rating = Math.min(5, Math.max(0, parsePositiveNumber(body.rating, 4.5)));
+
+  if (!name) {
+    errors.push('Ingresa el nombre.');
+  }
+
+  if (!imageUrl) {
+    errors.push('Ingresa la URL de la imagen.');
+  }
+
+  try {
+    if (imageUrl) {
+      new URL(imageUrl);
+    }
+  } catch (error) {
+    errors.push('La URL de la imagen no es válida.');
+  }
+
+  if (price <= 0) {
+    errors.push('Ingresa un precio mayor a cero.');
+  }
+
+  if (errors.length > 0) {
+    sendJson(response, 400, { ok: false, errors });
+    return;
+  }
+
+  const offers = await readOffers();
+  const createdAt = new Date().toISOString();
+
+  if (type === 'destination') {
+    const destination = {
+      id: crypto.randomUUID(),
+      type: 'destination',
+      name,
+      location: String(body.location || name).trim(),
+      description: String(body.description || '').trim(),
+      imageUrl,
+      price,
+      rating,
+      createdAt
+    };
+
+    offers.destinations.push(destination);
+    await writeOffers(offers);
+    sendJson(response, 201, { ok: true, message: 'Destino creado correctamente.', offer: destination });
+    return;
+  }
+
+  const packageOffer = {
+    id: crypto.randomUUID(),
+    type: 'package',
+    name,
+    destination: String(body.destination || '').trim(),
+    duration: String(body.duration || '').trim(),
+    includes: String(body.includes || '').trim(),
+    imageUrl,
+    price,
+    rating,
+    available: Math.round(parsePositiveNumber(body.available, 10)),
+    createdAt
+  };
+
+  if (!packageOffer.destination) {
+    sendJson(response, 400, { ok: false, errors: ['Ingresa el destino del paquete.'] });
+    return;
+  }
+
+  offers.packages.push(packageOffer);
+  await writeOffers(offers);
+  sendJson(response, 201, { ok: true, message: 'Paquete creado correctamente.', offer: packageOffer });
+}
+
 async function serveStaticFile(request, response) {
   const requestUrl = new URL(request.url, `http://${request.headers.host}`);
   const decodedPath = decodeURIComponent(requestUrl.pathname);
@@ -292,6 +416,16 @@ const server = http.createServer(async (request, response) => {
 
     if (request.method === 'POST' && request.url === '/api/login') {
       await handleLogin(request, response);
+      return;
+    }
+
+    if (request.method === 'GET' && request.url === '/api/offers') {
+      await handleGetOffers(response);
+      return;
+    }
+
+    if (request.method === 'POST' && request.url === '/api/offers') {
+      await handleCreateOffer(request, response);
       return;
     }
 

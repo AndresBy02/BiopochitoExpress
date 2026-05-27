@@ -298,6 +298,20 @@
             background-color: #1d4ed8;
         }
 
+        .no-results-message {
+            display: none;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            color: #6b7280;
+        }
+
+        .no-results-message.active {
+            display: block;
+        }
+
         @media (min-width: 640px) {
             .results-summary {
                 flex-direction: row;
@@ -391,7 +405,7 @@
             <div class="results-summary">
                 <div class="results-title">
                     <h1>Resultados de búsqueda</h1>
-                    <p class="results-count">Se encontraron 6 ofertas disponibles</p>
+                    <p class="results-count" id="resultsCount">Se encontraron 3 ofertas disponibles</p>
                 </div>
                 <button class="btn-filters" onclick="toggleFilters()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -484,13 +498,15 @@
                     </div>
                 </div>
 
-                <button class="btn-clear-filters">Limpiar filtros</button>
+                <button class="btn-clear-filters" type="button">Limpiar filtros</button>
             </aside>
 
             <!-- Results List -->
             <div class="results-list">
+                <div class="active-filters" id="activeFilters" aria-live="polite"></div>
+
                 <!-- Result Card 1 -->
-                <div class="result-card" onclick="window.location.href='offer-detail.html'">
+                <div class="result-card" data-offer-type="packages" data-price="1250000" data-rating="4.8" onclick="window.location.href='offer-detail.html'">
                     <div class="result-card-content">
                         <div class="result-image">
                             <img src="https://images.unsplash.com/photo-1690571100303-cb86f92b9b01?w=600" alt="Cartagena">
@@ -538,7 +554,7 @@
                 </div>
 
                 <!-- Result Card 2 -->
-                <div class="result-card" onclick="window.location.href='offer-detail.html'">
+                <div class="result-card" data-offer-type="packages" data-price="980000" data-rating="4.9" onclick="window.location.href='offer-detail.html'">
                     <div class="result-card-content">
                         <div class="result-image">
                             <img src="https://images.unsplash.com/photo-1770955114269-464cba027fba?w=600" alt="Medellín">
@@ -586,7 +602,7 @@
                 </div>
 
                 <!-- Result Card 3 -->
-                <div class="result-card" onclick="window.location.href='offer-detail.html'">
+                <div class="result-card" data-offer-type="packages" data-price="1580000" data-rating="4.7" onclick="window.location.href='offer-detail.html'">
                     <div class="result-card-content">
                         <div class="result-image">
                             <img src="https://images.unsplash.com/photo-1642840067750-783acb36632b?w=600" alt="San Andrés">
@@ -632,6 +648,10 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="no-results-message" id="noResultsMessage">
+                    No encontramos ofertas con esos filtros. Prueba ampliando el rango de precio o la calificación.
+                </div>
             </div>
         </div>
     </div>
@@ -670,11 +690,265 @@
 
     <script src="../../public/js/script.js"></script>
     <script src="../../public/js/flujo-reserva.js"></script>
+    <script src="../../public/js/auth.js"></script>
     <script>
         function toggleFilters() {
             const sidebar = document.getElementById('filtersSidebar');
             sidebar.classList.toggle('active');
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let resultCards = Array.from(document.querySelectorAll('.result-card'));
+            const filtersSidebar = document.getElementById('filtersSidebar');
+            const resultsCount = document.getElementById('resultsCount');
+            const activeFilters = document.getElementById('activeFilters');
+            const noResultsMessage = document.getElementById('noResultsMessage');
+            const clearFiltersButton = document.querySelector('.btn-clear-filters');
+            const typeInputs = Array.from(document.querySelectorAll('input[name="type"]'));
+            const priceInputs = Array.from(document.querySelectorAll('#price1, #price2, #price3, #price4'));
+            const ratingInputs = Array.from(document.querySelectorAll('#rating45, #rating40, #rating35, #rating30'));
+
+            const priceRanges = {
+                price1: { min: 0, max: 500000 },
+                price2: { min: 500000, max: 1000000 },
+                price3: { min: 1000000, max: 1500000 },
+                price4: { min: 1500000, max: Infinity }
+            };
+
+            const ratingRanges = {
+                rating45: 4.5,
+                rating40: 4.0,
+                rating35: 3.5,
+                rating30: 3.0
+            };
+
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('es-CO', {
+                    style: 'currency',
+                    currency: 'COP',
+                    maximumFractionDigits: 0
+                }).format(Number(value || 0));
+            }
+
+            function createResultCard(offer) {
+                const isPackage = offer.type === 'package';
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.dataset.dynamicOffer = offer.id;
+                card.dataset.offerType = isPackage ? 'packages' : 'flights';
+                card.dataset.price = String(offer.price || 0);
+                card.dataset.rating = String(offer.rating || 0);
+                card.onclick = () => window.location.href = 'offer-detail.html';
+
+                const title = isPackage ? offer.name : `${offer.name} - Solo vuelo`;
+                const location = isPackage ? offer.destination : (offer.location || offer.name);
+                const badge = isPackage ? 'Paquete' : 'Solo vuelo';
+                const dateText = isPackage ? (offer.duration || 'Disponible ahora') : 'Salida disponible';
+                const tags = isPackage
+                    ? ['Vuelo incluido', offer.duration || 'Duración flexible', offer.includes || 'Hotel incluido']
+                    : ['Solo vuelo', 'Destino publicado', offer.description || 'Oferta creada por admin'];
+
+                card.innerHTML = `
+                    <div class="result-card-content">
+                        <div class="result-image">
+                            <img src="${offer.imageUrl}" alt="${title}">
+                            <div class="offer-badge">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                                ${badge}
+                            </div>
+                        </div>
+                        <div class="result-info">
+                            <div class="result-header">
+                                <div class="result-title">
+                                    <h3>${title}</h3>
+                                    <div class="result-location">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                                        </svg>
+                                        ${location}
+                                    </div>
+                                </div>
+                                <div class="result-rating">
+                                    <span class="star">★</span>
+                                    <span class="score">${Number(offer.rating || 0).toFixed(1)}</span>
+                                    <span class="count">(nuevo)</span>
+                                </div>
+                            </div>
+                            <p class="result-dates">${dateText}</p>
+                            <div class="tags">
+                                ${tags.filter(Boolean).slice(0, 3).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                            <div class="result-footer">
+                                <div class="result-price-section">
+                                    <span class="result-price-label">Desde</span>
+                                    <span class="result-price-value">${formatCurrency(offer.price)}</span>
+                                    <span class="result-price-label">por persona</span>
+                                </div>
+                                <a href="offer-detail.html" class="btn-view-details" onclick="event.stopPropagation()">Ver detalles</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                return card;
+            }
+
+            async function loadPublishedOffers() {
+                try {
+                    const response = await fetch('/api/offers');
+                    const data = await response.json();
+
+                    if (!data.ok) {
+                        return;
+                    }
+
+                    document.querySelectorAll('[data-dynamic-offer]').forEach(card => card.remove());
+
+                    const offers = [
+                        ...data.offers.destinations.map(destination => ({ ...destination, type: 'destination' })),
+                        ...data.offers.packages.map(packageOffer => ({ ...packageOffer, type: 'package' }))
+                    ];
+
+                    offers.forEach(offer => {
+                        noResultsMessage.before(createResultCard(offer));
+                    });
+
+                    resultCards = Array.from(document.querySelectorAll('.result-card'));
+                } catch (error) {
+                    console.warn('No se pudieron cargar las ofertas publicadas.', error);
+                }
+            }
+
+            function getLabelText(input) {
+                const label = document.querySelector(`label[for="${input.id}"]`);
+                return label ? label.textContent.trim() : input.id;
+            }
+
+            function getSelectedFilters() {
+                const selectedType = typeInputs.find(input => input.checked)?.id || 'all';
+                const selectedPrices = priceInputs.filter(input => input.checked).map(input => input.id);
+                const selectedRatings = ratingInputs.filter(input => input.checked).map(input => input.id);
+
+                return {
+                    type: selectedType,
+                    prices: selectedPrices,
+                    ratings: selectedRatings
+                };
+            }
+
+            function matchesPrice(price, selectedPrices) {
+                if (selectedPrices.length === 0) {
+                    return true;
+                }
+
+                return selectedPrices.some(priceId => {
+                    const range = priceRanges[priceId];
+                    return price >= range.min && price <= range.max;
+                });
+            }
+
+            function matchesRating(rating, selectedRatings) {
+                if (selectedRatings.length === 0) {
+                    return true;
+                }
+
+                return selectedRatings.some(ratingId => rating >= ratingRanges[ratingId]);
+            }
+
+            function renderActiveFilters(filters) {
+                const chips = [];
+
+                if (filters.type !== 'all') {
+                    const typeInput = document.getElementById(filters.type);
+                    chips.push({ id: filters.type, text: getLabelText(typeInput), kind: 'type' });
+                }
+
+                filters.prices.forEach(priceId => {
+                    const input = document.getElementById(priceId);
+                    chips.push({ id: priceId, text: getLabelText(input), kind: 'checkbox' });
+                });
+
+                filters.ratings.forEach(ratingId => {
+                    const input = document.getElementById(ratingId);
+                    chips.push({ id: ratingId, text: getLabelText(input), kind: 'checkbox' });
+                });
+
+                activeFilters.innerHTML = chips.map(chip => `
+                    <span class="filter-chip">
+                        ${chip.text}
+                        <button type="button" data-remove-filter="${chip.id}" aria-label="Quitar filtro ${chip.text}">&times;</button>
+                    </span>
+                `).join('');
+
+                activeFilters.querySelectorAll('[data-remove-filter]').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const filterId = this.dataset.removeFilter;
+                        const input = document.getElementById(filterId);
+
+                        if (!input) {
+                            return;
+                        }
+
+                        if (input.name === 'type') {
+                            document.getElementById('all').checked = true;
+                        } else {
+                            input.checked = false;
+                        }
+
+                        applyFilters();
+                    });
+                });
+            }
+
+            function updateResultsCount(visibleCount) {
+                const offerText = visibleCount === 1 ? 'oferta disponible' : 'ofertas disponibles';
+                resultsCount.textContent = `Se encontraron ${visibleCount} ${offerText}`;
+            }
+
+            function applyFilters() {
+                const filters = getSelectedFilters();
+                let visibleCount = 0;
+
+                resultCards.forEach(card => {
+                    const type = card.dataset.offerType;
+                    const price = Number(card.dataset.price);
+                    const rating = Number(card.dataset.rating);
+                    const typeMatches = filters.type === 'all' || type === filters.type;
+                    const priceMatches = matchesPrice(price, filters.prices);
+                    const ratingMatches = matchesRating(rating, filters.ratings);
+                    const shouldShow = typeMatches && priceMatches && ratingMatches;
+
+                    card.hidden = !shouldShow;
+
+                    if (shouldShow) {
+                        visibleCount += 1;
+                    }
+                });
+
+                updateResultsCount(visibleCount);
+                renderActiveFilters(filters);
+                noResultsMessage.classList.toggle('active', visibleCount === 0);
+            }
+
+            if (filtersSidebar) {
+                filtersSidebar.querySelectorAll('input').forEach(input => {
+                    input.addEventListener('change', applyFilters);
+                });
+            }
+
+            if (clearFiltersButton) {
+                clearFiltersButton.addEventListener('click', function() {
+                    document.getElementById('all').checked = true;
+                    priceInputs.forEach(input => input.checked = false);
+                    ratingInputs.forEach(input => input.checked = false);
+                    applyFilters();
+                });
+            }
+
+            loadPublishedOffers().finally(applyFilters);
+        });
     </script>
 </body>
 </html>

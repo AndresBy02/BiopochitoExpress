@@ -1,1 +1,3 @@
 {"id":"fde25dcb-0fd5-40f7-9040-c8a4d64bd3d5","firstName":"Samuel","lastName":"Luque","email":"alumno@google.com","passwordHash":"e33bc644d9a85eae87c696d94edf1961a21bed75734d6b9625f9f04437c96d0e","createdAt":"2026-05-25T11:52:00.728Z"}
+{"id":"80e8c073-9809-4b15-8e66-8a6a0d9ff7d0","firstName":"Samuel","lastName":"A","email":"nvh@gmail.com","passwordHash":"657452141a6f937f200d79ef30b8edbd0bd6a07bc4c58a7aa506dd5a735eaaf9","createdAt":"2026-05-25T15:00:04.122Z"}
+{"id":"e9d869b2-4506-4003-b959-8e25624a871b","firstName":"Diego","lastName":"Laverde","email":"la@gmail.com","passwordHash":"5d157f3d5b7be9dffc4c56fec8fce22bb894a24c35f7277aa051a96547108676","createdAt":"2026-05-26T15:44:09.043Z"}

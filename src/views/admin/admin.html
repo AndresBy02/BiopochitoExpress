@@ -328,7 +328,7 @@
       <section id="destinos-section" class="admin-section" role="tabpanel" aria-labelledby="tab-destinos" hidden>
         <div class="section-header-admin">
           <h1>Gestión de Destinos</h1>
-          <button class="btn-primary" aria-label="Nuevo destino">
+          <button class="btn-primary" type="button" data-toggle-admin-form="destination" aria-label="Nuevo destino">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -336,6 +336,44 @@
             Nuevo Destino
           </button>
         </div>
+
+        <form class="admin-create-form" id="destinationForm" hidden>
+          <div class="admin-create-form-header">
+            <h2>Crear destino</h2>
+            <p>Este destino se mostrará como oferta de solo vuelo en la página de resultados.</p>
+          </div>
+          <div class="admin-form-grid">
+            <label class="admin-form-field">
+              <span>Nombre del destino</span>
+              <input type="text" name="name" placeholder="Ej: Santa Marta" required>
+            </label>
+            <label class="admin-form-field">
+              <span>Ciudad o ubicación</span>
+              <input type="text" name="location" placeholder="Ej: Santa Marta">
+            </label>
+            <label class="admin-form-field">
+              <span>Precio desde</span>
+              <input type="number" name="price" min="1" step="1000" placeholder="850000" required>
+            </label>
+            <label class="admin-form-field">
+              <span>Calificación</span>
+              <input type="number" name="rating" min="0" max="5" step="0.1" value="4.5">
+            </label>
+            <label class="admin-form-field admin-form-field-full">
+              <span>URL de la imagen</span>
+              <input type="url" name="imageUrl" placeholder="https://..." required>
+            </label>
+            <label class="admin-form-field admin-form-field-full">
+              <span>Descripción</span>
+              <textarea name="description" rows="3" placeholder="Describe el destino para los clientes"></textarea>
+            </label>
+          </div>
+          <div class="admin-form-message" data-admin-message hidden></div>
+          <div class="admin-form-actions">
+            <button class="btn-primary" type="submit">Guardar destino</button>
+            <button class="btn-secondary" type="button" data-cancel-admin-form="destination">Cancelar</button>
+          </div>
+        </form>
 
         <div class="destinations-grid">
           <div class="destination-admin-card">
@@ -395,7 +433,7 @@
       <section id="paquetes-section" class="admin-section" role="tabpanel" aria-labelledby="tab-paquetes" hidden>
         <div class="section-header-admin">
           <h1>Paquetes Turísticos</h1>
-          <button class="btn-primary" aria-label="Nuevo paquete">
+          <button class="btn-primary" type="button" data-toggle-admin-form="package" aria-label="Nuevo paquete">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -403,6 +441,52 @@
             Nuevo Paquete
           </button>
         </div>
+
+        <form class="admin-create-form" id="packageForm" hidden>
+          <div class="admin-create-form-header">
+            <h2>Crear paquete turístico</h2>
+            <p>El paquete aparecerá en resultados con la imagen que ingreses por URL.</p>
+          </div>
+          <div class="admin-form-grid">
+            <label class="admin-form-field">
+              <span>Nombre del paquete</span>
+              <input type="text" name="name" placeholder="Ej: Santa Marta Express" required>
+            </label>
+            <label class="admin-form-field">
+              <span>Destino</span>
+              <input type="text" name="destination" placeholder="Ej: Santa Marta" required>
+            </label>
+            <label class="admin-form-field">
+              <span>Duración</span>
+              <input type="text" name="duration" placeholder="3 días / 2 noches">
+            </label>
+            <label class="admin-form-field">
+              <span>Precio desde</span>
+              <input type="number" name="price" min="1" step="1000" placeholder="1250000" required>
+            </label>
+            <label class="admin-form-field">
+              <span>Disponibles</span>
+              <input type="number" name="available" min="0" step="1" value="10">
+            </label>
+            <label class="admin-form-field">
+              <span>Calificación</span>
+              <input type="number" name="rating" min="0" max="5" step="0.1" value="4.5">
+            </label>
+            <label class="admin-form-field admin-form-field-full">
+              <span>URL de la imagen</span>
+              <input type="url" name="imageUrl" placeholder="https://..." required>
+            </label>
+            <label class="admin-form-field admin-form-field-full">
+              <span>Incluye</span>
+              <textarea name="includes" rows="3" placeholder="Vuelo + Hotel + Tour"></textarea>
+            </label>
+          </div>
+          <div class="admin-form-message" data-admin-message hidden></div>
+          <div class="admin-form-actions">
+            <button class="btn-primary" type="submit">Guardar paquete</button>
+            <button class="btn-secondary" type="button" data-cancel-admin-form="package">Cancelar</button>
+          </div>
+        </form>
 
         <div class="data-table-container">
           <table class="data-table">

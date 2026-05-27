@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof Chart !== 'undefined') {
         initializeCharts();
     }
+
+    setupOfferManagement();
 });
 
 function initializeCharts() {
@@ -235,3 +237,181 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // (Los gráficos con Chart.js se mantienen igual, solo se añadió aria-label a los canvas)
+
+function formatAdminCurrency(value) {
+  return new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    maximumFractionDigits: 0
+  }).format(Number(value || 0));
+}
+
+function showAdminFormMessage(form, messages, type) {
+  const box = form.querySelector('[data-admin-message]');
+  const list = Array.isArray(messages) ? messages : [messages];
+
+  if (!box) {
+    return;
+  }
+
+  box.className = `admin-form-message ${type}`;
+  box.innerHTML = list.map(message => `<p>${message}</p>`).join('');
+  box.hidden = false;
+}
+
+function hideAdminFormMessage(form) {
+  const box = form.querySelector('[data-admin-message]');
+
+  if (!box) {
+    return;
+  }
+
+  box.hidden = true;
+  box.innerHTML = '';
+}
+
+async function adminRequest(url, payload) {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+  const data = await response.json();
+
+  if (!response.ok || !data.ok) {
+    throw new Error((data.errors || ['No se pudo guardar la informacion.']).join('\n'));
+  }
+
+  return data;
+}
+
+function buildDestinationAdminCard(destination) {
+  const card = document.createElement('div');
+  card.className = 'destination-admin-card';
+  card.dataset.dynamicOffer = destination.id;
+  card.innerHTML = `
+    <img src="${destination.imageUrl}" alt="${destination.name}">
+    <div class="destination-admin-content">
+      <h3>${destination.name}</h3>
+      <p>${destination.description || destination.location || 'Destino disponible para reservar'}</p>
+      <div class="destination-stats">
+        <span>⭐ ${Number(destination.rating || 0).toFixed(1)}</span>
+        <span>✈️ Oferta activa</span>
+        <span>${formatAdminCurrency(destination.price)}</span>
+      </div>
+      <div class="destination-actions">
+        <button class="btn-secondary" type="button">Publicado</button>
+        <button class="btn-danger" type="button" disabled>Demo</button>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+function buildPackageAdminRow(packageOffer) {
+  const row = document.createElement('tr');
+  row.dataset.dynamicOffer = packageOffer.id;
+  row.innerHTML = `
+    <td><strong>${packageOffer.name}</strong></td>
+    <td>${packageOffer.destination}</td>
+    <td>${packageOffer.duration || 'Por definir'}</td>
+    <td>${packageOffer.includes || 'Vuelo + Hotel'}</td>
+    <td>${formatAdminCurrency(packageOffer.price)}</td>
+    <td>${packageOffer.available ?? 0}</td>
+    <td><span class="badge success">Activo</span></td>
+    <td>
+      <button class="btn-icon" title="Publicado" type="button">✓</button>
+    </td>
+  `;
+  return row;
+}
+
+async function loadAdminOffers() {
+  try {
+    const response = await fetch('/api/offers');
+    const data = await response.json();
+
+    if (!data.ok) {
+      return;
+    }
+
+    const destinationGrid = document.querySelector('#destinos-section .destinations-grid');
+    const packageTableBody = document.querySelector('#paquetes-section .data-table tbody');
+
+    if (destinationGrid) {
+      destinationGrid.querySelectorAll('[data-dynamic-offer]').forEach(node => node.remove());
+      data.offers.destinations.forEach(destination => {
+        destinationGrid.appendChild(buildDestinationAdminCard(destination));
+      });
+    }
+
+    if (packageTableBody) {
+      packageTableBody.querySelectorAll('[data-dynamic-offer]').forEach(node => node.remove());
+      data.offers.packages.forEach(packageOffer => {
+        packageTableBody.appendChild(buildPackageAdminRow(packageOffer));
+      });
+    }
+  } catch (error) {
+    console.warn('No se pudieron cargar las ofertas del admin.', error);
+  }
+}
+
+function getFormPayload(form, type) {
+  const formData = new FormData(form);
+  const payload = Object.fromEntries(formData.entries());
+  payload.type = type;
+  return payload;
+}
+
+function setupOfferForm(formId, type) {
+  const form = document.getElementById(formId);
+
+  if (!form) {
+    return;
+  }
+
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    hideAdminFormMessage(form);
+
+    try {
+      const data = await adminRequest('/api/offers', getFormPayload(form, type));
+      showAdminFormMessage(form, data.message, 'success');
+      form.reset();
+      await loadAdminOffers();
+    } catch (error) {
+      showAdminFormMessage(form, error.message.split('\n'), 'error');
+    }
+  });
+}
+
+function setupOfferManagement() {
+  document.querySelectorAll('[data-toggle-admin-form]').forEach(button => {
+    button.addEventListener('click', () => {
+      const type = button.dataset.toggleAdminForm;
+      const form = document.getElementById(type === 'destination' ? 'destinationForm' : 'packageForm');
+
+      if (form) {
+        form.hidden = !form.hidden;
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-cancel-admin-form]').forEach(button => {
+    button.addEventListener('click', () => {
+      const type = button.dataset.cancelAdminForm;
+      const form = document.getElementById(type === 'destination' ? 'destinationForm' : 'packageForm');
+
+      if (form) {
+        form.hidden = true;
+        hideAdminFormMessage(form);
+      }
+    });
+  });
+
+  setupOfferForm('destinationForm', 'destination');
+  setupOfferForm('packageForm', 'package');
+  loadAdminOffers();
+}

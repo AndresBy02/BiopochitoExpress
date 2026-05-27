@@ -209,14 +209,15 @@ function setupActiveUserGreeting() {
     const user = JSON.parse(storedUser);
     const firstName = user.firstName || user.email || 'usuario';
     const greeting = `Bienvenido, ${firstName}`;
+    const accountTargets = [
+      accountText,
+      accountLinkMobile,
+      ...document.querySelectorAll('.header-actions .btn-account span, .nav-mobile .btn-account span')
+    ].filter(Boolean);
 
-    if (accountText) {
-      accountText.textContent = greeting;
-    }
-
-    if (accountLinkMobile) {
-      accountLinkMobile.textContent = greeting;
-    }
+    accountTargets.forEach(target => {
+      target.textContent = greeting;
+    });
 
     if (logoutButton) {
       logoutButton.hidden = false;
@@ -228,6 +229,17 @@ function setupActiveUserGreeting() {
   } catch (error) {
     localStorage.removeItem('usuarioActivo');
   }
+}
+
+function setupAccountButtonsNavigation() {
+  const accountButtons = document.querySelectorAll('button.btn-account');
+
+  accountButtons.forEach(button => {
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      window.location.href = 'inicio.html';
+    });
+  });
 }
 
 function closeUserSession() {
@@ -263,6 +275,7 @@ function setupLogoutButtons() {
 document.addEventListener('DOMContentLoaded', () => {
   setupRegisterForm();
   setupLoginForm();
+  setupAccountButtonsNavigation();
   setupActiveUserGreeting();
   setupLogoutButtons();
 });
